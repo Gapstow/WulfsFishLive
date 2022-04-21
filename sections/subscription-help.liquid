@@ -1,0 +1,59 @@
+<div class="page-width">
+    <div class="need-help">
+        <h2>{{ section.settings.title }}</h2>
+        <p>{{ section.settings.content }}</p>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "text",
+    "settings": [
+        {
+        "type": "text",
+        "id": "title",
+        "label": "title"
+        },
+        {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+        }
+    ]
+}
+{% endschema %}
+<style>
+.need-help h2{
+    margin: 40px 0;
+    font-family: 'Consort RR';
+    font-size: 27px;
+    color: #000;
+}
+.need-help p{
+    font-family: Raleway;
+    font-size: 15px;
+}
+.need-help{
+    margin: 120px 0 80px 0;
+    text-align: center;
+}
+hr {
+    margin: 60px 0px;
+    background-color: #000000;
+}
+
+@media screen and (max-width: 768px) {
+    .need-help {
+        margin: 60px 0 80px 0;
+    }
+    .need-help h2 {
+        margin: 20px 0;
+    }
+}
+@media screen and (max-width: 540px) {
+    .need-help p {
+        font-family: Raleway;
+        font-size: 11px;
+    }
+}
+</style>

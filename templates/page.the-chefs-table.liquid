@@ -1,0 +1,16 @@
+{% comment %}
+  To edit the contents of this file, look inside the `sections` folder for the file name that comes directly after `section`. Eg. {% section 'product__main' %} or {% section 'page__banner' %}
+{% endcomment %}
+
+<main id="template-{{ template | replace: '.', '-' | handle }}" class="shopify-section default-page">
+    <section class="section__wrapper section chefs_main_section">
+        <div class="container">
+            {% section 'chefs_banner' %}
+            {% section 'chefs_works' %}
+            {% section 'chefs_rewards' %}
+            {% section 'chefs_table' %}
+            {% section 'chefs_join_table' %}
+            {% section 'chefs_faq' %}
+        </div>
+    </section>
+</main>

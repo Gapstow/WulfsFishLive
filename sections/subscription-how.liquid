@@ -1,0 +1,126 @@
+<div class="page-main-width description-content">
+    <div id="some-description-box">
+        {%- for block in section.blocks -%}
+        <article class="row">
+            <div class="left-number">
+                {% if forloop.first == true %}
+                    <div class="number-wrap">
+                {% else %}
+                    <div class="number-wrap row-numbers">
+                {% endif %}
+                <div class="text-number">{{ block.settings.number }}</div>
+                </div>
+            </div>
+            <div calss="right-description description-content">
+                <div class="text-group">
+                    <p>{{ block.settings.description }}</p>
+                </div>
+            </div>
+            <div class="test"></div>
+        </article>
+        {%- endfor -%}
+    </div>
+</div>
+
+<style>
+    #some-description-box{
+        margin-top: 91px;
+    }
+    #some-description-box article{
+        display: flex;
+        margin: -1px;
+    }
+    #some-description-box .left-number{
+        display: flex;
+        justify-content: center;
+        width: 175px;
+        background: #142434;
+    }
+     #some-description-box .number-wrap{
+        width: 120px;
+        text-align: center;
+    }
+    #some-description-box .number-wrap.row-numbers{
+        border-top: solid 3px #fff;
+    }
+    .text-group p{
+        font-family: Raleway;
+        font-size: 25px;
+    }
+    #some-description-box .text-group{
+        margin-left: 37px;
+        cursor: auto;
+    }
+    #some-description-box  .text-number{
+        color: #ff7750;
+        font-family: ConsortRR;
+        font-size: 75px;
+    }
+     #some-description-box article div:nth-child(2){
+        width: calc(100% - 175px);
+        padding: 25px 0;
+    }
+    @media screen and (max-width: 768px) {
+        .description-content{
+            padding: 0 10px;
+        }
+        #some-description-box .left-number {
+            width: 95px;
+        }
+        #some-description-box .number-wrap{
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 72px;
+        }
+        #some-description-box .text-number {
+            font-size: 46px;
+        }
+        .text-group p {
+            font-size: 18px;
+        }
+        #some-description-box .text-group {
+            margin-left: 0px;
+        }
+        #some-description-box article div:nth-child(2){
+            width: calc(100% - 120px);
+            padding: 12px 0;;
+        }
+        #some-description-box { margin-top: 60px; }
+    }
+    @media screen and (max-width: 540px) {
+        #some-description-box .left-number {
+            width: 88px;
+        }
+        #some-description-box article div:nth-child(2) {
+            width: calc(100% - 100px);
+        }
+        .text-group p {
+            font-size: 14px;
+        }
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Heres How",
+  "class": "spaced-section spaced-section--full-width",
+  "blocks": [
+        {
+            "name": "text",
+            "type": "text",
+            "settings": [
+                {
+                "type": "text",
+                "id": "number",
+                "label": "Number"
+                },
+                {
+                    "type": "html",
+                    "id": "description",
+                    "label": "Description"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

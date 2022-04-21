@@ -1,0 +1,69 @@
+
+{% comment %}
+  To edit the contents of this file, look inside the `sections` folder for the file name that comes directly after `section`. Eg. {% section 'product__main' %} or {% section 'page__banner' %}
+{% endcomment %}
+<main id="template-{{ template | replace: '.', '-' | handle }}" class="shopify-section default-page">
+  <section class="section__wrapper
+                  section
+                  ">
+    {% unless page.metafields.custom_fields["custom_title"] != blank %}
+<h1>{{ page.title }}</h1>
+    {% endunless%}
+    <div class="container">
+      <div id="metafieldAccordion" class="faq-template-section jsFAQ">
+
+  <dl class="faq-accordion accordion-icon--carets">
+    {% for item in shop.metafields.custom_fields["big_game_promo"] %}
+    <dt data-index="{{ forloop.index0 }}">
+      <button class="accordion-style--carets accordion__button" type="button" aria-controls="panel-in-the-kitchen" aria-expanded="false">
+            {% include settings.icon, name: 'down-caret', icon_class: 'icon--rotate' %}
+           {{ item.title }}
+          </button>
+    {% if item.body != blank %}
+          <dd id="panel-in-the-kitchen" aria-hidden="false">
+            <div class="content">
+              {{ item.body }}
+            </div>
+          </dd>
+            {% endif %}
+    
+    </dt>
+    {% endfor %}
+  </dl>
+</div>
+    </div>
+    
+  </section>
+</main>
+
+<script data-theme-editor-load-script src="{{ 'z__jsFAQ.js' | asset_url }}"></script>
+
+
+<script>
+
+    var $faqHeading = $('.faq-accordion > dt > button');
+    console.log($faqHeading);
+    $('.faq-accordion > dd').attr('aria-hidden', true);
+    $faqHeading.attr('aria-expanded', false);
+    $faqHeading.on('click activate', function () {
+      var faqTitle = $(this);
+      var faqIcons = $(this).find('.icon');
+      var state = $(this).attr('aria-expanded') === 'false' ? true : false;
+      $(this).attr('aria-expanded', state);
+      $(this).parent().next().slideToggle(function () {
+        if (faqIcons.hasClass('icon--active')) {
+          faqIcons.toggleClass('icon--active');
+        }
+      });
+      $(this).parent().next().attr('aria-hidden', !state);
+      return false;
+    });
+    $faqHeading.on('keydown', function (event) {
+      var keyCode = event.keyCode || e.which;
+
+      if (keyCode === 13) {
+        $(this).trigger('activate');
+      }
+    });
+
+</script>

@@ -1,0 +1,15 @@
+
+{% for link in linklists.recipe-blogs.links %}
+  {% assign blog = link.object %}
+  {% if forloop.first == true %}
+    {% assign fullList = blog.articles %}
+  {% else %}
+    {% assign fullList = fullList | concat: blog.articles %}
+  {% endif %}
+{% endfor %}
+
+{% assign sortedList = fullList | sort: 'published_at' | reverse %}
+
+{% for article in sortedList | limit: 4 %}
+  <h3 class="name for-filtering">{{article.title}}<br>{{ article.published_at }}</h3>
+{% endfor %} 

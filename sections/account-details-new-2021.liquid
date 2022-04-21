@@ -1,0 +1,457 @@
+{% comment %}
+** Account details template - main content area **
+{% endcomment %}
+
+{% assign id = section.id %}
+{% comment %}Layout{% endcomment %}
+{% assign width = section.settings.width %}
+{% assign padding_top = section.settings.padding_top %}
+{% assign padding_bottom = section.settings.padding_bottom %}
+{% comment %}Advanced{% endcomment %}
+{% assign css_class = section.settings.css_class %}
+{% assign custom_css = section.settings.custom_css %}
+
+{% style %}
+
+  .section__wrapper {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+  }
+
+  {% include 'css-loop', css: section_css, id: id %}
+  {% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+{% paginate customer.orders by 20 %}
+<section class="section section__wrapper is-width-{{ width }} {{ css_class }}">
+  <div class="container">
+    <aside class="one-fifth medium-down--one-whole column account-sidebar">
+      <header class="account-main-header desktop-hide">
+        <div class="account-header-row">
+          <h2 class="account-welcome"><span class="welcome-greeting">Hello,&nbsp;</span><span class="welcome-name">{{ customer.name }}</span></h2>
+          <p>Not {{ customer.name }}? <a href="">Sign Out</a></p>
+        </div>
+        <div class="account-header-divider"></div>
+        <p class="account-header-info">{{ section.settings.header_info }}</p>
+      </header>
+<!--
+      <div class="account-header-row desktop-hide">
+        <h2 class="account-welcome"><span class="welcome-greeting">Hello,&nbsp;</span><span class="welcome-name">{{ customer.name }}</span></h2>
+        <p>Not {{ customer.name }}? <a href="">Sign Out</a></p>
+      </div>
+      -->
+      <header class="">
+        <h1 class="account-details__title title">My Account</h1>
+      </header>
+      <div class="account-sidebar__content has-padding-top"> 
+        <ul class="sidebar-linklist">
+          <li><a>Welcome</a></li>
+          {% if section.settings.use_orders %}
+          <li><a href="javascript:;" class="" data-fancybox data-src="#ordersLightbox" data-type="inline">{{ section.settings.orders_nav }}</a></li>
+          {% endif %}
+          {% if section.settings.use_tracking %}
+          <li><a href="{{ section.settings.tracking_url }}">{{ section.settings.tracking_nav }}</a></li>
+          {% endif %}
+          {% if section.settings.use_settings %}
+          <li><a href="{{ section.settings.settings_url }}">{{ section.settings.settings_nav }}</a></li>
+          {% endif %}
+          {% if section.settings.use_subscriptions %}
+          <li><a href="{{ section.settings.subscriptions_url }}">{{ section.settings.subscriptions_nav }}</a></li>
+          {% endif %}
+          {% if section.settings.use_rewards %}
+          <li><a href="{{ section.settings.rewards_url }}">{{ section.settings.rewards_nav }}</a></li>
+          {% endif %}
+          {% if section.settings.use_faq %}
+          <li><a href="{{ section.settings.faq_url }}">{{ section.settings.faq_nav }}</a></li>
+          {% endif %}
+        </ul>
+      </div>
+      </aside>
+    <main class="four-fifths medium-down--one-whole column account-main has-padding-top">
+      <header class="account-main-header mobile-hide">
+        <div class="account-header-row ">
+          <h2 class="account-welcome"><span class="welcome-greeting">Hello,&nbsp;</span><span class="welcome-name">{{ customer.name }}</span></h2>
+          <p>Not {{ customer.name }}? <a href="/account/logout">Sign Out</a></p>
+        </div>
+        <div class="account-header-divider"></div>
+        <p class="account-header-info">{{ section.settings.header_info }}</p>
+      </header>
+      <section class="featured-recipe">
+        {% include 'include-featured-recipe' %}
+      </section>
+      <section>
+        <div class="container container-account-blocks">
+          {% if section.settings.use_orders %}
+            <div class="account-block account-block-orders">
+              <!--  -->
+              <a href="javascript:;" class="" data-fancybox data-src="#ordersLightbox" data-type="inline"><img src="{{ section.settings.orders_image | img_url:'400x' }}" alt="" class="account-block-image"></a>
+              <h2 class="title"><a href="javascript:;" class="" data-fancybox data-src="#ordersLightbox" data-type="inline">{{ section.settings.orders_title }}</a></h2>
+              <p><a href="javascript:;" class="subtitle view-all-link" data-fancybox data-src="#ordersLightbox" data-type="inline">{{ section.settings.orders_subtitle }}</a></p>
+
+
+              <div id="ordersLightbox">       
+                <h2 class="title">Order History</h2>
+                <table class="table is-bordered" width="100%">
+                  <thead class="text-align-left">
+                    <tr>
+                      <th>{{ 'customer.orders.order_number' | t }}</th>
+                      <th>{{ 'customer.orders.date' | t }}</th>
+                      <th>{{ 'customer.orders.payment_status' | t }}</th>
+                      <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                      <th>{{ 'customer.orders.total' | t }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for order in customer.orders %}
+                      <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+                          <td>{{ order.name | link_to: order.customer_url }}</td>
+                          <td>{{ order.created_at | date: format: "month_day_year" }}</td>
+                          <td>{{ order.financial_status_label }}</td>
+                          <td>{{ order.fulfillment_status_label }}</td>
+                          <td>
+                            <span>{{ order.total_price | money }} {{ order.currency }}</span>
+                          </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          {% endif %}
+          {% if section.settings.use_tracking %}
+            <div class="account-block account-block-settings">
+              <!--  -->
+              <a href="{{ section.settings.tracking_url }}"><img src="{{ section.settings.tracking_image | img_url:'400x' }}" alt="" class="account-block-image"></a>
+              <h2 class="title"><a href="{{ section.settings.tracking_url }}">{{ section.settings.tracking_title }}</a></h2>
+              <p><a href="{{ section.settings.tracking_url }}" class="subtitle view-all-link">{{ section.settings.tracking_subtitle }}</a></p>
+            </div>
+          {% endif %}
+          {% if section.settings.use_settings %}
+            <div class="account-block account-block-settings">
+              <!--  -->
+              <a href="{{ section.settings.settings_url }}"><img src="{{ section.settings.settings_image | img_url:'400x' }}" alt="" class="account-block-image"></a>
+              <h2 class="title"><a href="{{ section.settings.settings_url }}">{{ section.settings.settings_title }}</a></h2>
+              <p><a href="{{ section.settings.settings_url }}" class="subtitle view-all-link">{{ section.settings.settings_subtitle }}</a></p>
+            </div>
+          {% endif %}
+          {% if section.settings.use_subscriptions %}
+            <div class="account-block account-block-subscriptions">
+              <!--  -->
+              <a href="{{ section.settings.subscriptions_url }}"><img src="{{ section.settings.subscriptions_image | img_url:'400x' }}" alt="" class="account-block-image"></a>
+              <h2 class="title"><a href="{{ section.settings.subscriptions_url }}">{{ section.settings.subscriptions_title }}</a></h2>
+              <p><a href="{{ section.settings.subscriptions_url }}" class="subtitle view-all-link">{{ section.settings.subscriptions_subtitle }}</a></p>
+            </div>
+          {% endif %}
+          {% if section.settings.use_rewards %}
+            <div class="account-block account-block-rewards">
+              <!--  -->
+              <a href="{{ section.settings.rewards_url }}"><img src="{{ section.settings.rewards_image | img_url:'400x' }}" alt="" class="account-block-image"></a>
+              <h2 class="title"><a href="{{ section.settings.rewards_url }}">{{ section.settings.rewards_title }}</a></h2>
+              <p><a href="{{ section.settings.rewards_url }}" class="subtitle view-all-link">{{ section.settings.rewards_subtitle }}</a></p>
+            </div>
+          {% endif %}
+          {% if section.settings.use_faq %}
+            <div class="account-block account-block-faq">
+              <!--  -->
+              <a href="{{ section.settings.faq_url }}"><img src="{{ section.settings.faq_image | img_url:'400x' }}" alt="" class="account-block-image"></a>
+              <h2 class="title"><a href="{{ section.settings.faq_url }}">{{ section.settings.faq_title }}</a></h2>
+              <p><a href="{{ section.settings.faq_url }}" class="subtitle view-all-link">{{ section.settings.faq_subtitle }}</a></p>
+            </div>
+          {% endif %}
+        </div>
+      </section>
+    </main>
+  </div>
+</section>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Account details",
+    "class": "account-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "header_info",
+        "label": "Header Subtitle",
+        "default": "For faster..."
+      },
+      {
+        "type": "header",
+        "content": "Top Recipe Info"
+      },
+      {
+        "type": "blog",
+        "id": "blog_select",
+        "label": "Blog",
+        "info": "Blog to pull most recent post from"
+      },
+      {
+        "type": "blog",
+        "id": "blog_select_2",
+        "label": "Blog",
+        "info": "2nd blog to pull from"
+      },
+      {
+        "type": "text",
+        "id": "recipe_title",
+        "label": "Recipe Section Title",
+        "default": "Recipes"
+      },
+      {
+        "type": "text",
+        "id": "recipe_button",
+        "label": "Recipe Button Text",
+        "default": "Read It"
+      },
+      {
+        "type": "header",
+        "content": "Order History"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_orders",
+        "label": "Show Order History",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "orders_nav",
+        "label": "Sidebar Nav Label",
+        "default": "Order..."
+      },
+      {
+        "type": "text",
+        "id": "orders_title",
+        "label": "Title",
+        "default": "Order..."
+      },
+      {
+        "type": "text",
+        "id": "orders_subtitle",
+        "label": "Subtitle",
+        "default": "View All..."
+      },
+      {
+        "type": "image_picker",
+        "id": "orders_image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "orders_url",
+        "label": "Link"
+      },
+      {
+        "type": "header",
+        "content": "Rewards"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_rewards",
+        "label": "Show Rewards Info",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "rewards_nav",
+        "label": "Sidebar Nav Label",
+        "default": "Rewards"
+      },
+      {
+        "type": "text",
+        "id": "rewards_title",
+        "label": "Title",
+        "default": "Rewards"
+      },
+      {
+        "type": "text",
+        "id": "rewards_subtitle",
+        "label": "Subtitle",
+        "default": "Rewards"
+      },
+      {
+        "type": "image_picker",
+        "id": "rewards_image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "rewards_url",
+        "label": "Link"
+      },
+      {
+        "type": "header",
+        "content": "Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_settings",
+        "label": "Show Settings",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "settings_nav",
+        "label": "Sidebar Nav Label",
+        "default": "Settings"
+      },
+      {
+        "type": "text",
+        "id": "settings_title",
+        "label": "Title",
+        "default": "Settings"
+      },
+      {
+        "type": "text",
+        "id": "settings_subtitle",
+        "label": "Subtitle",
+        "default": "Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "settings_image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "settings_url",
+        "label": "Link"
+      },
+      {
+        "type": "header",
+        "content": "Subscriptions"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_subscriptions",
+        "label": "Show Subscriptions",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "subscriptions_nav",
+        "label": "Sidebar Nav Label",
+        "default": "Subscriptions"
+      },
+      {
+        "type": "text",
+        "id": "subscriptions_title",
+        "label": "Title",
+        "default": "Subscriptions"
+      },
+      {
+        "type": "text",
+        "id": "subscriptions_subtitle",
+        "label": "Subtitle",
+        "default": "Subscriptions"
+      },
+      {
+        "type": "image_picker",
+        "id": "subscriptions_image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "subscriptions_url",
+        "label": "Link"
+      },
+      {
+        "type": "header",
+        "content": "FAQ"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_faq",
+        "label": "Show FAQ",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "faq_nav",
+        "label": "Sidebar Nav Label",
+        "default": "FAQ"
+      },
+      {
+        "type": "text",
+        "id": "faq_title",
+        "label": "Title",
+        "default": "FAQ"
+      },
+      {
+        "type": "text",
+        "id": "faq_subtitle",
+        "label": "Subtitle",
+        "default": "FAQ"
+      },
+      {
+        "type": "image_picker",
+        "id": "faq_image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "faq_url",
+        "label": "Link"
+      },
+      {
+        "type": "header",
+        "content": "Tracking"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_tracking",
+        "label": "Show Tracking",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "tracking_nav",
+        "label": "Sidebar Nav Label",
+        "default": "Tracking"
+      },
+      {
+        "type": "text",
+        "id": "tracking_title",
+        "label": "Title",
+        "default": "Tracking"
+      },
+      {
+        "type": "text",
+        "id": "tracking_subtitle",
+        "label": "Subtitle",
+        "default": "Tracking"
+      },
+      {
+        "type": "image_picker",
+        "id": "tracking_image",
+        "label": "Image"
+      },
+      {
+        "type": "url",
+        "id": "tracking_url",
+        "label": "Link"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top spacing",
+        "min": 0,
+        "max": 80,
+        "default": 40,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom spacing",
+        "min": 0,
+        "max": 80,
+        "default": 40,
+        "unit": "px"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,73 @@
+.article-recipe-card * {
+  color: black!important;
+}
+.article-recipe-card .tabcontent {
+  display: block!important;
+}
+.article-recipe-card .recipe-section-title {
+  font-size: 32px!important;
+  margin-bottom: 10px!important;
+}
+.article-recipe-card #recipeCardIngredients {
+  margin-top: 0!important;
+}
+.article-recipe-card #recipeCardInstructions {
+  margin-top: 0;
+}
+.article-recipe-card #recipeCardInstructions .instruction-step-content {
+  font-size: 17px!important;
+  color: black!important;
+  margin-left: 20px!important;
+  max-width: none!important;
+}
+.article-recipe-card #recipeCardInstructions .instructions-step {
+  padding-bottom: 0!important;
+  margin-bottom: 10px!important;
+  border-bottom: none!important;
+}
+.article-recipe-card #recipeCardInstructions .instruction-step-number {
+  color: black!important;
+  font-size: 19px!important;
+}
+.article-recipe-card #recipeCardInstructions .mobile-instruction-step-title {
+  font-size: 24px!important;
+  text-align: left!important;
+}
+.article-recipe-card #template-article-recipe-card {
+  padding-top: 25px!important;
+}
+.article-recipe-card .shopify-section.top-bar,
+.article-recipe-card header {
+  display: none!important;
+}
+.article-recipe-card #recipeMeta {
+  width: 100%;
+  flex-direction: row!important;
+}
+.article-recipe-card #recipeCardIngredients {
+  page-break-after: always;
+}
+.article-recipe-card .recipe-meta-item {
+  padding-left: 5px;
+  margin-left: 5px;
+  padding-right: 5px;
+  margin-right: 5px;
+}
+
+
+.print-icon,
+#tdf_notify,
+#preview-bar-iframe,
+#smile-ui-container,
+#purechat-container,
+#shopify-section-header-centered,
+.article-recipe-card #shopify-section-prefooter,
+.article-recipe-card .shopify-section.footer,
+.ingredients-products,
+#mobile-header,
+#recipeCardCarouselWrapper,
+#relatedRecipes,
+.header__menu {
+  display: none!important;
+}
+

@@ -1,0 +1,372 @@
+
+
+{% include 'include-clp-image-with-text' %}
+
+{% schema %}
+{
+  "name": "Image with text",
+  "class": "image-with-text image-with-text-1",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "standard",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gutter",
+      "label": "Show gutter",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 80,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Size",
+      "min": 0,
+      "max": 80,
+      "default": 33,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_bottom",
+      "label": "Spacing below heading",
+      "min": 0,
+      "max": 80,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body Size",
+      "default": 22,
+      "min": 0,
+      "max": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "body_padding_bottom",
+      "label": "Spacing between body elements",
+      "min": 0,
+      "max": 40,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Button Font Size",
+      "default": 10,
+      "min": 0,
+      "max": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_top",
+      "label": "Button Top/Bottom Padding",
+      "default": 10,
+      "min": 0,
+      "max": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "button_left",
+      "label": "Button Left/Right Padding",
+      "default": 10,
+      "min": 0,
+      "max": 80,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Animation",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "fadeIn",
+          "label": "Fade in"
+        },
+        {
+          "value": "fadeInDown",
+          "label": "Fade in down"
+        },
+        {
+          "value": "fadeInLeft",
+          "label": "Fade in left"
+        },
+        {
+          "value": "fadeInRight",
+          "label": "Fade in right"
+        },
+        {
+          "value": "slideInLeft",
+          "label": "Slide in left"
+        },
+        {
+          "value": "slideInRight",
+          "label": "Slide in right"
+        },
+        {
+          "value": "zoomIn",
+          "label": "Zoom in"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "1024 x 1024px recommended"
+        },
+        {
+          "type": "select",
+          "id": "image_crop",
+          "label": "Image cropping",
+          "default": "none",
+          "info": "Only applied when text area is taller than the image.",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": "CTA Button",
+          "default": "Take me...",
+          "info": "Optional"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "CTA Link"
+        },
+        {
+          "type": "color",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "button_background",
+          "label": "Button Background",
+          "default": "rgba(0,0,0,0)"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading text here",
+          "info": "Optional"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Top Text",
+          "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+          "info": "Optional"
+        },
+        {
+          "type": "richtext",
+          "id": "text_2",
+          "label": "Text 2",
+          "default": "<p>List Items.</p>",
+          "info": "Optional. Make each bullet point on a new line and type an asterisk (*) at the start of the new line."
+        },
+        {
+          "type": "richtext",
+          "id": "text_3",
+          "label": "Bottom Text",
+          "default": "<p>Use this text.</p>",
+          "info": "Optional. Make each bullet point on a new line."
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": "CTA Button",
+          "default": "Take me...",
+          "info": "Optional"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "CTA Link"
+        },
+        {
+          "type": "header",
+          "content": "Sizes"
+        },
+        {
+          "type": "paragraph",
+          "content": "Sizes are selected in the Section settings, not Block."
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Headings",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "text_color_body",
+          "label": "Body Text",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "button_background",
+          "label": "Button Background",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "vertical_position",
+          "label": "Vertical position",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Middle"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

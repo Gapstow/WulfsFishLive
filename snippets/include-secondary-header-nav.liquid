@@ -1,0 +1,21 @@
+
+<nav class="header__menu-items is-flex is-flex-wrap is-justify-{{ section.settings.menu_alignment }} header__dropdown--{{ settings.dropdown_position }}" role="navigation" aria-label="main navigation">
+  {% assign secondary_menu = linklists[section.settings.secondary_linklist] %}
+  {% for link in secondary_menu.links %}
+    {% if link.links == blank %}
+      <div class="navbar-item header__item {% if link.active or link.child_active %}is-active{% endif %}" data-navlink-handle="{{ link.title | handleize }}">
+        <a href="{{ link.url }}" class="navbar-link header__link {% if link.active %}is-active{% endif %} is-arrowless">
+          {{ link.title }}
+        </a>
+      </div>
+    {% else %}
+      <div class="navbar-item header__item has-dropdown has-dropdown--{{ settings.dropdown_style }} is-hoverable {% if link.active or link.child_active %}is-active{% endif %}" aria-haspopup="true" aria-expanded="false" data-navlink-handle="{{ link.title | handleize }}">
+        <a class="navbar-link header__link {% if link.active or link.child_active %}is-active{% endif %}"
+          {% unless link.url == 'http://' or link.url == '' or link.url == '/' or link.url == 'https://' or link.url == '#' %} href="{{ link.url }}" {% endunless %}>
+          {{ link.title }}
+        </a>
+        {% include 'header__dropdown-menu' %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</nav>

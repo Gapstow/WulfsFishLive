@@ -1,0 +1,126 @@
+{% comment %}
+** Gallery - dynamic **
+- Draggable section
+- Uses blocks
+{% endcomment %}
+
+{% include 'include-wholesale-wulfs-fish' %}
+
+<style>
+  #shopify-section-page-wholesale__wulfs_fish img {
+    display: none;
+  }
+</style>
+
+{% schema %}
+    {
+        "name": "Wulf's Fish",
+        "class": "gallery jsGallery",
+        "max_blocks": 20,
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "select",
+                "id": "gallery_type",
+                "label": "Gallery style",
+                "default": "classic",
+                "options": [
+                {
+                    "value": "classic",
+                    "label": "Classic"
+                },
+                {
+                    "value": "horizontal-masonry",
+                    "label": "Horizontal masonry"
+                },
+                {
+                    "value": "masonry",
+                    "label": "Vertical masonry"
+                }
+                ]
+            },
+            {
+                "type": "range",
+                "id": "images_per_row",
+                "label": "Images per row",
+                "min": 2,
+                "max": 8,
+                "step": 1,
+                "default": 3,
+                "info": "Applies to vertical masonry and classic only."
+            },
+            {
+                "type": "header",
+                "content": "Layout"
+            },
+            {
+                "type": "select",
+                "id": "width",
+                "label": "Width",
+                "default": "standard",
+                "options": [
+                {
+                    "value": "standard",
+                    "label": "Standard"
+                },
+                {
+                    "value": "wide",
+                    "label": "Wide"
+                }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "show_gutter",
+                "label": "Show gutter",
+                "default": true
+            },
+            {
+                "type": "range",
+                "id": "padding_top",
+                "label": "Top spacing",
+                "min": 0,
+                "max": 80,
+                "default": 20,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom",
+                "label": "Bottom spacing",
+                "min": 0,
+                "max": 80,
+                "default": 20,
+                "unit": "px"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "image",
+                "name": "Image",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Image",
+                        "info": "800 x 800px recommended"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sub_title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "description",
+                        "label": "Description"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,63 @@
+<!-- image grid -->
+
+{% include 'clp-image-grid' %}
+
+
+
+{% schema %}
+{
+  "name": "Grid of link blocks",
+  "class": "featured-promotions featured-promotions-custom-grid jsFeaturedPromos",
+  "max_blocks": 21,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title"
+    },
+    {
+      "type": "range",
+      "id": "section_title_size",
+      "label": "Section Title Size",
+      "min": 5,
+      "max": 80,
+      "default": 38,
+      "info": "Ingredients, Instructions, etc",
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "block_title_size",
+      "label": "Block Title Size",
+      "min": 5,
+      "max": 80,
+      "default": 25,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "800 x 600px recommended"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

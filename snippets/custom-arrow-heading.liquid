@@ -1,0 +1,71 @@
+<div id="customHeroheading">
+  <div class="caption-content" style="background-image: url(//cdn.shopify.com/s/files/1/0274/4310/1829/t/56/assets/homeCaptionArrow_1000x.png?v=13590802812995073125)"> 
+    {% unless page.metafields.global.custom_heading == blank %}
+    <h2 class="caption__heading title "> 
+      <span>{{ page.metafields.global.custom_heading }}</span>
+    </h2> 
+    {% endunless %}
+
+    {% unless page.metafields.global.custom_subheading == blank %}
+    <div class="caption__subheading"> 
+      <p>{{ page.metafields.global.custom_subheading }}</p>
+    </div>
+    {% endunless %}
+  </div>
+</div>
+
+<style type="text/css">
+  #customHeroheading {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  #customHeroheading .caption-content {
+    background-image: url(//cdn.shopify.com/s/files/1/0274/4310/1829/t/56/assets/homeCaptionArrow_1000x.png?v=1359080…);
+    background-size: cover;
+    padding: 40px 30px 40px 11%;
+    color: #fff;
+    background-position: center left;
+    display: inline-block;
+    margin-right: 0;
+    text-align: left;
+  }
+  
+  #customHeroheading .caption__heading {
+    font-size: clamp(40px, 10vw, 135px);
+    font-weight: 900;
+    margin-bottom: 0;
+    color: #fff;
+    text-transform: inherit;
+    line-height: 1;
+    padding: 0;
+  }
+  
+  #customHeroheading .caption__subheading {
+    font-size: clamp(40px, 10vw, 135px);
+    font-weight: 900;
+    color: #ff7750;
+    line-height: 1;
+    font-family: "Consort RR"!important;
+    white-space: nowrap;
+  }
+  
+  .page-wholesale #customHeroheading .caption__subheading {
+    font-size: clamp(30px, 10vw, 80px);
+  }
+  
+  @media screen and (max-width: 767px) {
+    #customHeroheading .caption-content {
+      padding-left: 20%;
+      width: auto;
+    }
+  
+    .page-wholesale #customHeroheading .caption__subheading {
+      font-size: 26px;
+    }
+  }
+</style>

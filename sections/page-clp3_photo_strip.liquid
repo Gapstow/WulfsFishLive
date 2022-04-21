@@ -1,0 +1,71 @@
+
+{% include 'clp-image-strip' %}
+
+
+{% schema %}
+{
+  "name": "Image Strip",
+  "class": "featured-promotions featured-promotions-custom-grid jsFeaturedPromos",
+  "max_blocks": 21,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Sidebar Title",
+      "default": "<p>Wulf's...</p>"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Size",
+      "min": 5,
+      "max": 60,
+      "default": 26,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Strip Background Color",
+      "default": "#bbbbbb"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 80,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 80,
+      "default": 18,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

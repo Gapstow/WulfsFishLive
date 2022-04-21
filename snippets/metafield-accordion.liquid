@@ -1,0 +1,110 @@
+<div id="metafieldAccordion" class="faq-template-section jsFAQ">
+{% assign description_namespace = product.metafields.product_description %}
+{% assign key = 'In the Kitchen' %}
+{% assign key = 'In the Kitchen' %}
+<!-- snippet is accordion  -->
+<!-- {{description_namespace}} -->
+<!-- {{description_namespace}} -->
+<!-- {{key}} --> 
+
+
+  <dl class="faq-accordion accordion-icon--carets">
+    {% if product.metafields.custom_fields["in_the_kitchen"] != blank %}
+        <dt>
+          <button class="accordion-style--carets accordion__button" type="button" aria-controls="panel-in-the-kitchen" aria-expanded="false">
+            {% include settings.icon, name: 'down-caret', icon_class: 'icon--rotate' %}
+            In The Kitchen
+          </button>
+        </dt>
+        <dd id="panel-in-the-kitchen" aria-hidden="false">
+          <div class="content">
+            {{ product.metafields.custom_fields["in_the_kitchen"] }}
+          </div>
+        </dd>
+    {% endif %}
+    {% if product.metafields.custom_fields["recipes"] != blank %}
+        <dt>
+          <button class="accordion-style--carets accordion__button" type="button" aria-controls="panel-in-the-kitchen" aria-expanded="false">
+            {% include settings.icon, name: 'down-caret', icon_class: 'icon--rotate' %}
+            Recipes
+          </button>
+        </dt>
+        <dd id="panel-in-the-kitchen" aria-hidden="false">
+          <div class="content">
+            {{ product.metafields.custom_fields["recipes"] }}
+          </div>
+        </dd>
+    {% endif %}
+    {% if product.metafields.custom_fields["sustainability"] != blank %}
+        <dt>
+          <button class="accordion-style--carets accordion__button" type="button" aria-controls="panel-in-the-kitchen" aria-expanded="false">
+            {% include settings.icon, name: 'down-caret', icon_class: 'icon--rotate' %}
+            Sustainability and Certifications
+          </button>
+        </dt>
+        <dd id="panel-in-the-kitchen" aria-hidden="false">
+          <div class="content">
+            {{ product.metafields.custom_fields["sustainability"] }}
+          </div>
+        </dd>
+    {% endif %}
+    {% if product.metafields.custom_fields["ingredients"] != blank %}
+        <dt>
+          <button class="accordion-style--carets accordion__button" type="button" aria-controls="panel-in-the-kitchen" aria-expanded="false">
+            {% include settings.icon, name: 'down-caret', icon_class: 'icon--rotate' %}
+            Ingredients
+          </button>
+        </dt>
+        <dd id="panel-in-the-kitchen" aria-hidden="false">
+          <div class="content">
+            {{ product.metafields.custom_fields["ingredients"] }}
+          </div>
+        </dd>
+    {% endif %}
+    {% if product.metafields.custom_fields["shopping_list-outside_of_wulfs"] != blank %}
+        <dt>
+          <button class="accordion-style--carets accordion__button" type="button" aria-controls="panel-in-the-kitchen" aria-expanded="false">
+            {% include settings.icon, name: 'down-caret', icon_class: 'icon--rotate' %}
+            Shopping List
+          </button>
+        </dt>
+        <dd id="panel-in-the-kitchen" aria-hidden="false">
+          <div class="content">
+            {{ product.metafields.custom_fields["shopping_list-outside_of_wulfs"] }}
+          </div>
+        </dd>
+    {% endif %}
+  </dl>
+</div>
+
+<script data-theme-editor-load-script src="{{ 'z__jsFAQ.js' | asset_url }}"></script>
+
+
+<script>
+
+    var $faqHeading = $('.faq-accordion > dt > button');
+    console.log($faqHeading);
+    $('.faq-accordion > dd').attr('aria-hidden', true);
+    $faqHeading.attr('aria-expanded', false);
+    $faqHeading.on('click activate', function () {
+      var faqTitle = $(this);
+      var faqIcons = $(this).find('.icon');
+      var state = $(this).attr('aria-expanded') === 'false' ? true : false;
+      $(this).attr('aria-expanded', state);
+      $(this).parent().next().slideToggle(function () {
+        if (faqIcons.hasClass('icon--active')) {
+          faqIcons.toggleClass('icon--active');
+        }
+      });
+      $(this).parent().next().attr('aria-hidden', !state);
+      return false;
+    });
+    $faqHeading.on('keydown', function (event) {
+      var keyCode = event.keyCode || e.which;
+
+      if (keyCode === 13) {
+        $(this).trigger('activate');
+      }
+    });
+
+</script>

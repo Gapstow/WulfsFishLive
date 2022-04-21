@@ -1,0 +1,156 @@
+<div id="splash_image">
+    <div class="subscription-hero-logo">
+     {%- if section.settings.logo_image != blank -%}
+      <img src="{{ section.settings.logo_image | img_url: '100x' }}">
+    {%- endif -%}
+    </div>
+    {%- if section.settings.image != blank -%}
+        <div class="hero-main-image" style="background-image: linear-gradient(to bottom, rgba(20, 36, 52, 0), rgba(20, 36, 52, 0.8)), url({{ section.settings.image | img_url: '1500x' }});"></div>
+        <div class="title-group">
+            <h2 id="page_title">{{ section.settings.title }}</h2>
+            <p id="page_subtitle">{{ section.settings.subtitle }}</p>
+        </div>
+    {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+</div>
+
+<style>
+#splash_image{
+    position: relative !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+#splash_image .hero-main-image {
+    width: 100vw; 
+    height: 800px; 
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+};
+#splash_image .hero-main-image img{
+    width: 100%;
+    height: auto;
+    background-image: linear-gradient(#eb01a5, #d13531); /* W3C */
+}
+.title-group{
+    position: absolute !important;
+    bottom: 172px;
+    width: 100%;
+    text-align: center;
+}
+#page_title{
+    color: #FF7752;
+    text-transform: inherit;
+    font-style: normal;
+    font-size: 95px;
+    line-height: 110px;
+    letter-spacing: 0.03em;
+    font-weight: bold;
+    font-family: 'Consort RR';
+}
+.title-group p{
+    font-family: 'Consort RR';
+    font-style: normal;
+    font-size: 35px;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+    color: #FFFFFF;
+    mix-blend-mode: normal;
+}
+/* RESPONSIVE GRIDE: 1400px,1320px,1200px,1140px,992px,960px,768px,720px,576px,540px */
+@media screen and (max-width: 1440px){
+    #splash_image .hero-main-image {
+        height: 597px;
+    }
+    .title-group {
+        bottom: 74px;
+    }
+}
+@media screen and (max-width: 1720px){
+    .reqular-subscriber{
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+    .title-group {     
+        padding: 0 151px;
+    }
+}
+@media screen and (max-width: 1025px){
+    .title-group {     
+        padding: 0 10px;
+    }
+}
+@media screen and (max-width: 768px) {
+    #splash_image .hero-main-image {
+        height: 319px;
+    }
+    #splash_image .subscription-hero-logo img {
+        width: auto;
+        width: 67px;
+    }
+    #page_title{
+        font-size: 48px;
+        line-height: 40px;
+    }
+    .title-group {
+        top: 169px;
+    }
+    .title-group p{
+        font-size: 20px;
+        line-height: 2;
+     }
+}
+
+@media screen and (max-width: 540px) {
+    #splash_image .hero-main-image {
+        height: 149px;
+    }
+    #splash_image .subscription-hero-logo img {
+        width: 33px;
+    }
+    .title-group p {
+        font-size: 12px;
+        line-height: 1;
+    }
+    .title-group {
+        top: 63px;
+    }
+    #page_title {
+        font-size: 26px;
+    }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Splash Image",
+  "class": "spaced-section spaced-section--full-width",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Splash Image"
+    },
+     {
+        "type": "image_picker",
+        "id": "logo_image",
+        "label": "Logo image",
+        "info": "79 x 142px recommended"
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+    },
+    {
+        "type": "richtext",
+        "id": "subtitle",
+        "label": "Subtitle"
+    }
+  ]
+}
+{% endschema %}

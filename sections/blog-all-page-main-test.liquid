@@ -1,0 +1,313 @@
+
+
+
+<section class="section">
+<div id="allBlogs" class="container">
+
+<div class="all-blogs-flex-wrapper">
+  <div id="leftSide">
+    <div id="filtersWrapper">
+      <button class="sort sort-name button button--primary hidden" data-sort="name">Sort by name</button>
+      <!-- <button class="sort sort-date button button--primary" data-sort="date">Sort by date</button> -->
+      <button class="sort sort-date button button--primary desc hidden" data-sort="date">Newest First</button>
+      <button class="sort sort-date button button--primary asc hidden" data-sort="date">Oldest First</button>
+      <button class="manual-sort-button button button--primary" id="nameAz" >Sort By Name</button>
+      <button class="manual-sort-button button button--primary active" id="newestPosts" >Newest First</button>
+      <button class="manual-sort-button button button--primary" id="oldestPosts">Oldest First</button>
+      <hr>
+      <button data-filter-handle="ask-a-fishmonger" id="filterAsk" class="filter button button--primary">Ask-a-Fishmonger</button>
+      <button data-filter-handle="chef-box-series" id="filterChef-Box" class="filter button button--primary">Chef Box Series</button>
+      <button data-filter-handle="chefs-at-home" id="filterChefs" class="filter button button--primary">Chefs at Home</button>
+      <button data-filter-handle="hooked" id="filterHooked" class="filter button button--primary">Hooked</button>
+      <button data-filter-handle="the-perfect-pair" id="filterPerfectPair" class="filter button button--primary">The Perfect Pair</button>
+      <button data-filter-handle="wulfs-blog" id="filterBlog" class="filter button button--primary">Wulf's Blog</button>
+      <button data-filter-handle="wulfs-kitchen" id="filterKitchen" class="filter button button--primary">Wulf's Kitchen</button>
+      <button data-filter-handle="all" id="filterAll" class="filter button button--primary">All</button>
+    </div>
+  </div>
+  <div id="rightSide">
+<input class="search blog-search" placeholder="Search" />
+<select name="material" id="filter-blog">
+    <option selected="selected" value="">Select a Blog</option>
+    <option value="ask-a-fishmonger">Ask-a-Fishmonger</option>
+    <option value="chef-box-series">Chef Box Series</option>
+    <option value="chefs-at-home">Chefs at Home</option>
+    <option value="events">Events</option>
+  	<option value="hooked">Hooked</option>
+    <option value="the-perfect-pair">The Perfect Pair</option>
+    <option value="wulfs-blog">Wulf's Blog</option>
+    <option value="wulfs-kitchen">Wulf's Kitchen</option>
+    <option value="">All</option>
+</select> 
+  <div class="mobile-blog-sort">
+    <button class="manual-sort-button-mobile button button--primary" id="nameAzMobile">A-Z</button>
+    <button class="manual-sort-button-mobile button button--primary active" id="newestPostsMobile">Newest First</button>
+    <button class="manual-sort-button-mobile button button--primary" id="oldestPostsMobile">Oldest First</button>
+  </div>
+<style>
+#filter-blog {
+    width: calc(100% - 20px);
+    margin-right: 30px;
+    margin-bottom: 20px;
+    padding: 10px;
+    padding-right: 20px;
+    margin-left: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: 98% 50%;
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml;charset=utf-8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'>  <polygon points='0,0 60,0 30,40' style='fill:black;'/> </svg>");
+    padding-right: 1.5em
+}
+@media (min-width: 841px) {
+  #filter-blog {
+    display: none;
+  }
+}
+</style>
+    <ul class="container list">
+    
+    {% assign blog_handles = "chef-box-series,wulfs-kitchen,the-perfect-pair,chefs-at-home,americas-test-kitchen,ask-a-fishmonger,wulfs-blog,hooked,from-the-journal,wulf-s-troquet-meal-kits" | split: "," %}
+    {% for handle in blog_handles %}
+      {% assign myblog = blogs[handle] %}
+      {% for article in myblog.articles %}
+        {% if article.excerpt != blank %}
+          {% assign filterExcerpt = article.excerpt | strip_html %}
+        {% else %}
+          {% assign filterExcerpt = article.content | strip_html | truncatewords: 30 %}
+        {% endif %}
+      <li class="featured-article blog-card one-third columns article card show-border-false medium-down--one-half small-down--one-whole has-margin-bottom category-{{handle}}" data-updated="{{article.updated_at}}">
+        <h3 class="name for-filtering">{{article.title}}</h3>
+        <p class="date for-filtering">{{article.published_at}}</p>
+        <p class="blog for-filtering">{{handle}}</p>
+        <p class="excerpt for-filtering">{{article.excerpt}}</p>
+
+
+          {% if article.image %}
+            <div class="card-image blog-card__image">
+              <figure class="image">
+                <a href="{{ article.url }}" title="{{ article.title | escape }}">
+
+                  {% assign imageHeightWidth = '400' %}
+                  {% assign imgUrlSize = imageHeightWidth | append: 'x' %}
+                  {% assign imgUrlSize = imgUrlSize | append: imageHeightWidth %}
+                  <!-- {{ imgUrlSize }} -->
+                  <img src="{{ article.image | img_url:imgUrlSize, crop: 'center' }}" />
+
+
+
+
+                </a>
+              </figure>
+            </div>
+          {% endif %}
+
+          <div class="card-content blog-card__content">
+            <div class="media">
+              <div class="media-content">
+                <h4 class="title">
+                  <a class="featured-article--link" href="{{ article.url }}">{{ article.title }}</a>
+                </h4>
+              </div>
+            </div>
+
+            {% if article.excerpt != blank and section.settings.blog_show_excerpt %}
+              {% assign postexcerpt = article.excerpt | size %}
+              {% if postexcerpt > 150 %}
+                  {% assign excerptlength = 'lg' %}
+              {% elsif postexcerpt <= 150 %}
+                  {% assign excerptlength = 'sm' %}
+              {% else %}
+                  {% assign excerptlength = 'sm' %}
+              {% endif %}
+              <div class="excerpt excerpt-length-{{ excerptlength }} has-margin-bottom">
+                {{ article.excerpt }}
+                <!-- <span class="truncation-fade">1b</span> -->
+              </div>
+            {% else %}
+              {% assign postexcerpt = article.content | strip_html | truncatewords: 30 %}
+              {% if postexcerpt > 150 %}
+                  {% assign excerptlength = 'lg' %}
+              {% elsif postexcerpt <= 150 %}
+                  {% assign excerptlength = 'sm' %}
+              {% else %}
+                  {% assign excerptlength = 'sm' %}
+              {% endif %}
+              <div class="excerpt excerpt-length-{{ excerptlength }} has-margin-bottom">
+                {{ postexcerpt }}
+                <!-- <span class="truncation-fade">2b</span> -->
+              </div>
+            {% endif %}
+
+            {% if section.settings.button_type != 'none' and section.settings.blog_posts_per_row == 1 %}
+              <div class="blog-card__read-more buttons">
+                {% include 'button', label: section.settings.button_label, href: article.url, type: "link", style: section.settings.button_type %}
+              </div>
+            {% endif %}
+
+            {% if section.settings.button_type != 'none' and section.settings.blog_posts_per_row != 1 %}
+              <div class="blog-card__read-more buttons">
+                {% include 'button', label: section.settings.button_label, href: article.url, type: "link", style: section.settings.button_type %}
+              </div>
+            {% endif %}
+
+            <div class="meta-info is-small">
+              {% if section.settings.blog_show_tags %}
+                {% if article.tags.size > 0 %}
+                  <ul class="meta-tag-list tags">
+                  {% for tag in article.tags %}
+                    <li class="tag tag--{{ settings.tag_style }}">
+                      <a href="{{ shop.url}}/blogs/{{ myblog.handle }}/tagged/{{ tag | handleize }}" title="{{ myblog.title | escape }} {{ 'blogs.general.tagged' | t }} {{ tag | escape }}">{{ tag }}</a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+                {% endif %}
+              {% endif %}
+
+              {% include 'meta-info-list' %}
+            </div>
+
+          </div>
+
+
+      </li>
+      {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+</div>
+
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+
+
+
+<script>
+
+$(document).ready(function(){ 
+  var options = {
+    valueNames: [ 'name','blog', 'date', 'excerpt' ]
+  };
+
+  var userList = new List('allBlogs', options);
+  userList.on('updated',function(){
+    console.log('updated');
+    $('.blog-card__content .media').matchHeight(); 
+  });
+  userList.sort('date', { order: "desc" });
+
+  $('#nameAz').on('click',function(){
+    $('.manual-sort-button').removeClass('active');
+    $('.manual-sort-button-mobile').removeClass('active');
+    $(this).addClass('active');
+    $('#nameAzMobile').addClass('active');
+    userList.sort('name', { order: "asc" });
+  })
+  $('#newestPosts').on('click',function(){
+    $('.manual-sort-button').removeClass('active');
+    $('.manual-sort-button-mobile').removeClass('active');
+    $(this).addClass('active');
+    $('#newestPostsMobile').addClass('active');
+    userList.sort('date', { order: "desc" });
+  })
+  $('#oldestPosts').on('click',function(){
+    $('.manual-sort-button').removeClass('active');
+    $('.manual-sort-button-mobile').removeClass('active');
+    $(this).addClass('active');
+    $('#oldestPostsMobile').addClass('active');
+    userList.sort('date', { order: "asc" });
+  })
+
+  $('#nameAzMobile').on('click',function(){
+    $('.manual-sort-button-mobile').removeClass('active');
+    $('.manual-sort-button').removeClass('active');
+    $(this).addClass('active');
+    $('#nameAz').addClass('active');
+    userList.sort('name', { order: "asc" });
+  })
+  $('#newestPostsMobile').on('click',function(){
+    $('.manual-sort-button-mobile').removeClass('active');
+    $('.manual-sort-button').removeClass('active');
+    $(this).addClass('active');
+    $('#newestPosts').addClass('active');
+    userList.sort('date', { order: "desc" });
+  })
+  $('#oldestPostsMobile').on('click',function(){
+    $('.manual-sort-button-mobile').removeClass('active');
+    $('.manual-sort-button').removeClass('active');
+    $(this).addClass('active');
+    $('#oldestPosts').addClass('active');
+    userList.sort('date', { order: "asc" });
+  })
+
+  var paramsObject = urlParamsObj();
+  if (paramsObject.blog) {
+    console.log("show only ",paramsObject.blog);
+    userList.filter(function(item) {
+      return (item.values().blog == paramsObject.blog);
+    });
+    $("[data-filter-handle|='" + paramsObject.blog + "']").addClass('selected');
+  } else {
+    console.log('show all posts');
+  }
+  
+
+  $('button.filter').on('click',function(){
+    var filterHandle = $(this).attr('data-filter-handle');
+    console.log({filterHandle});
+
+    if ( filterHandle == 'all' ) {
+      $('#leftSide button').removeClass('selected');
+      userList.filter();
+    } else {
+      if($(this).hasClass( 'selected' )){
+        userList.filter();
+        $(this).removeClass('selected');
+      } else {
+        userList.filter(function(item) {
+          return (item.values().blog == filterHandle);
+        });
+        $('#leftSide button').removeClass('selected');
+        $(this).addClass('selected');
+        $('.blog-card__content .title').matchHeight();
+      }
+    }
+
+  });
+
+  $('#filter-blog').change(function () {
+    var selection = this.value;
+    console.log(selection);
+    if (selection) {
+        userList.filter(function(item) {
+            return (item.values().blog == selection);
+        });
+    } else {
+        userList.filter();
+    }
+});
+
+
+  function urlParamsObj(source) {
+    var urlStr = source ? source : window.location.search ? window.location.search : ""
+    if (urlStr.indexOf("?") > -1) { // if there are params in URL
+      var param_array = urlStr.substring(urlStr.indexOf("?") + 1).split('&'),
+      theLength = param_array.length,
+      params = {},
+      i = 0,
+      x;
+      for (; i < theLength; i++) {
+      x = param_array[i].toString().split('=');
+      params[x[0]] = x[1];
+    }
+      return params;
+    }
+    return {};
+  }
+
+});
+
+</script>

@@ -1,0 +1,52 @@
+ {%- if settings.gameday -%}
+<div class="cart-champion-popup popup-hide" data-flag="">
+    <div class="popup-wrapper">
+        <div class="popup-header"></div>
+        <div class="popup-body">
+            <div class="body-heading">
+                <div class="popup-logo">
+                    <img src="{{ settings.popup_logo | img_url: '143x' }}" alt="">
+                </div>
+                <div class="popup-close fc-item" data-team="I don't care" data-note="Superbowl 2022 Pick: I don't care">
+                    <span class="close-text">{{ settings.btn_close_text }}</span>
+                    <span class="icon-wrapper">
+                        <span class="close-icon">x</span>
+                    </span>
+                </div>
+            </div>
+            <div class="body-main">
+                <div class="main-heading">
+                    <h2 class="heading-text">{{ settings.popup_heading }}</h2>
+                </div>
+                <div class="main-footer desktop-hide">
+                    <h3 class="subheading-text">{{ settings.popup_subheading }}</h3>
+                    <p class="text">{{ settings.popup_text }}</p>
+                </div>
+                <div class="main-content">
+                    <div class="content-wrapper">
+                        {% if shop.metafields.custom_fields["game_day_promo_popup"] != blank %}
+                            {% for item in shop.metafields.custom_fields["game_day_promo_popup"] %}
+                                <div class="fc-item fc-index--{{ forloop.index0 }}" data-team="{{ item["team_name"] }}" data-note="Superbowl 2022 Pick: {{ item["order_note"] }}">
+                                    {{ item["team_icon"] }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="main-footer mobile-hide">
+                    <h3 class="subheading-text">{{ settings.popup_subheading }}</h3>
+                    <p class="text">{{ settings.popup_text }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% style %}
+  .cart-champion-popup .popup-wrapper {
+    background-image: url({{ settings.popup_background | img_url:"1337x"}});
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+{% endstyle %}

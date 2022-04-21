@@ -1,0 +1,93 @@
+{% render 'include-wholesale__banner', _section: section.settings %}
+
+{% schema %}
+{
+    "name": "Wholesale Banner",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "1800 x 900px recommended"
+        },
+        {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile image",
+            "info": "900 x 1800px recommended"
+        },
+        {
+            "type": "image_picker",
+            "id": "logo_image",
+            "label": "Logo image",
+            "info": "79 x 142px recommended"
+        },
+        {
+            "type": "header",
+            "content": "Text"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "color",
+            "id": "heading_color",
+            "label": "Heading color",
+            "default": "#000000"
+        },
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+        },
+        {
+            "type": "color",
+            "id": "subheading_color",
+            "label": "Subheading color",
+            "default": "#FF7752"
+        },
+        {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Additional info in the content</p>"
+        },
+        {
+            "type": "header",
+            "content": "Button 1"
+        },
+        {
+            "type": "text",
+            "id": "button_1",
+            "label": "Button 1 label",
+            "default": "Button 1"
+        },
+        {
+            "type": "url",
+            "id": "button_1_link",
+            "label": "Button 1 link"
+        },
+        {
+            "type": "header",
+            "content": "Button 2"
+        },
+        {
+            "type": "text",
+            "id": "button_2",
+            "label": "Button 2 label",
+            "default": "Button 2"
+        },
+        {
+            "type": "url",
+            "id": "button_2_link",
+            "label": "Button 2 link"
+        }
+    ]
+}
+{% endschema %}

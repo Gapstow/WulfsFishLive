@@ -1,0 +1,295 @@
+{% comment %}
+Snippet can be used in section or block
+eg. {% include 'include-gallery' %}
+{% endcomment %}
+
+{% comment %}Assign object as block or section{% endcomment %}
+{% if type == 'block' %}
+{% assign object = block %}
+{% assign loop = "1,2,3" | split: ',' %}
+{% else %}
+{% assign object = section %}
+{% assign loop = section.blocks %}
+{% endif %}
+
+{% if object.settings.crop_images == true %}
+{%- capture image_crop -%}
+    has-image-crop image-crop--center
+{%- endcapture -%}
+{% endif %}
+
+{% assign id = object.id %}
+{% comment %} Colors {% endcomment %}
+{% assign overlay_color = object.settings.overlay_color %}
+{% assign link_color = object.settings.link_color %}
+{% comment %}Layout{% endcomment %}
+{% assign width = object.settings.width %}
+{% assign show_gutter = object.settings.show_gutter %}
+{% assign padding_top = object.settings.padding_top %}
+{% assign padding_bottom = object.settings.padding_bottom %}
+{% assign animation = object.settings.animation | default: 'none' %}
+{% comment %} Advanced {% endcomment %}
+{% assign title = object.settings.title %}
+{% assign description = object.settings.description %}
+
+{% comment %} Section specific CSS {% endcomment %}
+{%- capture section_css -%}
+    .gallery-item__overlay {
+        background-color: {{ overlay_color | color_modify: 'alpha', 0.77 }};
+    }
+
+    .gallery-item__overlay .icon {
+        fill: {{ link_color }};
+    }
+{%- endcapture -%}
+
+{% style %}
+#shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if width == 'wide' %}
+        width: 100%;
+    {% endif %}
+}
+
+{% include 'css-loop', css: section_css, id: id %}
+{% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+
+<section id="team" class="section
+    {{ css_class }}
+    is-width-{{ width }}
+    {% if show_gutter == false %}
+        has-no-side-gutter
+        has-background
+    {% else %}
+        has-gutter-enabled
+    {% endif %}
+    {% if loop.size > object.settings.images_per_row %}
+        has-multirow-blocks
+    {% endif %}
+    {% if width == 'wide' and show_gutter == false %}
+        equal-columns--outside-trim
+    {% endif %}
+    " {% if animation !="none" %} data-scroll-class="{{ animation }}" {% endif %}>
+
+    {% if context == 'gallery-template' %}
+        <div class="container hide-when-banner-enabled">
+            {% include 'heading', title: page.title, heading_tag: 'h1', context: 'gallery-page', text_alignment: 'left' %}
+        </div>
+    {% endif %}
+
+    <div class="wholesale_our_team_title">{{ title }}</div>
+    <div class="wholesale_our_team_description">{{ description }}</div>
+
+    <div class="
+        is-justify-center
+        gallery__wrapper
+        gallery-type--{{ object.settings.gallery_type }}
+        {% if object.settings.gallery_type != 'masonry' %}
+        container
+        {% endif %}
+        ">
+        {% if object.blocks.size > 0 or loop.length > 0 %}
+
+            {% for item in loop %}
+
+                {% if type == 'block' %}
+                    {% capture index %}{{ forloop.index }}{% endcapture %}
+                {% else %}
+                    {% assign block = item %}
+                {% endif %}
+
+                {% comment %}Add number to id for each loop{% endcomment %}
+                {% capture image %}image{{ index }}{% endcapture %}
+                {% capture link %}link{{ index }}{% endcapture %}
+
+                <div class="gallery__item wholesale_our_team
+                    {% if show_gutter %}
+                        has-gutter
+                    {% endif %}
+                    {% if object.settings.gallery_type != 'horizontal-masonry' %}
+                        {% include 'column-width', value: object.settings.images_per_row %}
+                        medium-down--one-half
+                        small-down--one-whole
+                    {% endif %}
+                    column
+                    {% if object.settings.gallery_type == 'classic' %}{{ image_crop }}{% endif %}" {% if type !='block'
+                    %}{{ block.shopify_attributes }}{% endif %}>
+
+                    {% if block.settings[image] %}
+
+                        <div class="gallery__item-wrap is-relative {% if block.settings.enable_lightbox %} lightbox_image {% endif %}">
+
+                            {% if object.settings.gallery_type == 'horizontal-masonry' %}
+                                {% include 'image-element', image: block.settings[image], alt: block.settings[image].alt, back_to_basics: true %}
+                            {% elsif object.settings.gallery_type == 'masonry' %}
+                                {% include 'image-element', image: block.settings[image], alt: block.settings[image].alt %}
+                            {% else %}
+                                {% include 'image-element', image: block.settings[image], alt: block.settings[image].alt, stretch_width: object.settings.crop_images %}
+                            {% endif %}
+
+                            {% if block.settings[link] != blank %}
+                                <div class="gallery-item__overlay is-flex is-align-center is-justify-center">
+                                    {% if block.settings[link] != blank %}
+                                        <a href="{{ block.settings[link] }}" class="gallery__link">
+                                            {% include settings.icon, name: 'link' %}
+                                        </a>
+                                    {% endif %} 
+                                </div>
+                            {% endif %}
+ 
+                            <div class="profile">{{block.settings.title}}</div>
+                            <div class="profile_description">{{block.settings.introduction}}</div>
+                            <div class="profile_email">{{block.settings.email}}</div>
+                            <div class="profile_link">{{block.settings.product_fave}}</div>
+                            <div class="profile_intro_video">{{block.settings.video}}</div>
+                        </div>
+
+                    {% else %}
+                        <div class="gallery__item-wrap is-relative {% if block.settings.enable_lightbox %} lightbox_image {% endif %}">
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                            {% if block.settings[link] != blank %}
+                                <div class="gallery-item__overlay is-flex is-align-center is-justify-center">
+                                    {% if block.settings[link] != blank %}
+                                        <a href="{{ block.settings[link] }}" class="gallery__link">
+                                            {% include settings.icon, name: 'link' %}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            <div class="profile">{{block.settings.title}}</div>
+                            <div class="profile_description">{{block.settings.introduction}}</div>
+                            <div class="profile_email">{{block.settings.email}}</div>
+                            <div class="profile_link">{{block.settings.product_fave}}</div>
+                            <div class="profile_intro_video">{{block.settings.video}}</div>
+                        </div>
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+
+
+
+
+
+            {% if shop.metafields.custom_fields["team_members"] != blank %}
+                {% for item in shop.metafields.custom_fields["team_members"] %}
+                    {% include 'team-custom-field-block' %}
+                {% endfor %}
+            {% endif %}
+
+
+
+
+
+
+        {% endif %}
+    </div>
+
+    <dialog id="favDialog" class="wholesale-team-dialog">
+        <form method="dialog" class="lightbox_dialog">
+            <div class="lightbox_team">
+                <h1 id="lightbox_name"></h1>
+                <div>
+                    <p id="lightbox_description"></p>
+                    <a class="button button--secondary lightbox_contact" href="mailto:{{block.settings.email}}">Contact</a>
+                    <a class="button button--secondary lightbox_favorite_wulfs_product" href="{{block.settings.product_fave}}">Favorite Wulf's Product</a>
+                </div>
+            </div>
+            <div class="lightbox_intro_video">
+                <img src="{{block.settings.video}}"/>
+            </div>
+            <button class="cancel_btn" onclick="unlockScroll()">X</button>
+        </form>
+    </dialog>
+
+    <script>
+        var favDialog = document.getElementById('favDialog');
+        var cancel_btn = document.getElementsByClassName('cancel_btn');
+
+        function getId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+
+            return (match && match[2].length === 11)
+            ? match[2]
+            : null;
+        }
+
+        function lockScroll(){
+            $html = $('html');  
+            $body = $('body'); 
+            var initWidth = $body.outerWidth();
+            var initHeight = $body.outerHeight();
+
+            var scrollPosition = [
+                self.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+                self.pageYOffset || document.documentElement.scrollTop  || document.body.scrollTop
+            ];
+            $html.data('scroll-position', scrollPosition);
+            $html.data('previous-overflow', $html.css('overflow'));
+            $html.css('overflow', 'hidden');
+            window.scrollTo(scrollPosition[0], scrollPosition[1]);   
+
+            var marginR = $body.outerWidth()-initWidth;
+            var marginB = $body.outerHeight()-initHeight; 
+            $body.css({'margin-right': marginR,'margin-bottom': marginB});
+        } 
+
+        function unlockScroll(){
+            $html = $('html');
+            $body = $('body');
+            $html.css('overflow', $html.data('previous-overflow'));
+            var scrollPosition = $html.data('scroll-position');
+            window.scrollTo(scrollPosition[0], scrollPosition[1]);    
+            $body.css({'margin-right': 0, 'margin-bottom': 0});
+            $('.lightbox_intro_video').html('');
+        }
+
+        $('.lightbox_image').on('click', function onOpen() {
+            if (typeof favDialog.showModal === "function") {
+                var emailAddress = $(this).find('.profile_email').text();
+                var emailMailto = "mailto:" + emailAddress;
+                var faveLink = $(this).find('.profile_link').text();
+                var popupContent = $(this).find('.new-custom-member-content');
+                var rawEmbedVideo = $(this).find('.profile_intro_video').text();
+                console.log(emailMailto,faveLink);
+                $('#favDialog').html(popupContent);
+                $('#lightbox_name').text($(this).find('.profile').text());
+                $('#lightbox_description').text($(this).find('.profile_description').text());
+                $('.lightbox_contact').attr('href',emailMailto);
+                $('.lightbox_favorite_wulfs_product').attr('href',faveLink);
+
+                if ($(this).find('.profile_intro_video').text() != '') {
+                    var embedCode = getId($(this).find('.profile_intro_video').text());
+                    console.log(rawEmbedVideo);
+                    if ( rawEmbedVideo.includes('vimeo') ) {
+                        $('.lightbox_intro_video').html('<iframe src="' + rawEmbedVideo + '" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>');
+                    } else {
+                        $('.lightbox_intro_video').html('<iframe src="//www.youtube.com/embed/' + embedCode + '" frameborder=0 allowfullscreen width="100%" height="100%"></iframe>');
+                    }
+                    //$('.lightbox_intro_video').html('<iframe src="//www.youtube.com/embed/' + embedCode + '" frameborder=0 allowfullscreen width="100%" height="100%"></iframe>');
+                    //$('.lightbox_intro_video').html('<iframe src="https://player.vimeo.com/video/381701264" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>');
+                    
+
+                }
+                lockScroll();
+                favDialog.showModal();
+            } else {
+                alert("The <dialog> API is not supported by this browser");
+            }
+        });
+    </script>
+</section>
+{% comment %} JavaScript {% endcomment %}
+<script type="application/json" data-section-id="{{ object.id }}" data-section-data>
+    {
+        "gallery_type": {{ object.settings.gallery_type | json }},
+        "show_gutter": {{ show_gutter }}
+    }
+</script>
+<script data-theme-editor-load-script src="{{ 'z__jsGallery.js' | asset_url }}"></script>

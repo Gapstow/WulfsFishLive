@@ -1,0 +1,23 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/wulfs-fish-1.myshopify.com/articles/configure/252918/edit
+{% endcomment %}
+{% if article.metafields.custom_fields["gallery_images"] != blank %}
+  <div class="custom-field custom-field__gallery-images custom-field__type--field-collection">
+    <h3 class="custom-field--title">Gallery Images</h3>
+    <div class="custom-field--value">
+      {% assign separator = "|###|" %}
+      {% assign article_gallery_image_array = article.metafields.custom_fields["article_gallery_image"] | split: separator %}
+      {% assign fc_keys = article.metafields.custom_fields["gallery_images"] | split: "," %}
+      {% for i in fc_keys %}
+        {% assign index = i | plus: 0 %}
+        <div class="fc-item fc-item--image fc-index--{{ index }}">
+          <div class="fc-field field__article-gallery-image">
+            {{ article_gallery_image_array[index] }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

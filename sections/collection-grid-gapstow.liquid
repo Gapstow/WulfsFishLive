@@ -1,0 +1,54 @@
+<!-- collection-grid-gapstow -->
+
+<section>
+  <div class="container">
+    {% for block in section.blocks %}
+      <div class="column one-third medium-down--one-whole">
+        <div class="wulf-collection-grid-item">
+          <div class="wulf-overlap-title">{{block.settings.title}}</div>
+          <div class="wulf-overlap-image">
+            <img src="{{block.settings.image | img_url:'x300' }}" />
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+
+
+
+{% schema %}
+{
+  "name": "Grid of link blocks",
+  "class": "featured-promotions featured-promotions-custom-grid jsFeaturedPromos",
+  "max_blocks": 21,
+  "settings": [
+    {
+      "type": "color",
+      "id": "title_background",
+      "label": "Title Background",
+      "default": "#142435"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "800 x 600px recommended"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

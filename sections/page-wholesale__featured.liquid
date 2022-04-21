@@ -1,0 +1,132 @@
+<div class="wholesale-featured">
+    <div class="wholesale-featured-banner">
+        {% if page.metafields.custom_fields["featured_label"] != blank %}
+            <h2><label>Wulffish<span>Featured {{ page.metafields.custom_fields["featured_label"] }}</span></label></h2>
+        {% endif %}
+    </div>
+
+    <div class="wholesale-featured-heading">
+        {% if page.metafields.custom_fields["featured_title"] != blank %}
+            <h3>Our featured {{ page.metafields.custom_fields["featured_title"] }}</h3>
+        {% endif %}
+
+        {% if page.metafields.custom_fields["featured_sub_title"] != blank %}
+            <label>{{ page.metafields.custom_fields["featured_sub_title"] }}</label>
+        {% endif %}
+
+        {% if page.metafields.custom_fields["featured_available_text"] != blank %}
+            <p>{{ page.metafields.custom_fields["featured_available_text"] }}</p>
+        {% endif %}
+    </div>
+
+{% if page.metafields.custom_fields["featured_image_content_repeate"] != blank %}
+    <div class="wholesale-featured-lists">
+        <div class="section">
+            {% for item in page.metafields.custom_fields["featured_image_content_repeate"] %}
+                <div class="wholesale-featured-list left-image {% if forloop.index0 == 0 %}active{% endif %}" data-num="{{ item['featured_repeater_num'] }}">
+                    <div class="featured-list-image">
+                        {% if item["featured_image_repeater"] != blank %}
+                            <div class="featured-list-slider-nav">
+                                {% for featured_image_repeater_item in item["featured_image_repeater"] %}
+                                    <div class="thumbnail-image">
+                                        <div class="thumbnail-image__inner">
+                                            {{ featured_image_repeater_item["image"] }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="featured-list-slider-for">
+                                {% for featured_image_repeater_item in item["featured_image_repeater"] %}
+                                    <div class="slider-banner-image">
+                                        <div class="slider-banner-image__inner">
+                                            {{ featured_image_repeater_item["image"] }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="featured-list-content">
+                        {% if item["featured_content_title"] != blank %}
+                            <h3>{{ item["featured_content_title"] }}</h3>
+                        {% endif %}
+
+                        {% if item["featured_content_sub_title"] != blank %}
+                            <label>{{ item["featured_content_sub_title"] }}</label>
+                        {% endif %}
+                        <br>
+                        {% if item["featured_content_text"] != blank %}
+                            {{ item["featured_content_text"] }}
+                        {% endif %}
+                        <br><br>
+
+                        {% if item["farmer"] != blank %}
+                            {{ item["farmer"] }}
+                        {% endif %}
+
+                        {% if item["size"] != blank %}
+                            {{ item["size"] }}
+                        {% endif %}
+
+                        {% if item["flavor_profile"] != blank %}
+                            {{ item["flavor_profile"] }}
+                        {% endif %}
+
+                        {% if item["pairing_suggestions"] != blank %}
+                            {{ item["pairing_suggestions"] }}
+                        {% endif %}
+
+                        <div class="featured-priority">
+                            {% if item["featured_priority_title"] != blank %}
+                                <label>{{ item["featured_priority_title"] }}</label>
+                            {% endif %}
+
+                            <div class="featured-priority-num">
+                                <div class="priority-num-label">
+                                    <span>Low / Mid</span>
+                                    <span>High / Full</span>
+                                </div>
+
+                                {% if item["featured_priority_number"] != blank %}
+                                    <div class="steps">
+                                        <div class="steps__item {% if item['featured_priority_number'] == 1 %}steps__item--active{% endif %}">1</div>
+                                        <div class="steps__item {% if item['featured_priority_number'] == 2 %}steps__item--active{% endif %}">2</div>
+                                        <div class="steps__item {% if item['featured_priority_number'] == 3 %}steps__item--active{% endif %}">3</div>
+                                        <div class="steps__item {% if item['featured_priority_number'] == 4 %}steps__item--active{% endif %}">4</div>
+                                        <div class="steps__item {% if item['featured_priority_number'] == 5 %}steps__item--active{% endif %}">5</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if page.metafields.custom_fields["bottom_slides"] != blank %}
+                <div class="wholesale-featured-slides">
+                    {% for item in page.metafields.custom_fields["bottom_slides"] %}
+                        <div class="wholesale-featured-slide" data-num="{{ item['number'] }}">
+                            {% if item["title"] != blank %}
+                                <label>{{ item["title"] }}</label>
+                            {% endif %}
+
+                            {% if item["name"] != blank %}
+                                <span>{{ item["name"] }}</span>
+                            {% endif %}
+
+                            {% if item["position"] != blank %}
+                                <p>{{ item["position"] }}</p>
+                            {% endif %}
+                            
+                            {% if item["business"] != blank %}
+                                <p>{{ item["business"] }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}

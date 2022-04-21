@@ -1,0 +1,93 @@
+{% comment %}
+Columns of heading and content
+- Uses blocks
+{% endcomment %}
+
+{% include 'include-info-columns' %}
+
+
+{% schema %}
+    {
+        "name": "Landing1 Info Columns",
+        "class": "gallery",
+        "max_blocks": 20,
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "range",
+                "id": "images_per_row",
+                "label": "Columns per row",
+                "min": 2,
+                "max": 8,
+                "step": 1,
+                "default": 3
+            },
+            {
+                "type": "header",
+                "content": "Layout"
+            },
+            {
+                "type": "select",
+                "id": "width",
+                "label": "Width",
+                "default": "standard",
+                "options": [
+                {
+                    "value": "standard",
+                    "label": "Standard"
+                },
+                {
+                    "value": "wide",
+                    "label": "Wide"
+                }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "show_gutter",
+                "label": "Show gutter",
+                "default": true
+            },
+            {
+                "type": "range",
+                "id": "padding_top",
+                "label": "Top spacing",
+                "min": 0,
+                "max": 80,
+                "default": 20,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom",
+                "label": "Bottom spacing",
+                "min": 0,
+                "max": 80,
+                "default": 20,
+                "unit": "px"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "image",
+                "name": "Column",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "description",
+                        "label": "Description"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

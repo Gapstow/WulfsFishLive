@@ -1,0 +1,262 @@
+{% comment %}
+Snippet can be used in section or block
+eg. {% include 'include-gallery' %}
+{% endcomment %}
+
+{% comment %}Assign object as block or section{% endcomment %}
+{% if type == 'block' %}
+{% assign object = block %}
+{% assign loop = "1,2,3" | split: ',' %}
+{% else %}
+{% assign object = section %}
+{% assign loop = section.blocks %}
+{% endif %}
+
+{% if object.settings.crop_images == true %}
+{%- capture image_crop -%}
+    has-image-crop image-crop--center
+{%- endcapture -%}
+{% endif %}
+
+{% assign id = object.id %}
+{% comment %} Colors {% endcomment %}
+{% assign overlay_color = object.settings.overlay_color %}
+{% assign link_color = object.settings.link_color %}
+{% comment %}Layout{% endcomment %}
+{% assign width = object.settings.width %}
+{% assign show_gutter = object.settings.show_gutter %}
+{% assign padding_top = object.settings.padding_top %}
+{% assign padding_bottom = object.settings.padding_bottom %}
+{% assign animation = object.settings.animation | default: 'none' %}
+{% comment %} Advanced {% endcomment %}
+{% assign title = object.settings.title %}
+{% assign description = object.settings.description %}
+
+{% comment %} Section specific CSS {% endcomment %}
+{%- capture section_css -%}
+    .gallery-item__overlay {
+        background-color: {{ overlay_color | color_modify: 'alpha', 0.77 }};
+    }
+
+    .gallery-item__overlay .icon {
+        fill: {{ link_color }};
+    }
+{%- endcapture -%}
+
+{% style %}
+#shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if width == 'wide' %}
+        width: 100%;
+    {% endif %}
+}
+
+{% include 'css-loop', css: section_css, id: id %}
+{% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+
+<section id="team" class="section
+    {{ css_class }}
+    is-width-{{ width }}
+    {% if show_gutter == false %}
+        has-no-side-gutter
+        has-background
+    {% else %}
+        has-gutter-enabled
+    {% endif %}
+    {% if loop.size > object.settings.images_per_row %}
+        has-multirow-blocks
+    {% endif %}
+    {% if width == 'wide' and show_gutter == false %}
+        equal-columns--outside-trim
+    {% endif %}
+    " {% if animation !="none" %} data-scroll-class="{{ animation }}" {% endif %}>
+
+    {% if context == 'gallery-template' %}
+        <div class="container hide-when-banner-enabled">
+            {% include 'heading', title: page.title, heading_tag: 'h1', context: 'gallery-page', text_alignment: 'left' %}
+        </div>
+    {% endif %}
+
+    <div class="wholesale_our_team_title">{{ title }}</div>
+    <div class="wholesale_our_team_description">{{ description }}</div>
+
+    <div class="
+        is-justify-center
+        gallery__wrapper
+        gallery-type--{{ object.settings.gallery_type }}
+        {% if object.settings.gallery_type != 'masonry' %}
+        container
+        {% endif %}
+        ">
+        {% if shop.metafields.custom_fields["team_members"] != blank %}
+            {% for item in shop.metafields.custom_fields["team_members"] %}
+            {% assign team_index = forloop.index %}
+                {% include 'team-custom-field-block' %}
+            {% endfor %}
+        {% endif %}
+
+    </div>
+
+    <dialog id="favDialog" class="wholesale-team-dialog">
+        <form method="dialog" class="lightbox_dialog_xxx">
+            <div id="dialogInner">
+                <div class="lightbox_team">
+                    <h1 id="lightbox_name"></h1>
+                    <div>
+                        <p id="lightbox_description"></p>
+                        <a class="button button--secondary lightbox_contact" href="mailto:{{block.settings.email}}">Contact</a>
+                        <a class="button button--secondary lightbox_favorite_wulfs_product" href="{{block.settings.product_fave}}">Favorite Wulf's Product</a>
+                    </div>
+                </div>
+                <div class="lightbox_intro_video">
+                    <img src="{{block.settings.video}}"/>
+                </div>
+            </div>
+            <button class="cancel_btn" {%- comment -%} onclick="unlockScroll()" {%- endcomment -%}>X</button>
+        </form>
+    </dialog>
+
+    <script>
+        var favDialog = document.getElementById('favDialog');
+        console.log({favDialog});
+        var cancel_btn = document.getElementsByClassName('cancel_btn');
+
+        function getId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+
+            return (match && match[2].length === 11)
+            ? match[2]
+            : null;
+        }
+
+        function lockScroll(){
+            $html = $('html');  
+            $body = $('body'); 
+            var initWidth = $body.outerWidth();
+            var initHeight = $body.outerHeight();
+
+            var scrollPosition = [
+                self.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+                self.pageYOffset || document.documentElement.scrollTop  || document.body.scrollTop
+            ];
+            $html.data('scroll-position', scrollPosition);
+            $html.data('previous-overflow', $html.css('overflow'));
+            $html.css('overflow', 'hidden');
+            window.scrollTo(scrollPosition[0], scrollPosition[1]);   
+
+            var marginR = $body.outerWidth()-initWidth;
+            var marginB = $body.outerHeight()-initHeight; 
+            $body.css({'margin-right': marginR,'margin-bottom': marginB});
+        } 
+
+        function unlockScroll(){
+            console.log('unScroll');
+            $html = $('html');
+            $body = $('body');
+            $html.css('overflow', $html.data('previous-overflow'));
+            var scrollPosition = $html.data('scroll-position');
+            window.scrollTo(scrollPosition[0], scrollPosition[1]);    
+            $body.css({'margin-right': 0, 'margin-bottom': 0});
+            $('.lightbox_intro_video').html('');
+        }
+
+        $('body').on('click','.cancel_btn', function(e){
+            e.preventDefault();
+            $('body').removeClass('dialog-open');
+            console.log('cancel btn');
+            favDialog.classList.remove('firefox-open');
+            if (typeof favDialog.showModal === "function") {
+                unlockScroll();
+                favDialog.close();
+            } else {
+                favDialog.classList.remove('firefox-open');
+            }
+        });
+
+        $('.lightbox_image').on('click', function onOpen() {
+            console.log('light image clicked.');
+            var typeOf = typeof favDialog.showModal; 
+            console.log(favDialog.showModal);
+            console.log({typeOf});
+            $('body').addClass('dialog-open');
+            if (typeof favDialog.showModal === "function") {
+                var emailAddress = $(this).find('.profile_email').text();
+                var emailMailto = "mailto:" + emailAddress;
+                var faveLink = $(this).find('.profile_link').text();
+                var popupContent = $(this).find('.new-custom-member-content').html();
+                var rawEmbedVideo = $(this).find('.profile_intro_video').text();
+                $('#dialogInner').html(popupContent);
+                $('#lightbox_name').text($(this).find('.profile').text());
+                $('#lightbox_description').text($(this).find('.profile_description').text());
+                $('.lightbox_contact').attr('href',emailMailto);
+                $('.lightbox_favorite_wulfs_product').attr('href',faveLink);
+
+                lockScroll();
+                favDialog.showModal();
+            } else {
+                console.log('firefox method');
+                var emailAddress = $(this).find('.profile_email').text();
+                var emailMailto = "mailto:" + emailAddress;
+                var faveLink = $(this).find('.profile_link').text();
+                var popupContent = $(this).find('.new-custom-member-content').html();
+                var rawEmbedVideo = $(this).find('.profile_intro_video').text();
+                $('#dialogInner').html(popupContent);
+                $('#lightbox_name').text($(this).find('.profile').text());
+                $('#lightbox_description').text($(this).find('.profile_description').text());
+                $('.lightbox_contact').attr('href',emailMailto);
+                $('.lightbox_favorite_wulfs_product').attr('href',faveLink);
+
+                lockScroll();
+
+                favDialog.classList.add('firefox-open');
+                //alert("The <dialog> API is not supported by this browser");
+            }
+        });
+    </script>
+</section>
+{% comment %} JavaScript {% endcomment %}
+<script type="application/json" data-section-id="{{ object.id }}" data-section-data>
+    {
+        "gallery_type": {{ object.settings.gallery_type | json }},
+        "show_gutter": {{ show_gutter }}
+    }
+</script>
+<script data-theme-editor-load-script src="{{ 'z__jsGallery.js' | asset_url }}"></script>
+<script data-theme-editor-load-script src="{{ 'z__jsFAQ.js' | asset_url }}"></script>
+
+<script>
+    $(document).ready(function(){
+        var $faqHeading = $('.faq-accordion > dt > button');
+        console.log($faqHeading);
+        $('.faq-accordion > dd').attr('aria-hidden', true);
+        $faqHeading.attr('aria-expanded', false);
+        $('body').on('click activate', '.faq-accordion > dt > button', function () {
+            console.log('click');
+            var faqTitle = $(this);
+            var faqIcons = $(this).find('.icon');
+            var state = $(this).attr('aria-expanded') === 'false' ? true : false;
+            $(this).attr('aria-expanded', state);
+            $(this).parent().next().slideToggle(function () {
+                if (faqIcons.hasClass('icon--active')) {
+                    faqIcons.toggleClass('icon--active');
+                }
+            });
+            $(this).parent().next().attr('aria-hidden', !state);
+            return false;
+        });
+
+        $faqHeading.on('keydown', function (event) {
+        var keyCode = event.keyCode || e.which;
+
+        if (keyCode === 13) {
+            $(this).trigger('activate');
+        }
+        });
+    });
+
+</script>

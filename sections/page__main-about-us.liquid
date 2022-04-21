@@ -1,0 +1,138 @@
+{% comment %}
+** Page - static **
+- Main content area
+{% endcomment %}
+
+{% assign id = section.id %}
+{% comment %}Layout{% endcomment %}
+{% assign width = section.settings.width %}
+{% assign padding_top = section.settings.padding_top %}
+{% assign padding_bottom = section.settings.padding_bottom %}
+{% comment %}Advanced{% endcomment %}
+{% assign css_class = section.settings.css_class %}
+{% assign custom_css = section.settings.custom_css %}
+{% assign title_long = section.settings.title_long %}
+
+{% style %}
+
+  .section__wrapper {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if width == 'wide' -%}
+      width: 100%;
+      max-width: none;
+    {%- endif %}
+  }
+
+
+  {% include 'css-loop', css: section_css, id: id %}
+  {% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+  <div class="page__content content container">
+    <div class="one-whole column">
+      <h1 class="page__title page__title-long title text-center">{{title_long}}</h1>
+      <!-- <h1 class="page__title page__title-mobile page__title-long title text-center">{{page.title}}</h1> -->
+    </div>
+  </div>
+
+<style>
+.content h1.page__title-long {
+  margin: auto;
+  font-size: {{ section.settings.title_size }}px;
+  max-width: {{ section.settings.title_width }}px;
+  text-transform: none;
+}
+/**/
+</style>
+
+
+{% schema %}
+  {
+    "name": "Page",
+    "class": "page-main has-sidebar-option",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "text",
+        "id": "title_long",
+        "label": "Page Title Long"
+      },
+      {
+        "type": "range",
+        "id": "title_size",
+        "label": "Title size",
+        "min": 12,
+        "max": 80,
+        "default": 37,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "title_width",
+        "label": "Title Width",
+        "min": 400,
+        "max": 1200,
+        "default": 800,
+        "step": 10,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "width",
+        "label": "Width",
+        "default": "standard",
+        "options": [
+          {
+            "value": "standard",
+            "label": "Standard"
+          },
+          {
+            "value": "wide",
+            "label": "Wide"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top spacing",
+        "min": 0,
+        "max": 80,
+        "default": 40,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom spacing",
+        "min": 0,
+        "max": 80,
+        "default": 40,
+        "unit": "px"
+      },
+      {
+        "type": "header",
+        "content": "Advanced"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+      },
+      {
+        "type": "text",
+        "id": "css_class",
+        "label": "CSS Class"
+      },
+      {
+        "type": "textarea",
+        "id": "custom_css",
+        "label": "Custom CSS"
+      }
+    ]
+  }
+{% endschema %}

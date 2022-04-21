@@ -1,0 +1,23 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/wulfs-fish-1.myshopify.com/articles/configure/250108/edit
+{% endcomment %}
+{% if article.metafields.custom_fields["related_products"] != blank %}
+  <div class="custom-field custom-field__related-products custom-field__type--field-collection">
+    <h3 class="custom-field--title">Related Products</h3>
+    <div class="custom-field--value">
+      {% assign separator = "|###|" %}
+      {% assign related_product_array = article.metafields.custom_fields["related_product"] | split: separator %}
+      {% assign fc_keys = article.metafields.custom_fields["related_products"] | split: "," %}
+      {% for i in fc_keys %}
+        {% assign index = i | plus: 0 %}
+        <div class="fc-item fc-item--related product fc-index--{{ index }}">
+          <div class="fc-field field__related-product">
+            {{ related_product_array[index] }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

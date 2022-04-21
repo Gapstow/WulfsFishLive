@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/wulfs-fish-1.myshopify.com/pages/configure/251279/edit
+{% endcomment %}
+{% if page.metafields.custom_fields["custom_title_color"] != blank %}
+  <div class="custom-field custom-field__custom-title-color custom-field__type--text">
+    <h3 class="custom-field--title">Custom Title Color</h3>
+    <div class="custom-field--value">
+      {{ page.metafields.custom_fields["custom_title_color"] }}
+    </div>
+  </div>
+{% endif %}

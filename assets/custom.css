@@ -1,0 +1,77 @@
+@font-face {
+    font-family: "ConsortRR";
+    src: url('{{ "consort-rr.woff" | asset_url }}') format('woff'),
+}
+a{
+    color: #000;
+}
+/* ==========LINE AND TEXT STYEL======== */
+.separator{
+    display:flex;
+    align-items: center;
+    margin-top: 70px;
+    margin-bottom: 70px;
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 45px;
+    color: #142434;
+    font-family: 'Consort RR';
+}
+
+.separator .line{
+    height: 3px;
+    flex: 1;
+    background-color: #FF7752;
+}
+
+.separator h2{
+    padding: 0 2rem;
+    color: #142434;
+    font-family: ConsortRR;
+    font-size: 45px;
+    width: 398px;
+}
+a,
+a:hover
+{
+    color: #FF7752;
+}
+/* ================= */
+
+
+@media screen and (min-width: 1210px){
+    .page-width{
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .page-main-width{
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    #some-description-box{
+        padding: 0 98px;
+    }
+}
+    
+@media screen and (min-width: 319px){
+    .page-width,
+    .page-main-width
+    {
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .separator h2 {
+        padding: 0 1rem;
+        font-size: 22px !important;
+        width: 190px !important;
+    }
+}
+@media screen and (max-width: 768px){
+    .separator{
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+}

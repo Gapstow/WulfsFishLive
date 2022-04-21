@@ -1,0 +1,128 @@
+
+
+
+
+<div id="allBlogsMain" class="section__wrapper section container" >
+  <input class="search" placeholder="Search" />
+  <button class="sort" data-sort="name">
+    Sort by name
+  </button>
+
+  <ul class=" list" id="articlesWrapper">
+
+  {% assign blog_handles = "chef-box-series,wulfs-kitchen,the-perfect-pair,chefs-at-home,americas-test-kitchen,ask-a-fishmonger,hooked,from-the-journal,wulf-s-troquet-meal-kits" | split: "," %}
+
+  {% for handle in blog_handles %}
+    {% assign myblog = blogs[handle] %}
+    {% for article in myblog.articles %}
+      <li class="featured-article blog-card one-third columns article card show-border-false medium-down--one-half small-down--one-whole has-margin-bottom category-{{handle}}" data-updated="{{article.updated_at}}">
+        {% if article.image %}
+          <div class="card-image blog-card__image">
+            <figure class="image">
+              <a href="{{ article.url }}" title="{{ article.title | escape }}">
+
+                {% assign imageHeightWidth = '400' %}
+                {% assign imgUrlSize = imageHeightWidth | append: 'x' %}
+                {% assign imgUrlSize = imgUrlSize | append: imageHeightWidth %}
+                <!-- {{ imgUrlSize }} -->
+                <img src="{{ article.image | img_url:imgUrlSize, crop: 'center' }}" />
+
+
+
+
+              </a>
+            </figure>
+          </div>
+        {% endif %}
+
+        <div class="card-content blog-card__content">
+          <div class="media">
+            <div class="media-content">
+              <h4 class="title">
+                <a class="featured-article--link" href="{{ article.url }}">{{ article.title }}</a>
+              </h4>
+            </div>
+          </div>
+
+          {% if article.excerpt != blank and section.settings.blog_show_excerpt %}
+            {% assign postexcerpt = article.excerpt | size %}
+            {% if postexcerpt > 150 %}
+                {% assign excerptlength = 'lg' %}
+            {% elsif postexcerpt <= 150 %}
+                {% assign excerptlength = 'sm' %}
+            {% endif %}
+            <div class="excerpt excerpt-length-{{ excerptlength }} has-margin-bottom">
+              {{ article.excerpt }}
+              <!-- <span class="truncation-fade">1a</span> -->
+            </div>
+          {% else %}
+            {% assign postexcerpt = article.content | strip_html | truncatewords: 30 %}
+            {% if postexcerpt > 150 %}
+                {% assign excerptlength = 'lg' %}
+            {% elsif postexcerpt <= 150 %}
+                {% assign excerptlength = 'sm' %}
+            {% endif %}
+            <div class="excerpt excerpt-length-{{ excerptlength }} has-margin-bottom">
+              {{ postexcerpt }}
+              <!-- <span class="truncation-fade">2a</span> -->
+            </div>
+          {% endif %}
+
+          {% if section.settings.button_type != 'none' and section.settings.blog_posts_per_row == 1 %}
+            <div class="blog-card__read-more buttons">
+              {% include 'button', label: section.settings.button_label, href: article.url, type: "link", style: section.settings.button_type %}
+            </div>
+          {% endif %}
+
+          {% if section.settings.button_type != 'none' and section.settings.blog_posts_per_row != 1 %}
+            <div class="blog-card__read-more buttons">
+              {% include 'button', label: section.settings.button_label, href: article.url, type: "link", style: section.settings.button_type %}
+            </div>
+          {% endif %}
+
+          <div class="meta-info is-small">
+            {% if section.settings.blog_show_tags %}
+              {% if article.tags.size > 0 %}
+                <ul class="meta-tag-list tags">
+                {% for tag in article.tags %}
+                  <li class="tag tag--{{ settings.tag_style }}">
+                    <a href="{{ shop.url}}/blogs/{{ myblog.handle }}/tagged/{{ tag | handleize }}" title="{{ myblog.title | escape }} {{ 'blogs.general.tagged' | t }} {{ tag | escape }}">{{ tag }}</a>
+                  </li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endif %}
+
+            {% include 'meta-info-list' %}
+          </div>
+
+        </div>
+<p class="article-title">{{article.title}}</p>
+<p class="article-date">{{article.updated_at}}</p>
+      </li>
+    {% endfor %}
+    {% endfor %}
+
+
+
+
+  </ul>
+</div>
+
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+
+var options = {
+  valueNames: [ 'article-title', 'article-date' ]
+};
+
+var articleList = new List('allBlogsMain');
+
+
+
+</script>

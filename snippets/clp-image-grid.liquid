@@ -1,0 +1,55 @@
+{% if section.blocks.size == 2 %}
+  {% assign width = "half" %}
+{% elsif section.blocks.size == 3 %}
+  {% assign width = "third" %}
+{% else %}
+  {% assign width = "fourth" %}
+{% endif %}
+
+
+<section class="section is-width-standard has-gutter-enabled custom-landing-page-image-grid-section">
+  {% if section.settings.title != blank %}
+    <div class="container heading-container blog-posts-heading-container">
+      {% include 'heading', title: section.settings.title, heading_tag: 'h1', context: 'featured-collection', text_alignment: 'left', enable_divider: false %}
+    </div>
+  {% endif %}
+  <div class="container">
+    {% for block in section.blocks %}
+      <div class="column one-{{ width }} medium-down--one-whole">
+        <div class="wulf-collection-grid-item">
+          <div class="wulf-overlap-title"><a href="{{ block.settings.link }}">{{block.settings.title}}</a></div>
+          <div class="wulf-overlap-image">
+            <a href="{{ block.settings.link }}">
+              <img src="{{block.settings.image | img_url:'300x300', crop:'center' }}" />
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} .heading-wrapper {
+    margin-bottom: 0;
+    margin-top: 20px;
+  }
+  #shopify-section-{{ section.id }} .featured-collection__title {
+    font-size: {{ section.settings.section_title_size }}px;
+  }
+  #shopify-section-{{ section.id }} .wulf-overlap-title {
+    font-size: {{ section.settings.block_title_size }}px;
+    line-height: 138%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  #shopify-section-{{ section.id }} .wulf-overlap-title a {
+    color: white;
+  }
+  /**/
+</style>

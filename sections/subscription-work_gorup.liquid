@@ -1,0 +1,135 @@
+<div class="page-fixed-width">
+    <div class="page-width">
+        <div class="separator">
+            <div class="line"></div>
+                <h2>{{ section.settings.separator }}</h2>
+            <div class="line"></div>
+        </div>
+    </div>
+    <div class="page-width" id="some-box">
+        <article class="row" id="idea-one">
+                <div class="left-image">
+                    <div class="image-group" style="background-image: url({{ section.settings.image | img_url: '890x3400' }});"></div>
+                </div>
+                {%- for block in section.blocks -%}
+                {% if forloop.first == true %}
+                    <div calss="right-text">
+                        <div class="text-group selected">
+                            <h3>{{ block.settings.title }}</h3>
+                            <p>{{ block.settings.description }}</p>
+                        </div>
+                {% else %}
+                    <div class="text-group">
+                        <h3>{{ block.settings.title }}</h3>
+                        <p>{{ block.settings.description }}</p>
+                    </div>
+                {% endif %}
+            {%- endfor -%}
+            </div>
+        </article>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with Text",
+  "class": "image-with-text",
+  "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Splash Image"
+        },
+        {
+            "type": "text",
+            "id": "separator",
+            "label": "Separator Text"
+        }
+    ],
+  "blocks": [
+        {
+            "name": "text",
+            "type": "text",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "html",
+                    "id": "description",
+                    "label": "Description"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
+
+<style>
+    .page-fixed-width{max-width: 1200px; margin: 0 auto;}
+    #some-box {background:#fff;font-family:'Open Sans', sans-serif;}
+    #some-box h3 {Font family: 'Consort RR'; font-size: 35px; color: #FF7752;padding-right: 181px;}
+    #some-box p {Font family: Raleway; font-size: 13px; color: #1D2D3C;}
+    #some-box article.row {width:100%;margin:0 auto;}
+    #some-box article.row > div {width:49.4%;position:relative;border:1px solid white;}
+    #some-box article.row {border:1px solid white;}
+    #some-box article.row .left-image{padding-right: 33px;}
+    #some-box article.row .left-image .image-group{
+        width: 100%;height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover !important;
+        }
+    #idea-one img, #idea-two img, #idea-three img {position:absolute;bottom:-20px;left:50px;}
+    .text-group{cursor: pointer;padding-left: 17px;padding-bottom: 50px;}
+    .text-group.selected{border-left: solid 1px #142434;}
+
+    @media screen and (max-width: 1024px){
+        #some-box h3{
+            padding-right: 10px;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .separator h2 {
+            width: auto;
+            font-size: 35px;
+        }
+        #some-box h3 {
+            font-size: 28px;
+        }
+        .text-group {
+            padding-bottom: 12px;
+        }
+    }
+    @media screen and (max-width: 750px){
+        #some-box article.row div {width:100%;display:block;}
+        #some-box article.row div.left-image{height: 550px;display: flex;justify-content: center;}
+        #some-other-box h3 {text-align:center;}
+        #idea-one img, #idea-two img, #idea-three img {position:relative;margin:auto;left:inherit;bottom:inherit;}
+        #idea-two {display:-webkit-box;display:-moz-box;display:box;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;}
+        #idea-two div:first-of-type {-webkit-box-ordinal-group:2;-moz-box-ordinal-group:2;box-ordinal-group:2;}
+        #some-box article.row .left-image {padding-right: 0;}
+        #some-box .left-image,
+        #some-box .right-text
+        {
+            width: 100%;
+        }
+        #some-box article.row .left-image.selected { display: flex; width: 100%; height: 300px ; padding: 0; justify-content: center; }
+        #some-box article.row .left-image .image-group{width: 300px;}
+    }
+
+    @media screen and (max-width: 540px) {
+        #some-box article.row div.left-image {
+            height: 582px;
+        }
+        #some-box article.row .left-image .image-group{
+            background-size: contain !important;
+        }
+        #some-box h3 {
+            font-size: 20px;
+            padding-right: 73px;
+        }
+    }
+</style>

@@ -1,0 +1,26 @@
+<script>
+  $(document).ready(function(){
+    console.log(`hello from custom-title-mover, template is {{template}} , template.name is {{template.name}} , template.suffix is {{template.suffix}}, page title = {{page.title}}, blog title = {{blog.title}}`);
+    {% if template.name == 'page' %}
+    {% assign moveTitle = page.title %}
+    {% if page.metafields.custom_fields["custom_hero_image"] != blank %}
+    var customHeroUrl = '{{ page.metafields.custom_fields["custom_hero_image"] }}';
+    var customHeroTitleColor = '#{{ page.metafields.custom_fields["custom_title_color"] }}';
+    console.log({customHeroUrl, customHeroTitleColor});
+    //$('#header .section').addClass('has-hero-image');
+    //$('#header .section').addClass('has-hero-image').css('background-image','url(' + customHeroUrl + ')');
+    //$('#customBannerTitle').css('color',customHeroTitleColor);
+    {% endif %}
+    {% elsif template.name == 'collection' %}
+    {% assign moveTitle = collection.title %}
+    {% elsif template.name == 'blog' %}
+    {% assign moveTitle = blog.title %}
+    {% elsif template.name == 'product' %}
+    {% assign moveTitle = product.title %}
+    {% elsif template.name == 'article' %}
+    {% assign moveTitle = article.title %}
+    {% endif %}
+    console.log(`moveTitle is {{moveTitle}}`);
+    $('#customBannerTitle').html(`{{moveTitle}}`);
+  });
+</script>

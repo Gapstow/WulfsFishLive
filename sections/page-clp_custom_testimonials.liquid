@@ -1,0 +1,73 @@
+<section class="is-width-standard section">
+  <div class="container testimonials-custom-fields">
+    <div class="one-fourth medium-down--one-whole">
+      <h2 class="chefs-section-title">{{section.settings.title}}</h2>
+    </div>
+    <div class="three-fourths medium-down--one-whole">
+      {% include 'include-custom-field-chef-carousel' %}
+    </div>
+  </div>
+  <div class="container testimonials-footer">
+    <div class="testimonials-trust-pilot-wrapper">
+      {{section.settings.trustpilot}}
+    </div>
+    <div class="testimonials-nav-wrapper">
+      <div id="chefTestimonialPrev" class="testimonials-nav testimonials-prev">
+        <img src="{{ section.settings.prev_arrow | img_url:'150x150' }}" alt="">
+      </div>
+      <div id="chefTestimonialNext" class="testimonials-nav testimonials-next">
+        <img src="{{ section.settings.next_arrow | img_url:'150x150' }}" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+#shopify-section-{{section.id}} {
+  background: {{section.settings.background}};
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+/**/
+</style>
+
+{% schema %}
+{
+  "name": "Custom Field Chefs",
+  "class": "chefs-custom-fields",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Chefs are entered in the App 'Custom Fields' in the Globals section."
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#0088dd"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "The best chefs..."
+    },
+    {
+      "type": "html",
+      "id": "trustpilot",
+      "label": "Trust Pilot Widget Code Snippet",
+      "default": "<div></div>"
+    },
+    {
+      "type": "image_picker",
+      "id": "prev_arrow",
+      "label": "Previous Button"
+    },
+    {
+      "type": "image_picker",
+      "id": "next_arrow",
+      "label": "Next Button"
+    }
+  ]
+}
+{% endschema %}

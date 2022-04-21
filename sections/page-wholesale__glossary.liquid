@@ -1,0 +1,32 @@
+<div class="wholesale-glossary">
+    <div class="section">
+        {% if page.metafields.custom_fields["glossary_title"] != blank %}
+            <h2>{{ page.metafields.custom_fields["glossary_title"] }}</h2>
+        {% endif %}
+
+        {% if page.metafields.custom_fields["glossary_description"] != blank %}
+            <label>{{ page.metafields.custom_fields["glossary_description"] }}</label>
+        {% endif %}
+        
+        {% if page.metafields.custom_fields["glossary_repeater"] != blank %}
+            <div class="wholesale-glossary-lists">
+                {% for item in page.metafields.custom_fields["glossary_repeater"] %}
+                    <div class="wholesale-glossary-list">
+                        {% if item["image"] != blank %}
+                            <div class="glossary-list-image">
+                                {{ item["image"] }}
+                            </div>
+                        {% endif %}
+                        {% if item["title"] != blank %}
+                            <span>{{ item["title"] }}</span>
+                        {% endif %}
+
+                        {% if item["text"] != blank %}
+                            {{ item["text"] }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

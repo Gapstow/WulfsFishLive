@@ -1,0 +1,362 @@
+{% comment %}
+** Featured promotions - dynamic **
+- Draggable section
+- Uses blocks
+{% endcomment %}
+
+{% assign id = section.id %}
+{% assign show_gutter = section.settings.show_gutter %}
+{% assign header_overlap = section.settings.heading_overlap %}
+{% comment %} Layout {% endcomment %}
+{% assign width = section.settings.width %}
+{% assign animation = section.settings.animation %}
+{% assign padding_top = section.settings.padding_top %}
+{% assign padding_bottom = section.settings.padding_bottom %}
+{% comment %} Advanced {% endcomment %}
+{% assign css_class = section.settings.css_class %}
+{% assign custom_css = section.settings.custom_css %}
+
+{% comment %} Is the color set to transparent? {% endcomment %}
+{% assign overlay_alpha = section.settings.overlay_background | color_extract: 'alpha' %}
+{% assign overlay_text_alpha = section.settings.overlay_text | color_extract: 'alpha' %}
+
+{% comment %} Opacity level {% endcomment %}
+{% if overlay_alpha != 0 %}
+  {% assign overlay_background_alpha = section.settings.overlay_background_opacity | divided_by: 100.00 %}
+{% endif %}
+
+{% capture section_css -%}
+  .featured-promotions__content {
+    border-radius: {{ img_border_radius }}px;
+  }
+
+  .featured-promotions__overlay {
+    border-radius: {{ img_border_radius }}px;
+    color: {% if overlay_text_alpha != 0 %}{{ section.settings.overlay_text }}{% else %}{{ settings.regular_color }}{% endif %};
+    border-color: {% if overlay_text_alpha != 0 %}{{ section.settings.overlay_text }}{% else %}{{ settings.regular_color }}{% endif %};
+  }
+
+  .featured-promotions__overlay .featured-promotions__link {
+    color: {{ section.settings.overlay_text }};
+  }
+
+  .has-color-override,
+  .has-color-override strong {
+    color: {% if overlay_text_alpha != 0 %}{{ section.settings.overlay_text }}{% else %}{{ settings.regular_color }}{% endif %};
+    border-color: {% if overlay_text_alpha != 0 %}{{ section.settings.overlay_text }}{% else %}{{ settings.regular_color }}{% endif %};
+  }
+
+  .featured-promotions__content:before {
+    background-color: {% if overlay_alpha != 0 %}{{ section.settings.overlay_background | color_modify: 'alpha', overlay_background_alpha }};{% endif %}
+  }
+
+  .featured-promotions__overlay-wrapper {
+    background-color: {{settings.button_primary_bg_color}};
+    transform: translatey({{section.settings.heading_overlap}}%);
+    width: {{section.settings.heading_shrink}}%;
+  }
+  .featured-promotions__overlay-wrapper .featured-promotions__title {
+    color: white;
+    font-size: {{section.settings.heading_size}}px;
+  }
+{%- endcapture -%}
+
+{% comment %} Section specific CSS {% endcomment %}
+{% style %}
+  #shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    background-image: url({{ section.settings.background_image_main | img_url:"2000x"}});
+    background-size: cover;
+    background-position: center center;
+    padding-bottom: 190px;
+    background-repeat: no-repeat;
+    {% if width == 'wide' %}
+      width: 100%;
+    {% endif %}
+  }
+  {% include 'css-loop', css: section_css, id: id %}
+  {% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+<section class="section
+  {{ css_class }}
+  is-width-{{ width }}
+  {% if show_gutter == false %}
+    has-no-side-gutter
+    has-background
+  {% else %}
+    has-gutter-enabled
+  {% endif %}
+  {% if width == 'wide' %}
+    equal-columns--outside-trim
+  {% endif %}" {% if animation != "none" %}data-scroll-class="{{ animation }}"{% endif %}>
+  <div class="container testimonials-container">
+    <div class="three-fourths medium-down--one-whole">
+
+  {% if section.blocks.size > 0 %}
+    {% if section.blocks.size > 3 %}
+      <div class="container">
+        <div class="featured-promotions__nav-wrapper one-whole column is-flex is-justify-space-between">
+          <div class="featured-promotions__nav featured-promotions__nav--prev">
+            {% include settings.icon, name: 'left-arrow' %}
+          </div>
+          <div class="featured-promotions__nav featured-promotions__nav--next ">
+            {% include settings.icon, name: 'right-arrow' %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    <div id="featuredTestimonials" class="featured-promotions__wrapper {% if section.blocks.size <= 3 %} container {% endif %}" {% if section.blocks.size > 3 %} data-featured-promotions-slider {% endif %}>
+      {% for block in section.blocks %}
+
+        <div id="shopify-section-{{ block.id }}"
+            class="featured-promotions__block
+              featured-promotions__block--{{ forloop.length }}
+              {% if block.settings.link %}
+                featured-promotions__block--has-link
+              {% endif %}
+              medium-down--one-whole
+              {% if section.blocks.size == 1 %}
+                one-whole
+              {% elsif section.blocks.size == 2 %}
+                one-half
+              {% else %}
+                one-third
+              {% endif %}
+              column
+              has-color-override" data-promo-index={{ forloop.index0 }} {{ block.shopify_attributes }}>
+          {% comment %} Is the color set to transparent? {% endcomment %}
+          {% assign block_overlay_alpha = block.settings.overlay_background | color_extract: 'alpha' %}
+          {% assign block_overlay_text_alpha = block.settings.overlay_text | color_extract: 'alpha' %}
+
+          {% comment %} Opacity level {% endcomment %}
+          {% if block_overlay_alpha != 0 %}
+            {% assign block_overlay_background_alpha = block.settings.overlay_background_opacity | divided_by: 100.00 %}
+          {% endif %}
+
+          <div class="featured-promotions__content">
+            {% if block.settings.image != blank %}
+              {% include 'image-element', image: block.settings.image, alt: block.settings.image.alt %}
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+
+  {% endif %}
+
+    </div>
+    <div class="one-fourth medium-down--one-whole">
+      <h1>The Best Chefs In The Nation Trust Wulf's Fish</h1>
+    </div>
+  </div><!-- .testimonials-container -->
+  <div class="container is-justify-end">
+    <!--<img src="{{ section.settings.trustpilot_image | img_url:'x35' }}" />-->
+    <!-- TrustBox widget - Micro Combo -->
+<div class="trustpilot-widget" data-locale="en-US" data-template-id="5419b6ffb0d04a076446a9af" data-businessunit-id="5eff6dcc8f22580001ad9ad4" data-style-height="20px" data-style-width="100%" data-theme="dark">
+  <a href="https://www.trustpilot.com/review/wulfsfish.com" target="_blank" rel="noopener">Trustpilot</a>
+</div>
+<!-- End TrustBox widget -->
+  </div>
+</section>
+
+
+{% comment %}JavaScript{% endcomment %}
+<script data-theme-editor-load-script src="{{ 'z__jsFeaturedPromos.js' | asset_url }}"></script>
+
+
+{% schema %}
+{
+  "name": "Featured Testimonials",
+  "class": "featured-promotions featured-promotions-custom-grid fpt jsFeaturedPromos",
+  "max_blocks": 21,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image_main",
+      "label": "Image",
+      "info": "Big recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "trustpilot_image",
+      "label": "Trustpilot Image",
+      "info": "Placeholder"
+    },
+    {
+      "type": "range",
+      "id": "heading_shrink",
+      "label": "Heading Width Percent",
+      "min": 0,
+      "max": 100,
+      "default": 80,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "heading_overlap",
+      "label": "Heading Overlap",
+      "min": 0,
+      "max": 100,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_background",
+      "label": "Background",
+      "default": "#939393"
+    },
+    {
+      "type": "range",
+      "id": "overlay_background_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 70,
+      "unit": "%"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 5,
+      "max": 60,
+      "default": 38,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "standard",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gutter",
+      "label": "Show gutter",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 80,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 80,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Animation",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "fadeIn",
+          "label": "Fade in"
+        },
+        {
+          "value": "fadeInDown",
+          "label": "Fade in down"
+        },
+        {
+          "value": "fadeInLeft",
+          "label": "Fade in left"
+        },
+        {
+          "value": "fadeInRight",
+          "label": "Fade in right"
+        },
+        {
+          "value": "slideInLeft",
+          "label": "Slide in left"
+        },
+        {
+          "value": "slideInRight",
+          "label": "Slide in right"
+        },
+        {
+          "value": "zoomIn",
+          "label": "Zoom in"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Tall recommended"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

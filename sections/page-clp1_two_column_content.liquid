@@ -1,0 +1,82 @@
+{% comment %}
+Columns of heading and content
+- Uses blocks
+{% endcomment %}
+<!-- section two columns -->
+{% if section.settings.show_section %}
+  {% include 'include-two-column-content' %}
+{% endif %}
+
+
+{% schema %}
+    {
+        "name": "L1 Two Column Content",
+        "class": "gallery",
+        "settings": [
+            {
+              "type": "checkbox",
+              "id": "show_section",
+              "label": "Show Section",
+              "default": false
+            },
+            {
+              "type": "richtext",
+              "id": "column_pre",
+              "label": "Top Content",
+              "default": "<p></p>"
+            },
+            {
+              "type": "richtext",
+              "id": "column_list",
+              "label": "Content",
+              "default": "<p></p>",
+              "info": "Optional. Make each bullet point on a new line."
+            },
+            {
+              "type": "richtext",
+              "id": "column_post",
+              "label": "Bottom Content",
+              "default": "<p></p>",
+              "info": "Optional"
+            },
+            {
+                "type": "header",
+                "content": "Layout"
+            },
+            {
+                "type": "select",
+                "id": "width",
+                "label": "Width",
+                "default": "standard",
+                "options": [
+                {
+                    "value": "standard",
+                    "label": "Standard"
+                },
+                {
+                    "value": "wide",
+                    "label": "Wide"
+                }
+                ]
+            },
+            {
+                "type": "range",
+                "id": "padding_top",
+                "label": "Top spacing",
+                "min": 0,
+                "max": 80,
+                "default": 20,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "padding_bottom",
+                "label": "Bottom spacing",
+                "min": 0,
+                "max": 80,
+                "default": 20,
+                "unit": "px"
+            }
+        ]
+    }
+{% endschema %}

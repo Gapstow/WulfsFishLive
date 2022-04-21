@@ -1,0 +1,136 @@
+<div class="page-width">
+    <div class="separator">
+        <div class="line"></div>
+            <h2>{{ section.settings.separator }}</h2>
+        <div class="line"></div>
+    </div>
+</div>
+<div class="reqular-subscriber">
+    <b class="title">{{ section.settings.title }}</b><b class="title1"> {{ section.settings.title1 }}</b>
+    <p class="title2">{{ section.settings.title2 }}</p>
+    <h2 class="title3">{{ section.settings.title3 }}</h2>
+</div>
+{% schema %}
+{
+  "name": "Regular Subscribers",
+  "settings": [
+    {
+        "type": "text",
+        "id": "separator",
+        "label": "Separator Text"
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+    },
+    {
+        "type": "text",
+        "id": "title1",
+        "label": "Title1"
+    },
+    {
+        "type": "text",
+        "id": "title2",
+        "label": "Title2"
+    },
+    {
+        "type": "text",
+        "id": "title3",
+        "label": "Title3"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.reqular-subscriber{
+    padding-top: 80px;
+    background: #142434;
+    text-align: center;
+    padding-left: 242px;
+    padding-right: 242px;
+    padding-bottom: 30px;
+}
+.reqular-subscriber b.title
+{
+    color: #FF7752;
+}
+.reqular-subscriber b.title1,
+.reqular-subscriber p.title2
+{
+    color: #fff;
+}
+
+.reqular-subscriber b.title,
+.reqular-subscriber b.title1,
+.reqular-subscriber p.title2
+{
+    font-family: 'Consort RR';
+    font-size: 44px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    font-weight: 500;
+}
+.reqular-subscriber .title3
+{
+    font-family: 'Consort RR';
+    font-size: 86px;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+    line-height: 99px;
+    text-transform: capitalize;
+}
+.reqular-subscriber p.title2::after {
+  content: "";
+  display: block;
+  width: 600px;
+  margin: 0 auto;
+  padding-top: 3px;
+  border-bottom: 2px solid #FFA552;
+}
+
+@media screen and (max-width: 1024px) {
+    .reqular-subscriber{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .reqular-subscriber b.title,
+    .reqular-subscriber b.title1,
+    .reqular-subscriber p.title2
+    {
+        font-size: 26px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .reqular-subscriber p.title2::after {
+        width: 90%; 
+    }
+    .reqular-subscriber .title3 {
+        font-size: 50px;
+    }
+}
+@media screen and (max-width: 540px) {
+    .reqular-subscriber b.title, 
+    .reqular-subscriber b.title1, 
+    .reqular-subscriber p.title2 {
+        font-size: 11px;
+    }
+    .reqular-subscriber .title3 {
+        font-size: 32px;
+        line-height: 1.3; 
+    }
+    .reqular-subscriber p.title2::after {
+        width: 50%;
+    }
+    .reqular-subscriber {
+        padding-top: 30px;
+        padding-bottom: 11px;
+    }
+    .text-group p {
+        font-size: 13px;
+    }
+}
+
+</style>

@@ -1,0 +1,777 @@
+.navbar-link {
+  font-size: {{settings.gapstow_primary_nav_parent}}px!important;
+}
+.navbar-dropdown {
+  .navbar-item {
+  font-size: {{settings.gapstow_primary_nav_child}}px!important;
+  }
+}
+.header__link .icon-caption,
+.top-bar .navbar-link {
+  font-size: {{settings.gapstow_secondary_nav}}px!important;
+}
+
+
+
+/*********************************** WHOLESALE OYSTERS ************************/
+
+// 
+.wholesale-hero-banner {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 40vw;
+  position: relative;
+  @media(max-width: 500px) {
+    height: 500px;
+  }
+
+  .wholesale-hero-logo {
+    margin-left: 65px;
+    img {
+      width: 79px;
+    }
+  }
+
+  .wholesale-hero-heading {
+    background-position: center left;
+    background-size: cover;
+    color: #fff;
+    display: inline-block;
+    margin-right: 0;
+    padding: 40px 30px 40px 11%;
+    position: absolute;
+    text-align: right;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    @media(max-width: 800px) {
+      padding: 30px 40px 30px 80px;
+    }
+
+    h2 {
+      font-size: clamp(40px, 10vw, 135px);
+      line-height: 1;
+      text-transform: capitalize;
+      @media(max-width: 800px) {
+        font-size: 55px;
+      }
+    }
+
+    label {
+      font-family: "Consort RR";
+      font-size: clamp(30px, 10vw, 80px);
+      line-height: 1;
+      white-space: nowrap;
+      @media(max-width: 800px) {
+        font-size: 40px;
+      }
+    }
+  }
+
+  .wholesale-hero-content-btns {
+    position: absolute;
+    top: 65%;
+
+    .wholesale-hero-content {
+      p {
+        color: white;
+        font-family: "Consort RR";
+        font-size: 35px;
+        font-weight: 500;
+        line-height: 41px;
+        letter-spacing: 0.02em;
+      }
+    }
+
+    .wholesale-hero-btns {
+      margin-top: 15px;
+      @media(max-width: 800px) {
+        margin-top: 0;
+      }
+
+      a {
+        border: 3px solid #FF7752;
+        color: white;
+        display: inline-block;
+        font-family: "Raleway";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 100;
+        letter-spacing: 0.02em;
+        line-height: 18px;
+        padding: 10px;
+        text-align: center;
+        width: 265px;
+        &:first-child {
+          background-color: #FF7752;
+        }
+        &:last-child {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+.wholesale-image-text {
+  padding: 100px 0 50px;
+  @media(max-width: 800px) {
+    padding: 50px 0;
+  }
+
+  h2.background {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+
+    &:before {
+      border-top: 3px solid #FF7752;
+      content: "";
+      left: 0;
+      margin: 0 auto;
+      position: absolute;
+      right: 0;
+      top: 25%;
+      width: 95%;
+      z-index: -1;
+    }
+
+    span {
+      background: #fff;
+      color: #142434;
+      font-size: 45px;
+      letter-spacing: 0.03em;
+      line-height: 52px;
+      padding: 0 15px;
+      text-align: center;
+    }
+  }
+
+  .wholesale-image-text-block {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    margin-top: 50px;
+    @media(max-width: 500px) {
+      grid-template-columns: 1fr;
+    }
+
+    .wholesale-text-block {
+      h3 {
+        color: #FF7752;
+        font-size: 35px;
+        font-weight: 500;
+        line-height: 41px;
+        letter-spacing: 0.06em;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+      }
+
+      p {
+        color: #1D2D3C;
+        font-size: 15px;
+        line-height: 18px;
+        letter-spacing: 0.06em;
+        margin-bottom: 25px;
+      }
+
+      label {
+        color: #142434;
+        font-family: 'Consort RR';
+        font-size: 25px;
+        font-weight: 500;
+        line-height: 29px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .image-text-items {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(4, 1fr);
+        margin-top: 20px;
+        @media(max-width: 500px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .image-text-item {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          text-align: center;
+
+          label {
+            color: rgba(0, 0, 0, 0.4);
+            display: block;
+            font-family: 'Allison';
+            font-size: 26px;
+            line-height: 35px;
+            letter-spacing: 0.01em;
+          }
+
+          span {
+            color: #1D2D3C;
+            display: block;
+            font-size: 14px;
+            letter-spacing: 0.06em;
+            line-height: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.wholesale-slides {
+  .slick-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    transform: translateY(-50%);
+    font-size: 0;
+    border: none;
+    background-color: transparent;
+    width: 43px;
+    height: 43px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+
+
+    &.slick-prev {
+      left: 10%;
+      background-image: url({{ 'slide-left-arrow.png' | asset_url }});
+
+      &:hover {
+        background-image: url({{ 'slide-left-arrow-hover.png' | asset_url }});
+      }
+    }
+
+    &.slick-next {
+      right: 10%;
+      background-image: url({{ 'slide-right-arrow.png' | asset_url }});
+
+      &:hover {
+        background-image: url({{ 'slide-right-arrow-hover.png' | asset_url }});
+      }
+    }
+  }
+
+  .slick-dots {
+    border-bottom: 3px solid #FF7752;
+    margin: 0 70px;
+    padding: 24px 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    li {
+      &.slick-active {
+        button {
+          color: #FF7752;
+        }
+      }
+      button {
+        font-size: 17px;
+        line-height: 20px;
+        text-align: center;
+        letter-spacing: 0.03em;
+        color: rgba(0, 0, 0, 0.4);
+        border: none;
+    background-color: transparent;
+      }
+    }
+  }
+
+  .wholesale-slide {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .wholesale-slide-content {
+      position: absolute;
+      text-align: center;
+      @media(max-width: 800px) {
+        transform: translate(-50%, -50%);
+        width: 100%;
+      }
+
+      h2 {
+        font-size: 100px;
+        line-height: 102px;
+        text-align: center;
+        letter-spacing: 0.03em;
+        color: #FFFFFF;
+        @media(max-width: 800px) {
+          font-size: 55px;
+          line-height: 1;
+        }
+      }
+
+      label {
+        display: block;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 35px;
+        line-height: 41px;
+        letter-spacing: 0.03em;
+        color: white;
+        @media(max-width: 800px) {
+          font-size: 30px;
+        }
+      }
+
+      span {
+        font-family: 'ConsortRR';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 35px;
+        line-height: 41px;
+        letter-spacing: 0.03em;
+        color: #FF7752;
+        display: block;
+        margin-top: 20px;
+        @media(max-width: 800px) {
+          font-size: 30px;
+        }
+      }
+
+      p {
+        font-size: 13px;
+        line-height: 15px;
+        text-align: center;
+        letter-spacing: 0.03em;
+        color: #FFFFFF;
+        margin-top: 30px;
+      }
+    }
+  }
+}
+
+.wholesale-glossary {
+  padding: 70px 0;
+
+  h2 {
+    font-weight: 500;
+    font-size: 45px;
+    line-height: 52px;
+    text-align: center;
+    letter-spacing: 0.03em;
+    color: #142434;
+    text-align: center;
+  }
+
+  label {
+    font-size: 15px;
+    line-height: 18px;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #142434;
+    text-align: center;
+    display: block;
+  }
+
+  .wholesale-glossary-lists {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 26px;
+    text-align: center;
+    margin-top: 100px;
+    @media(max-width: 800px) {
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 50px;
+    }
+    @media(max-width: 500px) {
+      grid-template-columns: 1fr;
+    }
+
+    .wholesale-glossary-list {
+      .glossary-list-image {
+        height: 250px;
+        @media(max-width: 800px) {
+          height: 150px;
+        }
+
+        img {
+          height: 100%;
+          width: 70%;
+          object-fit: contain;
+        }
+      }
+      
+      span {
+        font-weight: normal;
+        font-family: 'Allison';
+        font-size: 56px;
+        line-height: 71px;
+        text-align: center;
+        letter-spacing: 0.01em;
+        color: #142434;
+      }
+
+      p {
+        font-family: 'ConsortRR';
+      }
+    }
+  }
+}
+
+.wholesale-featured {
+  .wholesale-featured-banner {
+    background-color: #142434;
+    padding: 53px 0 23px;
+
+    h2 {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+      
+      &:before {
+        border-top: 3px solid #ff7752;
+        content: "";
+        left: 0;
+        margin: 0 auto;
+        position: absolute;
+        right: 0;
+        top: 25%;
+        width: 95%;
+        z-index: -1;
+      }
+
+      label {
+        background-color: #142434;
+        color: white;
+        font-size: 45px;
+        letter-spacing: .03em;
+        line-height: 52px;
+        padding: 0 15px;
+        text-align: center;
+        display: inline-block;
+
+        span {
+          display: block;
+          font-family: 'Raleway', sans-serif;
+          font-size: 30px;
+        }
+      }
+    }
+  }
+
+  .wholesale-featured-heading {
+    padding-top: 60px;
+    padding-bottom: 40PX;
+    text-align: center;
+
+    h3 {
+      font-size: 35px;
+      line-height: 41px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #FF7752;
+    }
+
+    label {
+      font-size: 25px;
+    }
+
+    p {
+      font-size: 11px;
+      line-height: 13px;
+      text-transform: uppercase;
+      color: #142434;
+      opacity: 0.5;
+    }
+  }
+
+  .wholesale-featured-lists {
+    padding-bottom: 100px;
+    @media(max-width: 800px) {
+      padding-bottom: 50px;
+    }
+
+    .section {
+      padding-bottom: 70px;
+      border-bottom: 4px solid #FF7752;
+    }
+
+    .wholesale-featured-list {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 50px;
+
+      @media(max-width: 500px) {
+        grid-template-columns: 1fr;
+      }
+
+      &.active {
+        display: grid
+      }
+
+      .featured-list-image {
+        overflow: hidden;
+        display: flex;
+        @media(max-width: 500px) {
+          flex-direction: column;
+        }
+
+        .featured-list-slider-nav {
+          width: calc(19% - 4px);
+          margin: 0 10px;
+          @media(max-width: 500px) {
+            width: 100%;
+          }
+
+          .thumbnail-image {
+            margin-bottom: 10px;
+          }
+
+          .thumbnail-image__inner {
+            padding-bottom: 100%;
+            position: relative;
+          }
+
+          img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .featured-list-slider-for {
+          width: calc(81% - 16px);
+          @media(max-width: 500px) {
+            width: 100%;
+            order: -1;
+            margin-bottom: 15px;
+          }
+
+          .slider-banner-image__inner {
+            padding-bottom: 100%;
+            position: relative;
+          }
+
+          img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+
+      .featured-list-content {
+        H3 {
+          font-size: 35px;
+          line-height: 41px;
+          letter-spacing: .06em;
+          text-transform: uppercase;
+          color: #ff7752;
+        }
+
+        label {
+          font-size: 25px;
+          display: block;
+        }
+
+        span {
+          font-size: 16px;
+          display: block;
+        }
+    
+        p {
+          font-size: 13px;
+          line-height: 17px;
+          letter-spacing: 0.06em;
+          color: #1D2D3C;
+        }
+
+        .featured-priority {
+          margin-top: 30px;
+
+          label {
+            border-bottom: solid 2px black;
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+          }
+
+          .featured-priority-num {
+            margin-top: 20px;
+
+            .priority-num-label {
+              align-items: center;
+              display: flex;
+              justify-content: space-between;
+
+              span {
+                font-size: 13px;
+                opacity: 0.8;
+                text-transform: uppercase;
+              }
+            }
+
+            .steps {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              position: relative;
+              margin-top: 10px;
+
+              &:before {
+                content: "";
+                width: 100%;
+                display: block;
+                height: 4px;
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                background-color: rgba(133,133,133,0.8);
+                z-index: 0;
+              }
+              
+              .steps__item {
+                width: 20px;
+                height: 20px;
+                display: flex;
+                font-size: 0;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                background-color: black;
+                border-radius: 50px;
+                margin-right: 80px;
+                position: relative;
+                @media(max-width: 500px) {
+                  margin-right: 0;
+                }
+
+                &.steps__item--active{
+                  background-color: white;
+                  border: solid 2px black;
+                }
+                &:last-child{
+                  margin-right: 0px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .wholesale-featured-slides {
+      max-width: 1100px;
+      margin: 100px auto 0;
+
+      .slick-track {
+        .wholesale-featured-slide:nth-child(3n+1) {
+          text-align: left;
+        }
+        .wholesale-featured-slide:nth-child(3n+2) {
+          text-align: center;
+        }
+        .wholesale-featured-slide:nth-child(3n+3) {
+          text-align: right;
+        }
+      }
+      .slick-dots {
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        li {
+          width: 15px;
+          height: 15px;
+          background: #ff7752;
+          opacity: 0.4;
+          margin-left: 3px;
+          margin-right: 3px;
+          border-radius: 33px;
+          &.slick-active {
+            opacity: 1;
+          }
+          button {
+            display: none;
+          }
+        }
+      }
+
+      .slick-arrow {
+        position: absolute;
+        top: 50%;
+        z-index: 1;
+        transform: translateY(-50%);
+        font-size: 0;
+        border: none;
+        background-color: transparent;
+        width: 43px;
+        height: 43px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+
+
+        &.slick-prev {
+          left: -10%;
+          background-image: url({{ 'circle-left-arrow.png' | asset_url }});
+        }
+
+        &.slick-next {
+          right: -10%;
+          background-image: url({{ 'circle-right-arrow.png' | asset_url }});
+        }
+      }
+      
+      .wholesale-featured-slide {
+        @media (max-width: 800px) {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          max-width: 300px;
+          margin: auto;
+          text-align: center;
+        }
+
+        label {
+          display: block;
+          font-size: 27px;
+          font-family: 'Consort RR';
+          line-height: 31px;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: #142434;
+          cursor: pointer;
+          @media (max-width: 800px) {
+            text-align: center;
+          }
+        }
+
+        span {
+          display: block;
+          font-size: 15px;
+          line-height: 31px;
+          letter-spacing: 0.06em;
+          color: #142434;
+          cursor: pointer;
+        }
+    
+        p {
+          color: #FF7752;
+          cursor: pointer;
+        }
+
+        img {
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}
+
+/******************************* END WHOLESALE OYSTERS ************************/

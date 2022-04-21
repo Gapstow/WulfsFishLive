@@ -1,0 +1,10 @@
+
+<section class="section is-width-standard has-gutter-enabled has-multirow-blocks">
+  <div id="featuredReviewsWrapper">
+  {% for block in section.blocks %}
+      {% if block.settings.featured_review %}
+        <img src="{{block.settings.image | img_url:'x200' }}" />
+      {% endif %}
+  {% endfor %}
+  </div>
+</section>

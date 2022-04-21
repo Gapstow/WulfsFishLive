@@ -1,0 +1,68 @@
+{% if shop.metafields.custom_fields["team_members"] != blank %}
+  <div class="custom-field custom-field__team-members custom-field__type--field-collection-json">
+    <h3 class="custom-field--title">Team Members</h3>
+    <div class="custom-field--value">
+      {% for item in shop.metafields.custom_fields["team_members"] %}
+        <div class="fc-item fc-index--{{ forloop.index0 }}">
+           {% if item["photo"] != blank %}
+              <div class="custom-field--value">
+                {{ item["photo"] }}
+              </div>
+           {% endif %}
+           {% if item["name"] != blank %}
+              <div class="custom-field--value">
+                {{ item["name"] }}
+              </div>
+           {% endif %}
+           {% if item["email"] != blank %}
+              <div class="custom-field--value">
+                {{ item["email"] }}
+              </div>
+           {% endif %}
+           {% if item["cf_qa"] != blank %}
+             <div class="fc-field field__cf-qa field-type--field-collection-json">
+               <h4 class="custom-field--title">Q&A</h4>
+               <div class="custom-field--value">
+                 {% for cf_qa_item in item["cf_qa"] %}
+                   <div class="child-fc-item">
+                     {% if cf_qa_item["question"] != blank %}
+                        <div class="custom-field--value">
+                          {{ cf_qa_item["question"] }}
+                        </div>
+                     {% endif %}
+                     {% if cf_qa_item["answer"] != blank %}
+                        <div class="custom-field--value">
+                          {{ cf_qa_item["answer"] }}
+                        </div>
+                     {% endif %}
+                   </div>
+                 {% endfor %}
+               </div>
+             </div> 
+           {% endif %}
+           {% if item["products"] != blank %}
+             <div class="fc-field field__products field-type--field-collection-json">
+               <h4 class="custom-field--title">Products</h4>
+               <div class="custom-field--value">
+                 {% for products_item in item["products"] %}
+                   <div class="child-fc-item">
+                     {% if products_item["product_from_store"] != blank %}
+                        <div class="custom-field--value">
+                          {{ products_item["product_from_store"] }} 
+                        </div>
+                     {% endif %}
+                     {% if products_item["comment_on_product"] != blank %}
+                        <div class="custom-field--value">
+                          {{ products_item["comment_on_product"] }} ssssssssssssssssssssss
+                        </div>
+                     {% endif %}
+                   </div>
+                 {% endfor %}
+               </div>
+             </div>
+           {% endif %}
+         </div>
+       {% endfor %}
+    </div>
+  </div>
+{% endif %}

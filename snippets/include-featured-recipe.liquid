@@ -1,0 +1,63 @@
+
+
+{% assign blog_select = section.settings.blog_select %}
+{% assign blog_select_2 = section.settings.blog_select_2 %}
+
+{% for article_1 in blogs[blog_select].articles limit: 1 %}
+  {% assign recipe_title_1 = article_1.title %}
+  {% assign recipe_url_1 = article_1.url %}
+  {% assign recipe_excerpt_1 = article_1.excerpt_or_content %}
+  {% assign recipe_image_1 = article_1.image %}
+  {% assign recipe_date_1 = article_1.created_at %}
+{% endfor %}
+
+{% for article_2 in blogs[blog_select_2].articles limit: 1 %}
+  {% assign recipe_title_2 = article_2.title %}
+  {% assign recipe_url_2 = article_2.url %}
+  {% assign recipe_excerpt_2 = article_2.excerpt_or_content %}
+  {% assign recipe_image_2 = article_2.image %}
+  {% assign recipe_date_2 = article_2.created_at %}
+{% endfor %}
+
+{% if recipe_date_1 > recipe_date_2 %}
+  {% assign recipe_title = recipe_title_1 %}
+  {% assign recipe_url = recipe_url_1 %}
+  {% assign recipe_excerpt = recipe_excerpt_1 %}
+  {% assign recipe_image = recipe_image_1 %}
+{% else %}
+  {% assign recipe_title = recipe_title_2 %}
+  {% assign recipe_url = recipe_url_2 %}
+  {% assign recipe_excerpt = recipe_excerpt_2 %}
+  {% assign recipe_image = recipe_image_2 %}
+{% endif %}
+
+<div class="container">
+  <div class="two-fifths medium-down--one-whole column">
+    <div class="square-recipe-image-holder mobile-hide"></div>
+    <img src="{{ recipe_image | img_url:'500x400', crop:'center' }}" alt="" class="recipe-image mobile-hide">
+  </div>
+  <div class="three-fifths medium-down--one-whole column">
+
+    <div class="featured-recipe-info">
+      <div class="featured-recipe-title">
+        <h3><a href="/pages/all-blogs" class="button">{{ section.settings.recipe_title }}</a></h3>
+      </div>
+      <div class="featured-recipe-title-excerpt">
+        <h1 class="article__title title">{{ recipe_title }}</h1>
+        <!-- Blog 1: {{ recipe_title_1 }} at {{ recipe_date_1 }} -->
+        <!-- Blog 2: {{ recipe_title_2 }} at {{ recipe_date_2 }} -->
+        <!-- Blog Latest: {{ recipe_title }} at {{ recipe_date }} -->
+        <img src="{{ recipe_image | img_url:'500x400', crop:'center' }}" alt="" class="recipe-image desktop-hide">
+        <p class="featured-recipe-excerpt">{{ recipe_excerpt }}</p>
+      </div>
+      <div class="featured-recipe-link-wrapper">
+        <h4><a href="{{recipe_url}}" class="featured-recipe-link button">{{ section.settings.recipe_button }}</a></h4>
+      </div>
+    </div>
+  </div>
+  <style>
+    .square-recipe-image-holder {
+      background-image: url({{ recipe_image | img_url:'500x400', crop:'center' }});
+    }
+  </style>
+</div>

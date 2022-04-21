@@ -1,0 +1,16 @@
+<form id="tracktorOrderForm" class="tracktorCustomTrackingPage" method="GET" action="/apps/tracktor">
+  <h1>{{ section.settings.title }}</h1>
+    <div>
+      <label for="tracktorOrderName">Order Number:</label>
+      <br>
+      <input id="tracktorOrderName" type="text" name="order" style="min-width: 250px; max-width: 450px;">
+    </div>
+    <br>
+    <div>
+      <label for="tracktorOrderEmail">Email:</label>
+      <br>
+      <input id="tracktorOrderEmail" type="text" name="email" style="min-width: 250px; max-width: 450px;">
+    </div>
+    <br>
+  <button id="tracktorTrack" class="button-enter btn styled-submit button">Track</button>
+</form>

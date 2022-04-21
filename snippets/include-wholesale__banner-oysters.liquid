@@ -1,0 +1,48 @@
+<div class="wholesale-hero-banner">
+    <div class="section">
+        {% comment %} <div class="wholesale-hero-logo">
+            <img src="{{ _section.logo_image | img_url: '100x' }}">
+        </div> {% endcomment %}
+        <div class="wholesale-hero-heading">
+            {% if _section.heading != blank %}
+                <h2 style="color: {{ _section.heading_color }}">{{ _section.heading }}</h2>
+            {% endif %}
+            {% if _section.subheading != blank %}
+                <label style="color: {{ _section.subheading_color }}">{{ _section.subheading }}</label>
+            {% endif %}
+        </div>
+        <div class="wholesale-hero-content-btns">
+            {% if _section.content != blank %}
+                <div class="wholesale-hero-content">{{ _section.content }}</div>
+            {% endif %}
+            <div class="wholesale-hero-btns">
+                {% if _section.button_1_link != blank %}
+                    <a href="{{ _section.button_1_link }}">{{ _section.button_1 }}</a>
+                {% endif %}
+                {% if _section.button_2_link != blank %}
+                    <a href="{{ _section.button_2_link }}">{{ _section.button_2 }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+  	.wholesale-hero-logo{
+      display: block;
+    }
+    .wholesale-hero-banner {
+        background-image: url({{ _section.image | img_url: 'master' }});
+    }
+    .wholesale-hero-heading {
+        background-image: url('https://cdn.shopify.com/s/files/1/0274/4310/1829/t/56/assets/homeCaptionArrow_1000x.png?v=1359080%E2%80%A6');
+    }
+    @media(max-width: 500px) {
+        .wholesale-hero-banner {
+            background-image: url({{ _section.mobile_image | img_url: 'master' }});
+        }
+        .wholesale-hero-logo{
+			display: none;
+        }
+    }
+</style>

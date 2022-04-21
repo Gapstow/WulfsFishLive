@@ -1,0 +1,237 @@
+{% comment %}
+  Snippet can be used in section or block
+  eg. {% include 'include-featured-blog' %}
+{% endcomment %}
+
+
+{% if type == 'block' %}
+  {% assign object = block %}
+{% else %}
+  {% assign object = section %}
+{% endif %}
+{% comment %}Assign object as block or section{% endcomment %}
+<!-- type: {{type}} object: {{object}}-->
+
+
+{% assign id = object.id %}
+{% assign title = object.settings.title %}
+{% assign blog_widget_select = object.settings.blog_widget_select %}
+{% assign home_page_articles = object.settings.home_page_articles %}
+{% assign home_page_articles = 40 %}
+{% comment %}Layout{% endcomment %}
+{% assign width = object.settings.width %}
+{% assign padding_top = object.settings.padding_top %}
+{% assign padding_bottom = object.settings.padding_bottom %}
+{% comment %} Advanced {% endcomment %}
+{% assign css_class = object.settings.css_class %}
+{% assign custom_css = object.settings.custom_css %}
+
+{% assign recipes_linklist = linklists[object.settings.blogs_linklist] %}
+
+
+{% for link in recipes_linklist.links %}
+  {% assign blog = link.object %}
+  {% if forloop.first == true %}
+    {% assign fullList = blog.articles %}
+  {% else %}
+    {% assign fullList = fullList | concat: blog.articles %}
+  {% endif %}
+{% endfor %}
+
+{% assign sortedList = fullList | sort: 'updated_at' | reverse %}
+
+
+<!-- blog_widget_select: {{blog_widget_select}} home_page_articles: {{home_page_articles}}-->
+
+
+{% comment %} Section specific CSS {% endcomment %}
+{% style %}
+  #shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if width == 'wide' -%}
+      width: 100%;
+    {%- endif %}
+  }
+  {% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+<section class="section
+                section-linklist-blogs
+                {{ css_class }}
+                is-width-{{ width }}">
+
+
+
+  {% if title != blank %}
+    <div class="container heading-container">
+      {% include 'heading', title: object.settings.title, heading_tag: 'h1', context: 'featured-collection', text_alignment: 'left', enable_divider: false %}
+      {% include 'heading', title: object.settings.subtitle, heading_tag: 'h2', context: 'featured-collection', text_alignment: 'left', enable_divider: false %}
+    </div>
+  {% endif %}
+
+  {% assign article_counter = 0 %}
+
+  <div class="container blog-container">
+    {% if blog_widget_select != blank %}
+    {%- comment -%}
+      {% f o r article in blogs[blog_widget_select].articles limit: home_page_articles %}
+    {%- endcomment -%}
+      {% for article in sortedList limit: home_page_articles %}
+          {% if article.tags contains 'Chefs at Home' %}   {% endif %} 
+          {% assign article_counter = article_counter | plus:1 %}
+
+
+          {% assign isChefHome = false %}
+          {% for tag in article.tags %} 
+            {% if tag == 'Chefs at Home' %}{% assign isChefHome = true %}{% endif %}
+          {% endfor %}
+
+          <div class="featured-article blog-card {% include 'column-width', value: object.settings.home_page_articles %} columns article card show-border-{{ object.settings.show-border }} medium-down--one-whole has-margin-bottom ">
+            
+            
+            <!-- Article #{{article_counter}} -  tags: {% for tag in article.tags %} {{ tag }}{% unless forloop.last %} | {% endunless %}{% endfor %} -->
+            {% if article.image %}
+              <div class="card-image blog-card__image">
+                <figure class="image">
+                  <a href="{{ article.url }}" title="{{ article.title | escape }}">
+
+            {% if section.settings.basic_image %}
+              {% assign imageHeightWidth = section.settings.thumbnail_height %}
+              {% assign imgUrlSize = imageHeightWidth | append: 'x' %}
+              {% assign imgUrlSize = imgUrlSize | append: imageHeightWidth %}
+              <!-- {{ imgUrlSize }} -->
+              <img src="{{ article.image | img_url:imgUrlSize, crop: 'center' }}" />
+            {% else %}
+              {% comment %} just making everything SQUARE!! 
+                {% include 'image-element', image: article.image, alt: article.image.alt %}
+              {% endcomment %}
+              {% assign imageHeightWidth = '400' %}
+              {% assign imgUrlSize = imageHeightWidth | append: 'x' %}
+              {% assign imgUrlSize = imgUrlSize | append: imageHeightWidth %}
+              <!-- {{ imgUrlSize }} -->
+              <img src="{{ article.image | img_url:imgUrlSize, crop: 'center' }}" />
+
+            {% endif %}
+            
+                  </a>
+                </figure>
+              </div>
+            {% endif %}
+
+            <div class="card-content blog-card__content">
+              <div class="media">
+                <div class="media-content">
+                  <h3 class="title">
+                    <a class="featured-article--link" href="{{ article.url }}" title="{{ article.title | escape }}">{{ article.title }}</a>
+                  </h3>
+                </div>
+              </div>
+
+              {% if article.excerpt != blank and object.settings.blog_show_excerpt%}
+                {% assign postexcerpt = article.excerpt | size %}
+                {% if postexcerpt > 150 %}
+                  {% assign excerptlength = 'lg' %}
+                {% elsif postexcerpt <= 150 %}
+                  {% assign excerptlength = 'sm' %}
+                {% endif %}
+                <div class="excerpt excerpt-length-{{ excerptlength }} has-margin-bottom">
+                  {{ article.excerpt }}
+                  <span class="truncation-fade"></span> 
+                </div>
+              {% else %}
+                {% assign postexcerpt = article.content | strip_html | truncatewords: 30 %}
+                {% if postexcerpt > 150 %}
+                    {% assign excerptlength = 'lg' %}
+                {% elsif postexcerpt <= 150 %}
+                    {% assign excerptlength = 'sm' %}
+                {% endif %}
+                <div class="excerpt excerpt-length-{{ excerptlength }} has-margin-bottom">
+                  {{ postexcerpt }}
+                  <!-- <span class="truncation-fade">1f</span> -->
+                </div>
+              {% endif %}
+
+              <div class="meta-info is-small">
+                {% if object.settings.blog_show_tags %}
+                  {% if article.tags.size > 0 %}
+                    <ul class="meta-tag-list tags">
+                    {% for tag in article.tags %}
+                      <li class="tag tag--{{ settings.tag_style}}">
+                        <a href="{{ shop.url}}/blogs/{{ blogs[blog_widget_select].handle }}/tagged/{{ tag | handleize }}" title="{{ blog.title | escape }} {{ 'blogs.general.tagged' | t }} {{ tag | escape }}">{{ tag }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endif %}
+
+                {% include 'meta-info-list' %}
+              </div>
+            </div>
+          {% if object.settings.button_type != 'none' %}
+            <div class="blog-card__read-more">
+              {% include 'button', label: object.settings.button_label, href: article.url, type: "link", style: object.settings.button_type %}
+            </div>
+          {% endif %}
+          </div>
+          
+
+        
+        {% if article_counter == object.settings.home_page_articles %}{% break %}{% endif %}
+      {% endfor %} {% comment %}article loop{% endcomment %}
+    {% else %}
+      {% for i in (1..home_page_articles) %}
+        <div class="featured-article blog-card {% include 'column-width', value: object.settings.home_page_articles %} columns article card show-border-{{ object.settings.show-border }} medium-down--one-half small-down--one-whole has-margin-bottom">
+          <div class="card-image blog-card__image">
+            <figure class="image">
+              <a href="{{ article.url }}">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </a>
+            </figure>
+          </div>
+
+          <div class="card-content blog-card__content">
+            <div class="media">
+              <div class="media-content">
+                <h4 class="title">
+                  <a class="featured-article--link" href="#">{{ 'homepage.onboarding.blogpost_title' | t }}</a>
+                </h4>
+              </div>
+            </div>
+
+            {% if object.settings.blog_show_excerpt%}
+              <div class="excerpt has-margin-bottom">
+                {{ 'homepage.onboarding.blog_excerpt' | t }}
+                <span class="truncation-fade"></span>
+              </div>
+            {% endif %}
+
+            <div class="meta-info is-small">
+                {% if object.settings.blog_show_tags %}
+                <ul class="meta-tag-list tags ">
+                  {% for i in (1..3) %}
+                    <li class="tag tag--{{ settings.tag_style}}">
+                      <a href="#">
+                        tag{{i}}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+
+                {% include 'meta-info-list' %}
+              </div>
+            </div>
+
+          {% if object.settings.button_type != 'none' %}
+            <div class="blog-card__read-more">
+              {% include 'button', label: object.settings.button_label, href: a.url, type: "link", style: object.settings.button_type %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>

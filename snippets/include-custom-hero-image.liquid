@@ -1,0 +1,90 @@
+{% if template.suffix contains 'us2020' %}
+  <div id="customHeroImage" class="banner-image template-{{template.suffix}} aaa">
+    <div data-youtube="https://www.youtube.com/watch?v=DMM2Mu2abPs"></div>
+    {% if page.metafields.custom_fields["custom_title"] != blank %}
+      <h1>{{ page.metafields.custom_fields["custom_title"] }}</h1>
+    {% endif %} 
+    
+  </div>
+
+  {{ 'youtube_bg.js' | asset_url | script_tag }} 
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      jQuery('[data-youtube]').youtube_background({
+        'play-button': false
+      });
+    });
+  </script>
+{% else %}
+  <div id="customHeroImage" class="banner-image template-{{template.suffix}} {% if page.metafields.global.custom_heading != blank or page.metafields.global.custom_subheading != blank %}flex_end{% endif %}"{% if template.suffix contains 'game' %}style="display:grid !important;"{% endif%}>
+    {% if page.metafields.custom_fields["custom_title"] != blank and page.metafields.global.custom_heading == blank %}
+      <h1>{{ page.metafields.custom_fields["custom_title"] }}</h1>
+    {% endif %}
+    {% if page.metafields.custom_fields["button_url"] != blank %}
+
+    <div style="margin:auto !important;">
+      <a href="{{ page.metafields.custom_fields["button_url"] }}">
+		<div class="button">
+          {% if page.metafields.custom_fields["button_text"] != blank %}<p>{{ page.metafields.custom_fields["button_text"] }}</p>{%endif%}
+      	</div>
+    </a>
+    </div>
+    {%endif%}
+    {% if page.metafields.global.custom_heading != blank or page.metafields.global.custom_subheading != blank %}
+    <div class="caption-content" style="background-image: url(//cdn.shopify.com/s/files/1/0274/4310/1829/t/56/assets/homeCaptionArrow_1000x.png?v=13590802812995073125)"> 
+      {% unless page.metafields.global.custom_heading == blank %}
+      <h2 class="caption__heading title "> 
+        <span>{{ page.metafields.global.custom_heading }}</span>
+      </h2> 
+      {% endunless %}
+      
+      {% unless page.metafields.global.custom_subheading == blank %}
+      <div class="caption__subheading"> 
+        <p>{{ page.metafields.global.custom_subheading }}</p>
+      </div>
+      {% endunless %}
+      
+    </div>
+    {% endif %}
+
+  </div>
+
+{% endif %}
+
+<style>
+  #customHeroImage {
+    {% if page.metafields.custom_fields["custom_hero_image"] != blank %}
+    background-image: url({{ page.metafields.custom_fields["custom_hero_image"] }});
+    background-size: cover;
+    background-position: center;
+    height: 35vw;
+    min-height: 200px;
+    {% endif %}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .custom-header-top-page #customHeroImage {
+    background-position: 50% 0%;
+  }
+  #customHeroImage h1 {
+    display: inline-block;
+    color: white;
+    font-size: 50px;
+  }
+  @media (max-width: 600px) {
+    #customHeroImage h1 {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.21);
+    }
+  }
+</style>
+<script>
+$(document).ready(function(){
+  $('main').addClass('no-top-padding');
+});
+</script>

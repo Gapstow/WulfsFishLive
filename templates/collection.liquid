@@ -1,0 +1,78 @@
+{% comment %}
+  To edit the contents of this file, look inside the `sections` folder for the file name that comes directly after `section`. Eg. {% section 'product__main' %} or {% section 'page__banner' %}
+
+  - https://help.shopify.com/en/themes/development/templates/collection-liquid
+{% endcomment %}
+
+<div id="template-{{ template | replace: '.', '-' | handle }}" class="shopify-section collection-page has-padding-top" data-check-for-order="true">
+  {% comment %} Collection banner {% endcomment %}
+  {% section 'collection__banner' %}
+  <section class="section__wrapper
+                  section
+                  ">
+
+
+  {% if section.settings.hide_top_row == false %}
+  {% endif %}
+    <div id="oldFullWidthBreadcrumbRow" class="container {% if settings.heading_divider_style == 'long' %}has-heading-divider-below {% endif %}">
+
+    <div class="one-whole column desktop__hide">
+      <h1 class="page__title page__title-mobile ">{{collection.title}}</h1>
+    </div>
+
+      <div class="one-half medium-down--one-whole column has-no-side-gutter hide-when-banner-enabled">
+        
+{% comment %} moved to sidebar Feb 10 2021 
+{% endcomment %}
+      <!-- TrustBox widget - Micro Combo -->
+      <div class="trustpilot-widget" data-locale="en-US" data-template-id="5419b6ffb0d04a076446a9af" data-businessunit-id="5eff6dcc8f22580001ad9ad4" data-style-height="20px" data-style-width="100%" data-theme="light">
+      <a href="https://www.trustpilot.com/review/wulfsfish.com" target="_blank" rel="noopener">Trustpilot</a>
+      </div>
+      <!-- End TrustBox widget -->
+      </div>
+      <div class="collection__filters one-half medium-down--one-whole column">
+        {% comment %} Collection filters {% endcomment %}
+        {% include 'collection__filters' %}
+      </div>
+      {% if settings.heading_divider_width != 0 and settings.heading_divider_style == 'long' %}
+        <div class="heading-divider-below heading-wrapper one-whole column hide-when-banner-enabled">
+          <div class="heading-divider
+                      heading-divider--{{ settings.heading_divider_style }}"
+                {% if settings.heading_divider_animation != "none" %}
+                  data-scroll-class="{{ settings.heading_divider_animation }}"
+                {% endif %}>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="clearfix"></div>
+
+
+
+    {% comment %} Collection description {% endcomment %}
+    {% if collection.description != blank %}
+      <div class="container">
+        <div class="one-whole column">
+          <div class="collection__description has-padding-bottom">
+            {{ collection.description }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% comment %} Collection sidebar and main content area {% endcomment %}
+    <div class="container collection__content">
+      {% section 'collection__sidebar' %}
+      {% section 'collection__main' %}
+    </div>
+  </section>
+
+      {% comment %} 
+        {% section 'index__featured-testimonials' %}
+      {% endcomment %}
+      
+      
+      {% section 'index__chef-reviews' %}
+
+</div>
+

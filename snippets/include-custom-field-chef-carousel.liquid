@@ -1,0 +1,13 @@
+
+<div id="customFieldChefs">
+{% for item in shop.metafields.custom_fields["chefs_reviews"] %}
+  <div class="chef-outer">
+    <div class="chef-wrapper">
+      <img class="chef-image" src="{{ item['chef_image'] }}" alt="" class="chef-image">
+      <h3 class="chef-name">{{ item["chef_name"] }}</h3>
+      <h4 class="chef-title">{{ item["chef_title"] }}</h4>
+      <p class="chef-review">{{ item["chef_review"] }}</p>
+    </div>
+  </div>
+{% endfor %}
+</div>

@@ -1,0 +1,84 @@
+
+<section>
+  <div class="container is-flex">
+    <div class="tracktor-column">
+      <div class="tracktor-form">
+      {% include 'include-tracktor-form' %}
+      </div>
+    </div>
+    <div class="tracktor-column">
+      <div class="tracktor-image text-center">
+        <img src="{{ section.settings.image | img_url:'800x' }}" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<style>
+#shopify-section-tracktor__main .container.is-flex {
+  max-width: {{ section.settings.max_width }}px;
+}
+#shopify-section-tracktor__main .tracktor-image img {
+  max-width: {{ section.settings.image_max_width }}px;
+}
+#shopify-section-{{ section.id }} #tracktorOrderForm h1 {
+  color: {{ section.settings.title_color }};
+  font-size: {{ section.settings.title_size }}px;
+}
+#shopify-section-prefooter {
+  padding-top: 50px!important;
+}
+/**/
+</style>
+{% schema %}
+  {
+    "name": "Tracktor Form",
+    "class": "tracktor-section",
+    "settings": [
+      {
+        "type": "range",
+        "id": "max_width",
+        "label": "Section Max Width",
+        "min": 300,
+        "max": 1200,
+        "step": 10,
+        "default": 900
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Track..."
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Heading Color",
+        "default": "#888"
+      },
+      {
+        "type": "range",
+        "id": "title_size",
+        "label": "Heading size",
+        "min": 14,
+        "max": 100,
+        "default": 46
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "range",
+        "id": "image_max_width",
+        "label": "Image Max Width",
+        "min": 100,
+        "max": 1000,
+        "step": 10,
+        "default": 340
+      }
+    ]
+  }
+{% endschema %}

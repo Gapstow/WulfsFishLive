@@ -1,0 +1,80 @@
+<!-- product articles  -->
+{% comment %}
+{% if product.metafields.custom_fields["related_posts"] != blank %}
+  <section class="section__wrapper section">
+    <div class="custom-field custom-field__related-posts custom-field__type--field-collection">
+    <h1 class="featured-collection__title title">{{section.settings.title}} Reverse</h1>
+      <div class="custom-field--value">
+        {% assign separator = "|###|" %}
+        {% assign post_array = product.metafields.custom_fields["post"] | split: separator %}
+        {% assign fc_keys = product.metafields.custom_fields["related_posts"] | split: "," %}
+        <div class="container">
+          {% for i in fc_keys %}
+            <!-- next i is {{i}} -->
+            {% assign index = i | plus: 0 %}
+            {% assign article_blog_handle = post_array[index] | split: "." %}
+            <!--  article_blog_handle =  {{article_blog_handle}}  article_blog_handle[0] = {{article_blog_handle[0]}}   article_blog_handle[1] = {{article_blog_handle[1]}}  -->
+            {% for article in blogs[article_blog_handle[0]].articles %}
+              {% if article.handle contains article_blog_handle[1] %}
+                <!-- {{ article.title | link_to: article.url }} -->
+                {% include 'include-blog-card' %}
+
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+{% endcomment %}
+
+  <section class="section__wrapper section">
+    <div class="custom-field custom-field__related-posts custom-field__type--field-collection">
+    <h1 class="featured-collection__title title">{{section.settings.title}} Reverse</h1>
+      <div class="custom-field--value">
+        <div class="container container-accordion-articles">
+          {% assign blog_handles = "chef-box-series,wulfs-kitchen,the-perfect-pair,chefs-at-home,americas-test-kitchen,ask-a-fishmonger,hooked,from-the-journal,wulf-s-troquet-meal-kits" | split: "," %}
+            {% for handle in blog_handles %}
+              {% assign myblog = blogs[handle] %}
+              {% paginate myblog.articles by 100 %}
+                {% for article in myblog.articles %}
+                  {% if article.metafields.custom_fields["related_products"] != blank %}
+                  {% assign separator = "|###|" %}
+                  {% assign related_product_array = article.metafields.custom_fields["related_product"] | split: separator %}
+                  {% assign fc_keys = article.metafields.custom_fields["related_products"] | split: "," %}
+                  {% for i in fc_keys %}
+                    {% assign index = i | plus: 0 %}
+                    {%if related_product_array[index] == product.handle %}
+                      {% include 'include-blog-card' %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+            {% endpaginate %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+{% schema %}
+
+{
+  "name": "Related Articles",
+  "class": "blog-main has-sidebar-option jsBlog",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Related Posts Title",
+      "default": "Cook With This Product!"
+    }
+  ]
+}
+
+{% endschema %}

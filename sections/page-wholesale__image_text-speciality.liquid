@@ -1,0 +1,41 @@
+<div class="wholesale-image-text">
+  <div class="section">
+      <h2 class="background">
+          <span>LEARN ABOUT <br>Speciality Items</span>
+      </h2>
+      <div class="wholesale-image-text-block">
+          <div class="wholesale-image-block">
+              {{page.metafields.custom_fields['map_image']}}
+          </div>
+          <div class="wholesale-text-block">
+              {% if page.metafields.custom_fields["map_title"] != blank %}
+                  <h3>{{ page.metafields.custom_fields["map_title"] }}</h3>
+              {% endif %}
+              {% if page.metafields.custom_fields["map_content"] != blank %}
+                  {{ page.metafields.custom_fields["map_content"] }}
+              {% endif %}
+              <label>Sizes:</label>
+
+              {% if page.metafields.custom_fields["size_repeater"] != blank %}
+                  <div class="image-text-items">
+                      {% for item in page.metafields.custom_fields["size_repeater"] %}
+                          <div class="image-text-item">
+                              {% if item["size_title"] != blank %}
+                                  <label>{{ item["size_title"] }}</label>
+                              {% endif %}
+                              <div>
+                                  {% if item["size_image"] != blank %}
+                                      {{ item["size_image"] }}
+                                  {% endif %}
+                                  {% if item["size_number"] != blank %}
+                                      <span>{{ item["size_number"] }}</span>
+                                  {% endif %}
+                              </div>
+                          </div>
+                      {% endfor %}
+                  </div>
+              {% endif %}
+          </div>
+      </div>
+  </div>
+</div>

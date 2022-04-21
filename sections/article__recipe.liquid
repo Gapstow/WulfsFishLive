@@ -1,0 +1,318 @@
+  <section id="recipeCardHeader" class="section">
+    <!-- Recipe Card Header -->
+    <a class="print-icon" href="javascript:window.print()"><img src="{{ section.settings.print_icon | img_url }}" alt="Print This Page"/><span>Print</span></a>
+    <h1 class="article__title title">{{ article.title }}</h1>
+    <div id="recipeMeta">
+      <div class="recipe-meta-item recipe-meta-author">
+        <span>{{ article.metafields.custom_fields["recipe_author"] }}</span>
+      </div>
+      {% if article.metafields.custom_fields["serves"] != blank %}
+        <div class="recipe-meta-item recipe-meta-field">
+          {% if section.settings.serves_icon != blank %}
+            <img src="{{ section.settings.serves_icon | img_url }}" />
+          {% endif %}
+          <span>Serves: </span>
+          <span>{{ article.metafields.custom_fields["serves"] }}</span>
+        </div>
+      {% endif %}
+      {% if article.metafields.custom_fields["prep_time"] != blank %}
+        <div class="recipe-meta-item recipe-meta-field">
+          {% if section.settings.prep_icon != blank %}
+            <img src="{{ section.settings.prep_icon | img_url }}" />
+          {% endif %}
+          <span>Prep Time: </span>
+          <span>{{ article.metafields.custom_fields["prep_time"] }} min</span>
+        </div>
+      {% endif %}
+      {% if article.metafields.custom_fields["cook_time"] != blank %}
+        <div class="recipe-meta-item recipe-meta-field">
+          {% if section.settings.cook_icon != blank %}
+            <img src="{{ section.settings.cook_icon | img_url }}" />
+          {% endif %}
+          <span>Cook Time: </span>
+          <span>{{ article.metafields.custom_fields["cook_time"] }} min</span>
+        </div>
+      {% endif %}
+      {% if article.metafields.custom_fields["cooking_equipment"] != blank %}
+        <div class="recipe-meta-item recipe-meta-field">
+          {% if section.settings.equipment_icon != blank %}
+            <img src="{{ section.settings.equipment_icon | img_url }}" />
+          {% endif %}
+          <span>Cooking Equipment: </span>
+          {% for item in article.metafields.custom_fields["cooking_equipment"] %}
+          <span>{{ item["cooking_equipment"] }}</span>{% unless forloop.last %}, {% endunless %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if article.metafields.custom_fields["difficulty"] != blank %}
+        <div class="recipe-meta-item recipe-meta-field">
+          {% if section.settings.difficulty_icon != blank %}
+            <img src="{{ section.settings.difficulty_icon | img_url }}" />
+          {% endif %}
+          <span>Difficulty: </span>
+          <span>{{ article.metafields.custom_fields["difficulty"] }}</span>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+ 
+  {% if article.metafields.custom_fields["banner_slide"] != blank %}
+  <section id="recipeCardCarousel" class="section">
+    <!-- Recipe Card Carousel -->
+    {% assign slide_count = article.metafields.custom_fields['banner_slide']  | size %}
+    {% if slide_count > 1 %}
+      {% assign bannerId = 'recipeCardCarouselWrapper' %}
+    {% else %}
+      {% assign bannerId = 'recipeCardBannerWrapper' %}
+    {% endif %}
+    <div id="{{ bannerId }}" data-slide-count="{{ slide_count }}">
+      {% if article.metafields.custom_fields["use_video_banner"] == 1 %}
+      	<iframe width="100%" height="60%" src="{{article.metafields.custom_fields['banner_video_url']}}" frameborder="0" allowfullscreen></iframe>
+      {% else %}
+        {% for item in article.metafields.custom_fields["banner_slide"] limit:9 %}
+        <div class="full-bleed-recipe-card-slide" style="background-image: url({{ item['slide_image'] }});">
+          {% if item["slide_caption"] != blank %}<div class="recipe-card-slide-caption">{{ item["slide_caption"] }}</div>{% endif %}
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if article.metafields.custom_fields["chef_story_advanced"] != blank %}
+        <div id="chefStory"><p>{{ article.metafields.custom_fields["chef_story_advanced"] }}</p></div>
+    {% else %}
+      {% if article.metafields.custom_fields["chefs_story"] != blank %}
+        <div id="chefStory"><p>{{ article.metafields.custom_fields["chefs_story"] }}</p></div>
+      {% endif %}
+    {% endif %}
+
+  </section>
+  {% endif %}
+
+ 
+
+  <section id="recipeCardIngredients" class="section">
+    <!-- Recipe Card Ingredients -->
+    <h1 class="recipe-section-title ingredients-title">Ingredients</h1>
+    <div class="container container-ingredients">
+      <div class="column one-half ingredients-products">
+      {% if article.metafields.custom_fields["recipe_related_product"] != blank %}
+        {% assign product_refs = article.metafields.custom_fields["recipe_related_product"] | split: "|" %}
+        {% for product_handle in product_refs %}
+          <div class="recipe-card-product" data-recipe-handle="{{ product_handle }}">
+            {% assign product_ref = all_products[product_handle] %}
+            {% if product_ref != blank %}
+              <a href="{{ product_ref.url }}">
+                <img src="{{ product_ref.featured_image | img_url:'400x400', crop:'center' }}" alt="">
+                <h2 class="product-title">{{ product_ref.title  }}</h2>
+                <p><span class="money">{{ product_ref.price | money }}</span></p>
+              </a>
+            {% else %}
+                <img src="https://cdn.shopify.com/s/files/1/0274/4310/1829/files/Logo_alt_-_navy_x250.png?v=1612456867" alt="">
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+      </div>
+      <div class="column one-half ingredients-listings">
+      {% if article.metafields.custom_fields["recipe_section"] != blank %}
+        {% for item in article.metafields.custom_fields["recipe_section"] %}
+          <div class="recipe-ingredient-section">
+            {% if item["ingredients_heading"] != blank %}
+              <h3 class="ingredients-heading">{{ item["ingredients_heading"] }}</h3>
+            {% endif %}
+              <ul>
+                {% for repeater_item in item["ingredients_list"] %}
+                <li>{{ repeater_item["ingredients_list"] }}</li>
+                {% endfor %}
+              </ul>
+           </div>
+        {% endfor %}
+      {% endif %}
+      </div>
+    </div>
+    <!-- End Recipe Card Ingredients -->
+  </section>
+
+
+
+  <section id="recipeCardInstructions" class="section">
+    <!-- Recipe Card Instructions -->
+    <h1 class="recipe-section-title instructions-title">Instructions</h1>
+    <div class="tabs">
+      {% for item in article.metafields.custom_fields["recipe_section"] %}
+        {% if item["instructions_heading"] != blank %}
+        <a class="tablinks instructions-tablink{% if forloop.first %} active{% endif %}" onclick="openPanel(event, 'panel-{{ forloop.index }}')">{{ item["instructions_heading"] }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="recipe-panels">
+      {% for item in article.metafields.custom_fields["recipe_section"] %}
+        <div id="panel-{{ forloop.index }}" class="tabcontent"{% if forloop.first %} style="display: block;"{% endif %}>
+          <h3 class="mobile-instruction-step-title">{{ item["instructions_heading"] }}</h3>
+          {% for repeater_item in item["instructions_steps"] %}
+          <div class="instructions-step">
+            <span class="instruction-step-number">{{ forloop.index }}.</span>
+            <p class="instruction-step-content">{{ repeater_item["instructions_steps"] }}</p>
+          </div>
+          {% endfor %}
+
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+{% if article.metafields.custom_fields["related_recipes"] != blank %}
+  <section id="relatedRecipes" class="section">
+    <h1 class="recipe-section-title related-title">Related</h1>
+    <div class="related-recipes-container">
+      {% for item in article.metafields.custom_fields["related_recipes"] %}
+        <div class="related-recipe-card">
+        {% assign handle = item["related_recipearticle"] %}
+        <!-- {{ handle }} -->
+        {% assign fullHandle = handle | replace_first: '.', '/' %}
+        <!-- {{ fullHandle }} -->
+        {% assign article = articles[fullHandle] %}
+        {% assign articleTitle = article.title %}
+        {% assign articleUrl = article.url %}
+        {% assign titleParts = articleTitle | split: ':' %}
+        <div class="recipe-image" style="background-image: url({{article.image | img_url:'500x500', crop:'center' }});"><a href="{{ articleUrl }}"></a></div>
+        <h3 class="recipe-title"><a href="{{ articleUrl }}">{{ titleParts.last }}</a></h3>
+        <h4 class="blog-title">{{ titleParts.first }}</h4>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+
+<script>
+function openPanel(evt, panelName) {
+  var i, tabcontent, tablinks;
+
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  document.getElementById(panelName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+  $(document).ready(function(){
+    if ( $('#recipeCardCarouselWrapper').length ) {
+      $('#recipeCardCarouselWrapper').flickity({
+        wrapAround: true,
+        imagesLoaded: true,
+        on: {
+          ready: function ready() {
+            // Reset layout to avoid collapsing issues
+            setTimeout(function () {
+              $(recipeCardCarouselWrapper).flickity('resize');
+              $(recipeCardCarouselWrapper).fadeIn().css('opacity','1');
+            }, 500);
+          }
+        }
+      });
+    }
+  });
+</script>
+
+ 
+<style>
+.article-recipe-card #recipeCardHeader .article__title {
+  font-size: {{ section.settings.article_title_size }}px;
+}
+.article-recipe-card .recipe-section-title {
+  font-size: {{ section.settings.section_title_size }}px;
+}
+.article-recipe-card .recipe-ingredient-section li,
+.article-recipe-card #recipeCardInstructions .instruction-step-content {
+  font-size: {{ section.settings.body_size }}px;
+}
+#chefStory p {
+  font-size: {{ section.settings.description_size }}px;
+}
+#chefStory {
+  margin-top: 75px;
+}
+/**/
+</style>
+ {% schema %}
+  {
+    "name": "Recipe Card Settings",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "print_icon",
+        "label": "Print Icon"
+      },
+      {
+        "type": "image_picker",
+        "id": "serves_icon",
+        "label": "Serves Meta Icon"
+      },
+      {
+        "type": "image_picker",
+        "id": "prep_icon",
+        "label": "Prep Time Meta Icon"
+      },
+      {
+        "type": "image_picker",
+        "id": "cook_icon",
+        "label": "Cook Time Meta Icon"
+      },
+      {
+        "type": "image_picker",
+        "id": "equipment_icon",
+        "label": "Equipment Meta Icon"
+      },
+      {
+        "type": "image_picker",
+        "id": "difficulty_icon",
+        "label": "Difficulty Meta Icon"
+      },
+      {
+        "type": "range",
+        "id": "article_title_size",
+        "label": "Article Title Size",
+        "min": 5,
+        "max": 60,
+        "default": 38,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "section_title_size",
+        "label": "Section Title Size",
+        "min": 5,
+        "max": 80,
+        "default": 38,
+        "info": "Ingredients, Instructions, etc",
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "description_size",
+        "label": "Recipe Description Size",
+        "min": 5,
+        "max": 80,
+        "info": "Top description (optional)",
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "body_size",
+        "label": "Recipe Body Size",
+        "min": 5,
+        "max": 80,
+        "default": 24,
+        "unit": "px"
+      }
+    ]
+  }
+{% endschema %}

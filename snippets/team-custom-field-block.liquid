@@ -1,0 +1,109 @@
+{% if type == 'block' %}
+    {% capture index %}{{ forloop.index }}{% endcapture %}
+{% else %}
+    {% assign block = item %}
+{% endif %}
+
+{% comment %}Add number to id for each loop{% endcomment %}
+{% capture image %}image{{ index }}{% endcapture %}
+{% capture link %}link{{ index }}{% endcapture %}
+
+<div class="column gallery__item wholesale_our_team {% if show_gutter %} has-gutter{% endif %} {% if object.settings.gallery_type != 'horizontal-masonry' %} {% include 'column-width', value: object.settings.images_per_row %} medium-down--one-half small-down--one-whole {% endif %} ">
+  <div class="gallery__item-wrap is-relative lightbox_image">
+    <div class="image_wrapper">
+      <div class="gallery__item-inner" style="background-image: url({{ item['photo']  }});"></div>
+      <img src='{{ item["photo"] }}' alt="">
+      <div class="info-block">
+        <div class="inner-block">
+          <h3>{{ item["name"] }}</h3>
+          <h4>{{ item["title"] }}</h4>
+          <p class="text-center">{{ item["extra_info"] }}</p>
+          <div class="contact-button-wrapper">
+            <a class="button button--secondary lightbox_contact" href='javascript:;'>Meet {{ item["short_name"] }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>{{ item["name"] }}</h3>
+    <!-- <h4>{{ item["title"] }}</h4> -->
+    <div class="new-custom-member-content">
+      <div class="container">
+        <div class="column one-half medium-down--one-whole team-member-left-column">
+        <div class="title-media-object">
+          <img class="team-popup-photo" src='{{ item["photo"] }}' alt="">
+          <div>
+            <h3>{{ item["short_name"] }}</h3>
+            <p>{{ item["title"] }}</p>
+            {% if item["extra_info"] != blank %}
+              <p>{{ item["extra_info"] }}</p>
+            {% endif %}
+          </div> 
+          
+        </div>
+          {% if item["cf_qa"] != blank %}
+            {% if section.settings.accordion %}
+              <dl class="faq-accordion accordion-icon--{{ settings.toggle_icon_style }}">
+                {% for cf_qa_item in item["cf_qa"] %}
+                  <dt>
+                    <button class="accordion-style--{{ settings.toggle_icon_style }} accordion__button" type="button" aria-controls="panel-m{{ team_index }}-q{{ forloop.index }}" aria-expanded="true">
+                      {% include settings.icon, name: 'down-caret', icon_class: 'icon--rotate' %}
+                      {{ cf_qa_item["question"] }}
+                    </button>
+                  </dt>
+                  <dd id="panel-m{{ team_index }}-q{{ forloop.index }}" aria-hidden="false">
+                    <div class="content">
+                      {{ cf_qa_item["answer"] }}
+                    </div>
+                  </dd>
+                  {%- comment -%}
+                  {%- endcomment -%}
+                {% endfor %}
+                </dl>
+            {% else %}
+              <div>
+                {% for cf_qa_item in item["cf_qa"] %}
+                  <div class="team-qa-wrapper">
+                    <p class="team-qa team-question"><strong>{{ cf_qa_item["question"] }}</strong></p>
+                    <p class="team-qa team-answer">{{ cf_qa_item["answer"] }}</p>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="column one-half medium-down--one-whole team-member-right-column">
+
+          {% if item["products"] != blank %}
+            <h3>{{ item["short_name"] }}'s Picks</h3>
+            <div class="favorite-products custom">
+              {% for products_item in item["products"] %}
+                <div>
+                  {% assign product = all_products[ products_item["product_from_store"] ] %}
+                  <a class="team-media-item" href="{{ product.url}}" data-color="{{ section.settings.background_popup }}" data-section-icon="{{section.settings.icon_image}}">
+                  {% if section.settings.icon_image != blank %}
+                      <img src="{{ section.settings.icon_image | img_url:'92x92', crop:'center' }}" />
+                  {% else %}
+                    {% if products_item["icon"] != blank %}
+                      <img src="{{ products_item['icon'] }}" />
+                    {% else %}
+                      <img src="{{ product.featured_image | img_url:'92x92', crop:'center' }}" />
+                    {% endif %}
+                  {% endif %}
+                    <p><strong>{{- products_item["product_title"] -}}</strong><br><span>{{- products_item["comment_on_product"] | escape -}}</span></p>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+          <div class="contact-button-wrapper">
+            <a class="button button--secondary lightbox_contact" href='mailto:{{ item["email"] }}'>Contact {{ item["short_name"] }}</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

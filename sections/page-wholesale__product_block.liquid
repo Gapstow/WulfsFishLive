@@ -1,0 +1,70 @@
+<div class="Product-blcok__main">
+    <div class="container">
+        {% for block in section.blocks %}
+            <div class="one-fourth medium-down--one-half small-down--one-whole column product__grid-item has-padding-bottom">
+                <div class="product-wrap">
+                    <div class="product-image__wrapper">
+                        <div class="image__container product__imageContainer"> 
+                            <a href="{{ block.settings.link }}"> 
+                                <img src="{{ block.settings.image | img_url: 'master' }}">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="thumbnail__caption text-align-center">
+                        <div class="product-thumbnail">
+                            <a href="{{ block.settings.link }}" class="product-thumbnail__title" style="height: 21px;">{{ block.settings.title }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<style>
+    .page-wholesale__product-block {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+    }
+    .page-wholesale__product-block .Product-blcok__main {
+        width: 100%;
+    }
+    .page-wholesale__product-block .image__container {
+        padding-bottom: 100%
+    }
+    .page-wholesale__product-block .image__container img {
+        position: absolute;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+{% schema %}
+  {
+    "name": "Image block",
+    "class": "has-sidebar-option page-wholesale__product-block",
+    "blocks": [
+      {
+       "type": "block",
+       "name": "Product",
+       "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+       ]
+      }
+    ]
+  }
+  {% endschema %}

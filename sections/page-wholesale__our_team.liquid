@@ -1,0 +1,244 @@
+{% comment %}
+** Gallery - dynamic **
+- Draggable section
+- Uses blocks
+{% endcomment %}
+{% if section.settings.team_toggle %}
+{% include 'include-wholesale__our_team' %}
+{% endif %}
+
+<style>
+.gallery__item {
+  margin-bottom: 20px;
+}
+
+.gallery__item .image_wrapper {
+  position: relative;
+}
+.gallery__item .info-block {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: opacity .3s linear;
+}
+.gallery__item .info-block:hover {
+  opacity: 1;
+}
+.gallery__item .info-block .inner-block {
+  -webkit-transform: translateY(-50.1%);
+  transform: translateY(-50.1%);
+  top: 50%;
+  padding: 10px 0;
+  position: absolute;
+  width: 100%;
+  padding: 20px;
+}
+.info-block .contact-button-wrapper {
+  text-align: center;
+}
+.info-block .lightbox_contact {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-transform: capitalize;
+  max-width: 300px!important;
+  width: 70%!important;
+  font-weight: normal;
+}
+#favDialog {
+  background-color: {{ section.settings.background_popup }}
+}
+#favDialog h3 {
+  color: {{ section.settings.title_popup }}
+}
+#favDialog p,
+#favDialog li,
+#favDialog span {
+  color: {{ section.settings.text_popup }}
+}
+/**/
+</style>
+
+
+{% schema %}
+  {
+    "name": "Our Team",
+    "class": "gallery jsGallery",
+    "max_blocks": 20,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "team_toggle",
+        "label": "Show Team Section"
+      },
+	  {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "select",
+        "id": "gallery_type",
+        "label": "Gallery style",
+        "default": "classic",
+        "options": [
+          {
+            "value": "classic",
+            "label": "Classic"
+          },
+          {
+            "value": "horizontal-masonry",
+            "label": "Horizontal masonry"
+          },
+          {
+            "value": "masonry",
+            "label": "Vertical masonry"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "images_per_row",
+        "label": "Images per row",
+        "min": 2,
+        "max": 8,
+        "step": 1,
+        "default": 4,
+        "info": "Applies to vertical masonry and classic only."
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "select",
+        "id": "width",
+        "label": "Width",
+        "default": "standard",
+        "options": [
+          {
+            "value": "standard",
+            "label": "Standard"
+          },
+          {
+            "value": "wide",
+            "label": "Wide"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_gutter",
+        "label": "Show gutter",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top spacing",
+        "min": 0,
+        "max": 80,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom spacing",
+        "min": 0,
+        "max": 80,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "header",
+        "content": "Popup Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "accordion",
+        "label": "Show Q&A in Accordion Dropdowns",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_image",
+        "label": "Icon for Fave Products",
+        "info": "Square recommended"
+      },
+      {
+        "type": "color",
+        "id": "background_popup",
+        "label": "Popup background",
+        "default": "#ff4444"
+      },
+      {
+        "type": "color",
+        "id": "title_popup",
+        "label": "Titles",
+        "default": "#ff4444"
+      },
+      {
+        "type": "color",
+        "id": "text_popup",
+        "label": "Text",
+        "default": "#ff4444"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Team Member",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "800 x 800px recommended"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_lightbox",
+            "label": "Enhanced Profile",
+            "default": true
+          },
+          {
+            "type": "video_url",
+            "id": "video",
+            "label": "Video link",
+            "accept": ["youtube", "vimeo"],
+            "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Name"
+          },
+          {
+            "type": "richtext",
+            "id": "introduction",
+            "label": "Introduction"
+          },
+          {
+            "type": "text",
+            "id": "email",
+            "label": "Email"
+          },
+          {
+            "type": "url",
+            "id": "product_fave",
+            "label": "Favorite Product"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

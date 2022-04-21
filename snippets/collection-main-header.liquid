@@ -1,0 +1,11 @@
+<div id="interiorCollectionHeader" class="container collection-main-header"> 
+  <div class="two-fifths medium-down--one-whole column has-padding-bottom">
+  {% if section.settings.trustpilot_image != blank %}
+      <img src="{{ section.settings.trustpilot_image | img_url:'x35' }}" />
+    {% endif %}
+    </div>
+  <div class="three-fifths medium-down--one-whole column has-padding-bottom filters-column">
+    {% comment %} Collection filters {% endcomment %}
+    {% include 'collection__filters' %}
+  </div>
+</div>

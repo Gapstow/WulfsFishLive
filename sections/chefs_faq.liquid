@@ -1,0 +1,456 @@
+{% assign id = section.id %}
+{% comment %} Layout {% endcomment %}
+{% assign show_gutter = section.settings.show_gutter %}
+{% assign width = section.settings.width %}
+{% assign padding_top = section.settings.padding_top %}
+{% assign padding_bottom = section.settings.padding_bottom %}
+{% assign animation = section.settings.animation %}
+{% comment %} Advanced {% endcomment %}
+{% assign css_class = section.settings.css_class %}
+{% assign custom_css = section.settings.custom_css %}
+
+{% comment %} Section specific CSS {% endcomment %}
+{% style %}
+  #shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if width == 'wide' %}
+      width: 100%;
+    {% endif %}
+  }
+  {% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+<section class="section chefs_faq_section
+                {{ css_class }}
+                is-width-{{ width }}
+                {% if show_gutter == false %}
+                  has-no-side-gutter
+                  has-background
+                {% else %}
+                  has-gutter-enabled
+                {% endif %}
+                {% if width == 'wide' %}
+                  equal-columns--outside-trim
+                {% endif %}
+                "
+                {% if animation != "none" %}
+                  data-scroll-class="{{ animation }}"
+                {% endif %}>
+    <div class="chefs_faq_faq_title">
+        {% if section.settings.faq_title != blank %}
+            <h1>{{ section.settings.faq_title }}</h1>
+        {% endif %}
+    </div>
+    <div class="container chefs_faq_container">
+        {% capture icon_set %}
+        {% if settings.toggle_icon_style == 'carets' %}
+          {% include settings.icon, name: 'down-caret', icon_class: 'icon--rotate' %}
+        {% else %}
+          {% include settings.icon, name: 'plus', icon_class: 'icon--active' %}
+          {% include settings.icon, name: 'minus' %}
+        {% endif %}
+        {% endcapture %}
+        {% if section.blocks.size > 0 %}
+          <dl class="{{ section.settings.css_class }}faq-accordion accordion-icon--{{ settings.toggle_icon_style }}" style="width: 100%;">
+            {% for block in section.blocks %}
+              {% if block.type == 'content' %}
+
+                {% if block.settings.title != blank %}
+                  <dt>
+                    <button class="accordion-style--{{ settings.toggle_icon_style }} accordion__button" type="button" aria-controls="panel-{{ block.id }}" aria-expanded="true">
+                      {{ icon_set }}
+                      {{ block.settings.title }}
+                    </button>
+                  </dt>
+                  <dd id="panel-{{ block.id }}" aria-hidden="false">
+                    <div class="content">
+                      {{ block.settings.answer }}
+                    </div>
+                  </dd>
+                {% endif %}
+
+              {% elsif block.type == 'heading' %}
+
+                {% if block.settings.title != blank %}
+                  <h2 class="title faq-title">{{ block.settings.title }}</h2>
+                {% endif %}
+
+              {% elsif block.type == 'image' %}
+
+                {% if block.settings.image != blank %}
+                    {% include 'image-element', image: block.settings.image, alt: block.settings.image.alt, stretch_width: true %}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </dl>
+        {% endif %}
+        {% if section.settings.faq_description != blank %}
+            <div class="chefs_faq_faq_description">{{ section.settings.faq_description }}</div>
+        {% endif %}
+    </div>
+    <script>
+      var $faqHeading = $('.faq-accordion > dt > button');
+      $('.faq-accordion > dd').attr('aria-hidden', true);
+      $faqHeading.attr('aria-expanded', false);
+      $faqHeading.on('click activate', function () {
+        var faqTitle = $(this);
+        var faqIcons = $(this).find('.icon');
+        var state = $(this).attr('aria-expanded') === 'false' ? true : false;
+        $(this).attr('aria-expanded', state);
+        $(this).parent().next().slideToggle(function () {
+          if (faqIcons.hasClass('icon--active')) {
+            faqIcons.toggleClass('icon--active');
+          }
+        });
+        $(this).parent().next().attr('aria-hidden', !state);
+        return false;
+      });
+      $faqHeading.on('keydown', function (event) {
+        var keyCode = event.keyCode || e.which;
+    
+        if (keyCode === 13) {
+          $(this).trigger('activate');
+        }
+      });
+    </script>
+</section>
+
+{% schema %}
+{
+  "name": "Chefs FAQ",
+  "class": "image-with-text image-with-text-1",
+  "max_blocks": 8,
+  "settings": [
+    {
+        "type": "text",
+        "id": "faq_title",
+        "label": "Text",
+        "default": "FAQ Title"
+    },
+    {
+        "type": "richtext",
+        "id": "faq_description",
+        "label": "Text",
+        "default": "<p>Description</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "standard",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gutter",
+      "label": "Show gutter",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 80,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Animation",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "fadeIn",
+          "label": "Fade in"
+        },
+        {
+          "value": "fadeInDown",
+          "label": "Fade in down"
+        },
+        {
+          "value": "fadeInLeft",
+          "label": "Fade in left"
+        },
+        {
+          "value": "fadeInRight",
+          "label": "Fade in right"
+        },
+        {
+          "value": "slideInLeft",
+          "label": "Slide in left"
+        },
+        {
+          "value": "slideInRight",
+          "label": "Slide in right"
+        },
+        {
+          "value": "zoomIn",
+          "label": "Zoom in"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Frequently asked question",
+      "type": "content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "What is your question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Provide the answer to the question here.</p>"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "1024 x 1024px recommended"
+        },
+        {
+          "type": "select",
+          "id": "image_crop",
+          "label": "Image cropping",
+          "default": "none",
+          "info": "Only applied when text area is taller than the image.",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading text here"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Base size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "regular",
+              "label": "Regular"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "regular"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p></p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "View all"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            {
+              "value": "button--primary",
+              "label": "Primary"
+            },
+            {
+              "value": "button--secondary",
+              "label": "Secondary"
+            },
+            {
+              "value": "button--link-style",
+              "label": "Link style"
+            }
+          ],
+          "default": "button--primary"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "vertical_position",
+          "label": "Vertical position",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Middle"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with text",
+      "category": "Image",
+      "settings": {
+          "padding_top": 20,
+          "padding_bottom": 20
+      },
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

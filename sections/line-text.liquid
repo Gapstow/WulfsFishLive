@@ -1,0 +1,21 @@
+<div class="page-width">
+    <div class="separator">
+        <div class="line"></div>
+            <h2>{{ section.settings.separator }}</h2>
+        <div class="line"></div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Separator Text",
+  "class": "spaced-section spaced-section--full-width",
+  "settings": [
+    {
+        "type": "text",
+        "id": "separator",
+        "label": "Separator Text"
+    }
+  ]
+}
+{% endschema %}

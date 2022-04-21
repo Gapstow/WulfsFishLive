@@ -1,0 +1,338 @@
+{% comment %}
+Snippet can be used in section or block
+eg. {% include 'include-image-with-text-overlay' %}
+{% endcomment %}
+
+{% comment %}Assign object as block or section{% endcomment %}
+{% if type == 'block' %}
+{% assign object = block %}
+{% else %}
+{% assign object = section %}
+{% endif %}
+
+{% assign id = object.id %}
+{% assign image = object.settings.image %}
+{% assign mobile_image = object.settings.mobile_image %}
+{% assign link = object.settings.link %}
+{% comment %} Text {% endcomment %}
+{% assign pretext = object.settings.pretext %}
+{% assign pretext_color = object.settings.pretext_color %}
+{% assign title = object.settings.title %}
+{% assign title_color = object.settings.heading_color %}
+{% assign subtitle = object.settings.subtitle %}
+{% assign subtitle_color = object.settings.subheading_color %}
+{% assign text_alignment = object.settings.text_alignment %}
+{% assign text_horizontal_position = object.settings.text_horizontal_position %}
+{% assign text_vertical_position = object.settings.text_vertical_position %}
+{% assign text_vertical_adjustment = object.settings.vertical_bottom_adjust_up %}
+{% comment %} Text background {% endcomment %}
+{% assign background_color = object.settings.background_color %}
+{% assign background_color_alpha = object.settings.background_opacity | divided_by: 100.00 %}
+{% assign text_width = object.settings.text_width %}
+{% comment %} Buttons {% endcomment %}
+{% assign button_1 = object.settings.button_1 %}
+{% assign button_1_link = object.settings.button_1_link %}
+{% assign button_1_style = object.settings.button_1_style %}
+{% assign button_2 = object.settings.button_2 %}
+{% assign button_2_link = object.settings.button_2_link %}
+{% assign button_2_style = object.settings.button_2_style %}
+{% if button_1 != blank and button_2 != blank %}
+{% assign buttons = true %}
+{% else %}
+{% assign buttons = false %}
+{% endif %}
+{% assign caption_border_width = object.settings.border_width %}
+{% assign caption_border_color = object.settings.border_color %}
+{% comment %} Mobile {% endcomment %}
+{% assign mobile_text_below_image = object.settings.mobile_text_below_image %}
+{% assign mobile_text_crop = object.settings.mobile_image_crop %}
+{% assign mobile_headline_color = object.settings.heading_color_mobile %}
+{% assign mobile_preheading_color = object.settings.pretext_color_mobile %}
+{% assign mobile_subtitle_color = object.settings.subheading_color_mobile %}
+{% comment %}Layout{% endcomment %}
+{% assign width = object.settings.width %}
+{% assign padding_top = object.settings.padding_top %}
+{% assign padding_bottom = object.settings.padding_bottom %}
+{% assign padding_left = object.settings.padding_left %}
+{% assign padding_right = object.settings.padding_right %}
+{% assign animation = object.settings.animation | default: 'none' %}
+
+{% comment %}Is the color set to transparent?{% endcomment %}
+{% assign heading_alpha = title_color | color_extract: 'alpha' %}
+{% assign preheading_alpha = pretext_color | color_extract: 'alpha' %}
+{% assign subheading_alpha = subtitle_color | color_extract: 'alpha' %}
+{% assign mobile_headline_alpha = mobile_headline_color | color_extract: 'alpha' %}
+{% assign mobile_preheading_alpha = mobile_preheading_color | color_extract: 'alpha' %}
+{% assign mobile_subtitle_alpha = mobile_subtitle_color | color_extract: 'alpha' %}
+{% assign caption_border_alpha = object.settings.border_color | color_extract: 'alpha' %}
+
+{% comment %}Advanced{% endcomment %}
+{% assign css_class = object.settings.css_class %}
+{% assign custom_css = object.settings.custom_css %}
+
+{% comment %}Section specific CSS{% endcomment %}
+{% capture section_css -%}
+
+    .caption.align-bottom {
+        transform: none;
+        bottom: auto;
+        top: clamp(44%,50vh,40vh);
+    }
+    .caption-content {
+        margin-right: -15px;
+        position: relative;
+    }
+    .caption-content:before {
+        display: none;
+        content: '';
+        width: 200px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        transform: translatex(-100%);
+        box-sizing: border-box;
+        border-top: 200px solid transparent;
+        border-right: 100px solid {% if background_color_alpha != 100 %}{{ background_color | color_modify: 'alpha',
+        background_color_alpha }}{% else %}{{ background_color }}{% endif %};
+        border-bottom: 200px solid transparent;
+    }
+
+    .caption-content {
+        {% comment %}background-color: {% if background_color_alpha != 100 %}{{ background_color | color_modify: 'alpha',
+        background_color_alpha }}{% else %}{{ background_color }}{% endif %};{% endcomment %}
+        border: {{ caption_border_width }}px solid {{ caption_border_color }};
+        background-size: cover;
+        background-position: 0% 0;
+        padding-left: 12%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .image-with-text-overlay__heading {
+        color: {% if heading_alpha != 0 %}{{ title_color }}{% else %}{{ settings.heading_color }}{% endif %};
+        font-size: {{ section.settings.heading_size }}px;
+    }
+
+    .image-with-text-overlay__preheading p {
+        color: {% if preheading_alpha != 0 %}{{ pretext_color }}{% else %}{{ settings.heading_color }}{% endif %};
+        font-size: {{ section.settings.pretext_size }}px;
+    }
+
+    .image-with-text-overlay__subheading p {
+        color: {% if subheading_alpha != 0 %}{{ subtitle_color }}{% else %}{{ settings.heading_color }}{% endif %};
+        font-size: {{ section.settings.subheading_size }}px;
+    }
+{%- endcapture -%}
+
+{% comment %}Section specific CSS{% endcomment %}
+
+{% style %}
+    {% include 'css-loop', css: section_css, id: id %}
+
+    @media only screen and (min-width: 1060px) {
+        #shopify-section-{{ id }} .caption.align-bottom {
+            {% comment %}//bottom: 0;{% endcomment %}
+            {% comment %}//transform: translatey(-10%);
+            top: clamp(600px, 70vh, 900px);
+            {% endcomment %}
+        }
+    }
+
+    @media only screen and (min-width: 799px) and (max-width: 1059px) {
+        #shopify-section-{{ id }} .caption.align-bottom {
+            bottom: auto;
+            top: clamp(44%,50vh,40vh);
+            transform: none;
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        #shopify-section-{{ id }} .image-with-text-overlay__heading {
+        color: {% if mobile_headline_alpha != 0 %}{{ mobile_headline_color}}{% endif %};
+        }
+        #shopify-section-{{ id }} .image-with-text-overlay__preheading {
+            color: {% if mobile_preheading_alpha != 0 %}{{ mobile_preheading_color}}{% endif %};
+        }
+        #shopify-section-{{ id }} .image-with-text-overlay__subheading {
+            color: {% if mobile_subtitle_alpha != 0 %}{{ mobile_subtitle_color}}{% endif %};
+        }
+        #shopify-section-{{ id }} .caption.align-bottom {
+            position: absolute;
+            transform: none;
+            margin-bottom: 0;
+            width: 100%;
+            top: 10%;
+            {% comment %}background-color: {% if background_color_alpha != 100 %}{{ background_color | color_modify: 'alpha',
+            background_color_alpha }}{% else %}{{ background_color }}{% endif %};{% endcomment %}
+        }
+        #shopify-section-{{ id }} .caption-content {
+            background-color: transparent;
+            width: 100%;
+            text-align: right;
+            padding-right: 30px;
+        }
+    }
+
+    @media only screen and (min-width: 480px) {
+        #shopify-section-{{ id }} .caption-content {
+            /* width: {{ text_width }}%; */
+            width: auto;
+        }
+    }
+
+    #shopify-section-{{ id }} {
+        padding-top: {{ padding_top }}px;
+        padding-bottom: {{ padding_bottom }}px;
+        padding-left: {{ padding_left }}px;
+        padding-right: {{ padding_right }}px;
+        {% if width == 'wide' %}
+            width: 100%;
+        {% elsif width == 'half' %}
+            width: 50%;
+        {% endif %}
+    }
+    {% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+<section class="section
+    {{ css_class }}
+    is-width-{{ width }}
+    under-overlay-menu
+    mobile-text-under-{{ mobile_text_below_image }}
+    {% if caption_border_alpha != 0 %}
+        has-border
+    {% endif %}
+    " {% if animation !="none" %} data-scroll-class="{{ animation }}" {% endif %}>
+    <div class="container image-with-text-overlay__container
+        {% if width == 'wide' or width == 'half' %}
+            equal-columns--outside-trim
+        {% endif %}">
+        <div class="image-with-text-overlay__banner columns one-whole image-crop-{{ mobile_text_crop }} wholesale_banner_image">
+
+            {% if mobile_image != blank %}
+                {% assign hide_mobile = 'is-hidden-mobile-only' %}
+            {% endif %}
+
+            {% if section.settings.altTag != blank %}
+                {% assign desktopImageAlt = section.settings.altTag %}
+            {% else %}
+                {% assign desktopImageAlt = image.alt %}
+            {% endif %}
+
+            {% if section.settings.altTag-mobile != blank %}
+                {% assign mobileImageAlt = section.settings.altTag-mobile %}
+            {% else %}
+                {% assign mobileImageAlt = image.alt %}
+            {% endif %}
+
+            {% if image != blank %}
+                {% include 'image-element', image: image, alt: desktopImageAlt, stretch_width: true, additional_classes: hide_mobile %}
+            {% else %}
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+
+            {% if mobile_image != blank %}
+                <div class="is-hidden-desktop-only">
+                    {% include 'image-element', image: mobile_image, alt: mobileImageAlt, stretch_width: true %}
+                </div>
+            {% endif %}
+
+            {% if button_1 == blank and button_2 == blank and link != blank %}
+                <a href="{{link}}" class="banner--full-link"></a>
+            {% endif %}
+
+          	{% comment %}  
+          	<div class="wholesale_topnav">
+				<ul class="nav">
+                    <li><a href="#why-wulfs" {% if section.settings.subnav_buttons %} class="topnav_button"{% endif %} >Why Wulf's?</a></li>
+                    <li><a href="#products"{% if section.settings.subnav_buttons %} class="topnav_button"{% endif %}>Products</a></li>
+					<!-- <li><a href="#team">Our Team</a></li> -->
+                    <li><a href="#shopify-section-page-wholesale__corporate-gifts"{% if section.settings.subnav_buttons %} class="topnav_button"{% endif %}>Corporate Gifts</a></li>
+                </ul>
+            </div>
+            {% endcomment %}
+          
+          {% comment %}
+            {% if pretext != blank or title != blank or subtitle != blank or button_1 != blank or button_2 != blank %}
+                <div class="caption text-align-{{ text_horizontal_position }} align-{{ text_vertical_position }} wholesale_banner_caption">
+                    <div class="caption-content text-align-{{ text_alignment }}">
+                        {% if pretext != blank %}
+                            <div class="image-with-text-overlay__preheading banner__subheading pretext subtitle wholesale_banner_title">
+                                {{ pretext }}
+                            </div>
+                        {% endif %}
+                        {% if title != blank %}
+                            <h2
+                                class="image-with-text-overlay__heading banner__heading title {% if settings.banner_heading_size > 35 %}mobile-shrink-text{% endif %}">
+                                <span>{{ title }}</span>
+                            </h2>
+                        {% endif %}
+                        {% if subtitle != blank %}
+                            <div class="image-with-text-overlay__subheading banner__subheading subtitle wholesale_banner_subtitle">
+                                {{ subtitle }}
+                            </div>
+                        {% endif %}
+                        {% if button_1 != blank or button_2 != blank %}
+                            <div class="image-with-text-overlay__buttons buttons {% unless buttons == true %}is-justify-{{ text_alignment }}{% endunless %}">
+
+                                {% if button_1 != blank %}
+                                    {% include 'button', label: button_1, href: button_1_link, type: "link", style: button_1_style, style1: "wholesale_apply" %}
+                                {% endif %}
+                                {% if button_2 != blank %}
+                                    {% include 'button', label: button_2, href: button_2_link, type: "link", style: button_2_style, style1: "wholesale_info" %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+          {% endcomment %}
+          {% include 'custom-arrow-heading' %}
+        </div>
+        <script>
+            function goToByScroll(id) {
+                var scrollTarget = $('#' + id).offset().top - 250;
+                console.log({scrollTarget});
+                $('html, body').animate({
+                    scrollTop: scrollTarget
+                }, 'slow');
+            }
+            $(".nav a").on("click", function () {
+                var position = $(this).parent().position();
+                var width = $(this).parent().width();
+                $(".nav .slide1").css({ opacity: 1, left: +position.left, width: width });
+                if ($(this)[0].innerHTML == "Why Wulf's?") {
+                    goToByScroll('shopify-section-page-wholesale__wulfs_fish');
+                } else if ($(this)[0].innerHTML == "Products") {
+                    goToByScroll('shopify-section-page-wholesale__products');
+                } else if ($(this)[0].innerHTML == "Corporate Gifts") {
+                    goToByScroll('shopify-section-page-wholesale__corporate-gifts');
+                } else if ($(this)[0].innerHTML == "Our Team") {
+                    goToByScroll('shopify-section-page-wholesale__our_team');
+                } else {
+
+                }
+            });
+
+            $(".nav a").on("mouseover", function () {
+                var position = $(this).parent().position();
+                var width = $(this).parent().width();
+                $(".nav .slide2").css({
+                    opacity: 1,
+                    left: +position.left,
+                    width: width
+                });
+            });
+
+            $(".nav a").on("mouseout", function () {
+                $(".nav .slide2").css({ opacity: 0 });
+            });
+
+            // var currentWidth = $(".nav").find("li:nth-of-type(1) a").parent("li").width();
+            // var current = $("li:nth-of-type(1) a").position();
+            // $(".nav .slide1").css({ left: 20+current.left, width: currentWidth });
+        </script>
+    </div>
+</section>

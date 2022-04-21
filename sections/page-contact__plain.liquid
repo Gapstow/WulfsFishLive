@@ -1,0 +1,593 @@
+{% comment %}
+** Contact page - section **
+- Main area
+{% endcomment %}
+<!-- start include contact form -->
+{% include 'include-contact-form', context: 'contact-template' %}
+<!-- end include contact form -->
+
+<style>
+.contact-form__heading.title {
+  color: {{ section.settings.form_header_text_color }};
+  font-size: 30px;
+  line-height: 130%;
+  text-transform: none;
+}
+/**/
+</style>
+
+{% schema %}
+  {
+    "name": "Contact",
+    "class": "contact-section jsCustomContactForm",
+    "max_blocks": 10,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "content_image",
+        "label": "Image",
+        "info": "1000 x 1000px recommended"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "content_text",
+        "label": "Text"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_enable",
+        "label": "Display social media icons",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "text_alignment",
+        "label": "Text alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "header",
+        "content": "Contact form"
+      },
+      {
+        "type": "color",
+        "id": "background",
+        "label": "Background",
+        "default": "#E5E5E5"
+      },
+      {
+        "type": "color",
+        "id": "form_header_text_color",
+        "label": "Form Header Text",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text",
+        "default": "#000000",
+        "info": "Does not apply to placeholders."
+      },
+      {
+        "type": "select",
+        "id": "form_position",
+        "label": "Form position",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "right"
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "select",
+        "id": "width",
+        "label": "Width",
+        "default": "wide",
+        "options": [
+          {
+            "value": "standard",
+            "label": "Standard"
+          },
+          {
+            "value": "wide",
+            "label": "Wide"
+          }
+        ],
+        "default": "standard"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top spacing",
+        "default": 40,
+        "min": 0,
+        "max": 80,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom spacing",
+        "default": 40,
+        "min": 0,
+        "max": 80,
+        "unit": "px"
+      },
+      {
+        "type": "header",
+        "content": "Advanced"
+      },
+      {
+        "type": "text",
+        "id": "css_class",
+        "label": "CSS Class"
+      },
+      {
+        "type": "textarea",
+        "id": "custom_css",
+        "label": "Custom CSS"
+      },
+      {
+        "type": "header",
+        "content": "Map"
+      },
+          {
+            "type": "text",
+            "id": "map_address",
+            "label": "Address",
+            "info": "Google Maps will find the exact location"
+          },
+          {
+            "type": "range",
+            "id": "map_height",
+            "min": 300,
+            "max": 600,
+            "step": 10,
+            "unit": "px",
+            "label": "Map height",
+            "default": 400
+          },
+          {
+            "type": "range",
+            "id": "zoom_level",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": "x",
+            "label": "Map zoom level",
+            "default": 16
+          },
+          {
+            "type": "image_picker",
+            "id": "map_image",
+            "label": "Image",
+            "info": "Displayed when map isn't loaded"
+          },
+          {
+            "type": "header",
+            "content": "API key"
+          },
+          {
+            "type": "text",
+            "id": "api_key",
+            "label": "Google Maps API key",
+            "info": "You’ll need to [register a Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_pin",
+            "label": "Show pin",
+            "info": "Requires use of API key",
+            "default": true
+          },
+          {
+            "type": "select",
+            "id": "map_style",
+            "label": "Map color scheme",
+            "options": [
+              {
+                "value": "default",
+                "label": "Default"
+              },
+              {
+                "value": "aubergine",
+                "label": "Aubergine"
+              },
+              {
+                "value": "night",
+                "label": "Night"
+              },
+              {
+                "value": "retro",
+                "label": "Retro"
+              },
+              {
+                "value": "silver",
+                "label": "Silver"
+              }
+            ],
+            "default": "default",
+            "info": "Requires use of API key"
+          },
+          {
+            "type": "header",
+            "content": "Layout"
+          },
+          {
+            "type": "select",
+            "id": "animation",
+            "label": "Animation",
+            "default": "none",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "fadeIn",
+                "label": "Fade in"
+              },
+              {
+                "value": "fadeInDown",
+                "label": "Fade in down"
+              },
+              {
+                "value": "fadeInLeft",
+                "label": "Fade in left"
+              },
+              {
+                "value": "fadeInRight",
+                "label": "Fade in right"
+              },
+              {
+                "value": "slideInLeft",
+                "label": "Slide in left"
+              },
+              {
+                "value": "slideInRight",
+                "label": "Slide in right"
+              },
+              {
+                "value": "zoomIn",
+                "label": "Zoom in"
+              }
+            ]
+          }
+    ],
+    "blocks": [
+      {
+        "type": "checkbox",
+        "name": "Checkbox",
+        "settings": [
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Title",
+            "default": "Select all that apply"
+          },
+          {
+            "type": "checkbox",
+            "id": "required",
+            "label": "Field is required"
+          },
+          {
+            "type": "text",
+            "id": "options_1",
+            "label": "Option 1",
+            "default": "Option 1"
+          },
+          {
+            "type": "text",
+            "id": "options_2",
+            "label": "Option 2",
+            "default": "Option 2"
+          },
+          {
+            "type": "text",
+            "id": "options_3",
+            "label": "Option 3",
+            "default": "Option 3"
+          },
+          {
+            "type": "text",
+            "id": "options_4",
+            "label": "Option 4"
+          },
+          {
+            "type": "text",
+            "id": "options_5",
+            "label": "Option 5"
+          },
+          {
+            "type": "text",
+            "id": "options_6",
+            "label": "Option 6"
+          },
+          {
+            "type": "text",
+            "id": "options_7",
+            "label": "Option 7"
+          },
+          {
+            "type": "text",
+            "id": "options_8",
+            "label": "Option 8"
+          },
+          {
+            "type": "text",
+            "id": "options_9",
+            "label": "Option 9"
+          },
+          {
+            "type": "text",
+            "id": "options_10",
+            "label": "Option 10"
+          }
+        ]
+      },
+      {
+        "type": "email",
+        "name": "Email (required)",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Email field must be included."
+          },
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Label",
+            "default": "Title"
+          }
+        ]
+      },
+      {
+        "type": "dropdown",
+        "name": "Drop-down",
+        "settings": [
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Title",
+            "default": "Make a selection"
+          },
+          {
+            "type": "checkbox",
+            "id": "required",
+            "label": "Field is required"
+          },
+          {
+            "type": "text",
+            "id": "options_1",
+            "label": "Option 1",
+            "default": "Option 1"
+          },
+          {
+            "type": "text",
+            "id": "options_2",
+            "label": "Option 2",
+            "default": "Option 2"
+          },
+          {
+            "type": "text",
+            "id": "options_3",
+            "label": "Option 3",
+            "default": "Option 3"
+          },
+          {
+            "type": "text",
+            "id": "options_4",
+            "label": "Option 4"
+          },
+          {
+            "type": "text",
+            "id": "options_5",
+            "label": "Option 5"
+          },
+          {
+            "type": "text",
+            "id": "options_6",
+            "label": "Option 6"
+          },
+          {
+            "type": "text",
+            "id": "options_7",
+            "label": "Option 7"
+          },
+          {
+            "type": "text",
+            "id": "options_8",
+            "label": "Option 8"
+          },
+          {
+            "type": "text",
+            "id": "options_9",
+            "label": "Option 9"
+          },
+          {
+            "type": "text",
+            "id": "options_10",
+            "label": "Option 10"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "name": "Paragraph",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this field to display&nbsp;text of any kind, such as&nbsp;standard reply times for inquiries.</p>"
+          }
+        ]
+      },
+      {
+        "type": "radio",
+        "name": "Radio buttons",
+        "settings": [
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Title",
+            "default": "Choose an option"
+          },
+          {
+            "type": "checkbox",
+            "id": "required",
+            "label": "Field is required"
+          },
+          {
+            "type": "text",
+            "id": "options_1",
+            "label": "Option 1",
+            "default": "Option 1"
+          },
+          {
+            "type": "text",
+            "id": "options_2",
+            "label": "Option 2",
+            "default": "Option 2"
+          },
+          {
+            "type": "text",
+            "id": "options_3",
+            "label": "Option 3",
+            "default": "Option 3"
+          },
+          {
+            "type": "text",
+            "id": "options_4",
+            "label": "Option 4"
+          },
+          {
+            "type": "text",
+            "id": "options_5",
+            "label": "Option 5"
+          },
+          {
+            "type": "text",
+            "id": "options_6",
+            "label": "Option 6"
+          },
+          {
+            "type": "text",
+            "id": "options_7",
+            "label": "Option 7"
+          },
+          {
+            "type": "text",
+            "id": "options_8",
+            "label": "Option 8"
+          },
+          {
+            "type": "text",
+            "id": "options_9",
+            "label": "Option 9"
+          },
+          {
+            "type": "text",
+            "id": "options_10",
+            "label": "Option 10"
+          }
+        ]
+      },
+      {
+        "type": "textarea",
+        "name": "Text area",
+        "settings": [
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Title"
+          },
+          {
+            "type": "checkbox",
+            "id": "required",
+            "label": "Field is required"
+          }
+        ]
+      },
+      {
+        "type": "textfield",
+        "name": "Text field",
+        "settings": [
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Label",
+            "default": "Title"
+          },
+          {
+            "type": "checkbox",
+            "id": "required",
+            "label": "Field is required"
+          }
+        ]
+      }
+    ],
+    "default": {
+      "settings": {
+        "title": "Get in touch today",
+        "content_text": "<p>Customize your contact form to suit your business! Add custom fields like a dropdown menu, checkbox, text fields and more, so that you can gather pertinent info from shoppers right from the get-go, to help answer their inquiries more effectively.</p>"
+      },
+      "blocks": [
+        {
+          "type": "textfield",
+          "settings": {
+            "label": "Name",
+            "required": true
+          }
+        },
+        {
+          "type": "email",
+          "settings": {
+            "label": "Email"
+          }
+        },
+        {
+          "type": "textarea",
+          "settings": {
+            "label": "Message",
+            "required": true
+          }
+        }
+      ]
+    }
+  }
+{% endschema %}

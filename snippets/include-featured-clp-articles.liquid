@@ -1,0 +1,195 @@
+{% comment %}
+  Snippet can be used in section or block
+  eg. {% include 'include-featured-blog' %}
+{% endcomment %}
+
+
+{% if type == 'block' %}
+  {% assign object = block %}
+{% else %}
+  {% assign object = section %}
+{% endif %}
+{% comment %}Assign object as block or section{% endcomment %}
+<!-- type: {{type}} object: {{object}}-->
+
+
+{% assign id = object.id %}
+{% assign title = object.settings.title %}
+{% assign subtitle = object.settings.subtitle %}
+{% assign blog_widget_select = object.settings.blog_widget_select %}
+{% assign home_page_articles = object.settings.home_page_articles %}
+{% assign home_page_articles = 40 %}
+{% comment %}Layout{% endcomment %}
+{% assign width = object.settings.width %}
+{% assign padding_top = object.settings.padding_top %}
+{% assign padding_bottom = object.settings.padding_bottom %}
+{% comment %} Advanced {% endcomment %}
+{% assign css_class = object.settings.css_class %}
+{% assign custom_css = object.settings.custom_css %}
+
+<!-- blog_widget_select: {{blog_widget_select}} home_page_articles: {{home_page_articles}}-->
+
+
+{% comment %} Section specific CSS {% endcomment %}
+{% style %}
+  #shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if width == 'wide' -%}
+      width: 100%;
+    {%- endif %}
+  }
+  {% include 'css-loop', css: custom_css, id: id %}
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+<section class="section
+                {{ css_class }}
+                is-width-{{ width }}">
+
+
+
+  {% if title != blank or subtitle != blank %}
+    <div class="container heading-container blog-posts-heading-container">
+      {% if title != blank %}
+        {% include 'heading', title: object.settings.title, heading_tag: 'h1', context: 'featured-collection', text_alignment: 'left', enable_divider: false %}
+      {% endif %}
+      {% if subtitle != blank %}
+        {% include 'heading', title: object.settings.subtitle, heading_tag: 'h2', context: 'featured-collection', text_alignment: 'left', enable_divider: false %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% assign article_counter = 0 %}
+
+  <div class="container blog-container">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        {% assign article = block.settings.article %}
+          {% if article.tags contains 'Chefs at Home' %}   {% endif %} 
+          {% assign article_counter = article_counter | plus:1 %}
+
+
+          {% assign isChefHome = false %}
+          {% for tag in article.tags %} 
+            {% if tag == 'Chefs at Home' %}{% assign isChefHome = true %}{% endif %}
+          {% endfor %}
+
+          <div class="featured-article blog-card {% include 'column-width', value: object.settings.home_page_articles %} columns article card show-border-{{ object.settings.show-border }} medium-down--one-whole has-margin-bottom ">
+            
+            
+            <!-- Article #{{article_counter}} -  tags: {% for tag in article.tags %} {{ tag }}{% unless forloop.last %} | {% endunless %}{% endfor %} -->
+            {% if article.image %}
+              <div class="card-image blog-card__image">
+                <figure class="image">
+                  <a href="{{ article.url }}" title="{{ article.title | escape }}">
+
+            {% if section.settings.basic_image %}
+              {% assign imageHeightWidth = section.settings.thumbnail_height %}
+              {% assign imgUrlSize = imageHeightWidth | append: 'x' %}
+              {% assign imgUrlSize = imgUrlSize | append: imageHeightWidth %}
+              <!-- {{ imgUrlSize }} -->
+              <img src="{{ article.image | img_url:imgUrlSize, crop: 'center' }}" />
+            {% else %}
+              {% comment %} just making everything SQUARE!! 
+                {% include 'image-element', image: article.image, alt: article.image.alt %}
+              {% endcomment %}
+              {% assign imageHeightWidth = '400' %}
+              {% assign imgUrlSize = imageHeightWidth | append: 'x' %}
+              {% assign imgUrlSize = imgUrlSize | append: imageHeightWidth %}
+              <!-- {{ imgUrlSize }} -->
+              <img src="{{ article.image | img_url:imgUrlSize, crop: 'center' }}" />
+
+            {% endif %}
+            
+                  </a>
+                </figure>
+              </div>
+            {% endif %}
+
+            <div class="card-content blog-card__content">
+              <div class="media">
+                <div class="media-content">
+                  <h3 class="title">
+                    <a class="featured-article--link" href="{{ article.url }}" title="{{ article.title | escape }}">{{ article.title }}</a>
+                  </h3>
+                </div>
+              </div>
+              
+
+              {% if object.settings.blog_show_excerpt%}
+
+                {% if article.excerpt != blank %}
+
+                  {% assign postexcerpt = article.excerpt | size %}
+                  {% if postexcerpt > 150 %}
+                    {% assign excerptlength = 'lg' %}
+                  {% elsif postexcerpt <= 150 %}
+                    {% assign excerptlength = 'sm' %}
+                  {% endif %}
+                  <div class="excerpt excerpt-length-{{ excerptlength }} has-margin-bottom">
+                    {{ article.excerpt }}
+                    <span class="truncation-fade"></span> 
+                  </div>
+
+                {% else %}
+
+                  {% assign postexcerpt = article.content | strip_html | truncatewords: 30 %}
+                  {% if postexcerpt > 150 %}
+                      {% assign excerptlength = 'lg' %}
+                  {% elsif postexcerpt <= 150 %}
+                      {% assign excerptlength = 'sm' %}
+                  {% endif %}
+                  <div class="excerpt excerpt-length-{{ excerptlength }} has-margin-bottom">
+                    {{ postexcerpt }}
+                    1h</span> -->
+                  </div>
+
+                {% endif %}
+
+              {% endif %}
+
+
+              
+
+              <div class="meta-info is-small">
+                {% if object.settings.blog_show_tags %}
+                  {% if article.tags.size > 0 %}
+                    <ul class="meta-tag-list tags">
+                    {% for tag in article.tags %}
+                      <li class="tag tag--{{ settings.tag_style}}">
+                        <a href="{{ shop.url}}/blogs/{{ blogs[blog_widget_select].handle }}/tagged/{{ tag | handleize }}" title="{{ blog.title | escape }} {{ 'blogs.general.tagged' | t }} {{ tag | escape }}">{{ tag }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endif %}
+
+                {% include 'meta-info-list' %}
+              </div>
+            </div>
+          {% if object.settings.button_type != 'none' %}
+            <div class="blog-card__read-more">
+              {% include 'button', label: object.settings.button_label, href: article.url, type: "link", style: object.settings.button_type %}
+            </div>
+          {% endif %}
+          </div>
+          
+
+        
+        {% if article_counter == object.settings.home_page_articles %}{% break %}{% endif %}
+      {% endfor %} {% comment %}article loop{% endcomment %}
+    {% else %}
+
+    {% endif %}
+  </div>
+</section>
+
+<style>
+{% unless section.settings.blog_author %}
+  #shopify-section-{{ section.id }} .meta-info-list__item-author {
+    display: none;
+  }
+{% endunless %}
+</style>

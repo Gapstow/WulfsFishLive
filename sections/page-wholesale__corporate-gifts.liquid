@@ -1,0 +1,142 @@
+{% comment %}
+** Image with text overlay - dynamic **
+- Draggable section
+{% endcomment %}
+
+{% include 'include-wholesale__impress-with-bar' %}
+<div class="section-overlay" style="pointer-events: none;"></div>
+<style>
+    #shopify-section-{{section.id}} .image-element__wrap {
+        //max-height: 850px;
+    }
+    #shopify-section-{{section.id}}  {
+      position: relative;
+      margin-top: 40px;
+    }
+    #shopify-section-{{section.id}} .caption {
+      z-index: 99;
+    }
+    #shopify-section-{{section.id}} .section-overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 5;
+      background-color: {{ section.settings.overlay_color }};
+      opacity: 0.{{ section.settings.overlay_opacity }};
+    }
+    #shopify-section-{{section.id}} .wholesale_impress_banner_content p {
+      font-size: {{ section.settings.bartext_size }}px;
+    }
+    /**/
+</style>
+
+{% schema %}
+{
+  "name": "Corporate Gifts",
+  "class": "image-with-text-overlay image-with-text-overlay-head overlaid-header-option",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "1800 x 900px recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "900 x 1800px recommended"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "richtext",
+      "id": "corporate_heading",
+      "label": "Heading",
+      "default": "<p>Corporate Gifts</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "pretext",
+      "label": "Preheading",
+      "default": "<p>Preheading</p>"
+    },
+    {
+      "type": "color",
+      "id": "bar_background",
+      "label": "Bar Background Color",
+      "default": "#aaaaaa"
+    },
+    {
+      "type": "range",
+      "id": "bartext_size",
+      "min": 10,
+      "max": 90,
+      "step": 1,
+      "unit": "px",
+      "label": "Bar Font Size",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Image Overlay Color",
+      "default": "#aaaaaa"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 99,
+      "step": 1,
+      "default": 50,
+      "unit": "%",
+      "label": "Image Overlay Opacity"
+    },
+    {
+      "type": "select",
+      "id": "text_vertical_position",
+      "label": "Vertical position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "middle",
+          "label": "Middle"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "middle"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "wide",
+      "options": [
+        {
+          "value": "half",
+          "label": "Half"
+        },
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

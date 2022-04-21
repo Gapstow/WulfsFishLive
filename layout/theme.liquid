@@ -1,0 +1,435 @@
+{% capture content %}
+<!doctype html>
+<html lang="{{ shop.locale }}">
+  <head>
+  {% if template contains "recipe" %}
+  <!-- template is {{ template }} -->
+    {% include 'structured-recipe-script' %}
+  {% endif %}
+  <script>
+  console.log('live theme');
+  </script>
+    <!-- MegaMenu Configuration + Gift Note -->
+    <meta name="facebook-domain-verification" content="vkostapys1syjcnuuxe4p4xkgf11ap" />
+    <meta charset="utf-8">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.shop_bg_color }}">
+    <link rel="canonical" href="{{ canonical_url }}" />
+    {%- if current_tags -%}{%- assign meta_tags = current_tags | join: ', ' -%}{%- endif -%}
+    <title>{%- if template contains "index" -%}{{ page_title }}{%- else -%}{{ page_title }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags }}{%- endif -%}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}{% endif %}{% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}{% endif %}</title>
+    <link rel="preconnect dns-prefetch" href="https://fonts.shopifycdn.com" />
+    <link rel="preconnect dns-prefetch" href="https://cdn.shopify.com" />
+    <link rel="preconnect dns-prefetch" href="https://v.shopify.com" />
+    <link rel="preconnect dns-prefetch" href="https://cdn.shopifycloud.com" />
+    {% if settings.enable_shopify_review_comments %}
+    <link rel="preconnect dns-prefetch" href="https://productreviews.shopifycdn.com" />
+    {% endif %}
+    <!-- template.suffix {{ template.suffix }} -->
+    {{ 'fancybox.css' | asset_url | stylesheet_tag }}
+    {{ 'slick.css' | asset_url | stylesheet_tag }}
+    {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+    {{ 'gapstow-liquid.scss.css' | asset_url | stylesheet_tag }}
+    {{ 'gapstow.scss.css' | asset_url | stylesheet_tag }}
+    {{ 'recipe.scss.css' | asset_url | stylesheet_tag }}
+    {% if template.suffix contains 'custom_landing' %}
+      {{ 'clp.scss.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    
+    <link rel="stylesheet" media="print" href="{{ 'print.css' | asset_url }}" />
+
+
+    {% if settings.show_multiple_currencies or shop.enabled_currencies.size > 1 %}
+    <script type="text/javascript" src="/services/javascripts/currencies.js" ></script>
+    {% endif %}
+    <script>
+      {% include 'js-variables' %}
+    </script>
+    <script type="text/javascript" data-src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="{{ 'slick.min.js' | asset_url }}"></script>
+    <script defer src="{{ 'matchHeight.js' | asset_url }}"></script>
+    <script defer src="{{ 'vendors.js' | asset_url }}"></script>
+    <script defer src="{{ 'utilities.js' | asset_url }}"></script>
+    <script defer src="{{ 'app.js' | asset_url }}"></script>
+    <script defer src="{{ 'custom.js' | asset_url }}"></script>
+    {%- if settings.show_multiple_currencies or shop.enabled_currencies.size > 1 -%}
+    <script defer src="{{ 'currencyConversion.js' | asset_url }}"></script>
+    {%- endif -%}
+    {%- if settings.enable_shipping_calculator and template contains "cart" -%}
+    <script defer type="text/javascript" src="{{ 'shopify_common.js' | shopify_asset_url }}"></script>
+    <script defer type="text/javascript" src="{{ 'api.jquery.js' | shopify_asset_url }}"></script>
+    <script defer type="text/javascript" src="/services/javascripts/countries.js"></script>
+    {%- endif -%}
+    <noscript>
+      <style>
+      </style>
+    </noscript>
+    {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags | escape }}.{% endif %}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}.{% endif %}" />
+    {%- endif -%}
+    <!-- template is {{template}}  1: {{page.metafields.custom_fields["custom_title_color_medium"]}}  2: {{page.metafields.custom_fields["breakpoint_for_wide_title"]}}    3: {{page.metafields.custom_fields["custom_title_color"]}}  -->
+    {% if template contains 'page' %}
+    {% if page.metafields.custom_fields["custom_title_color"] != blank %}
+    {% if page.metafields.custom_fields["breakpoint_for_wide_title"] != blank %}
+    {% assign breakPointLarge = page.metafields.custom_fields["breakpoint_for_wide_title"] %}
+    {% assign breakPointMedium = breakPointLarge | minus:1 %}
+    <style>
+      @media (min-width: {{ breakPointLarge }}px) {
+        #customBannerTitle {
+          color: #{{ page.metafields.custom_fields["custom_title_color"] }};
+        }
+      }
+      @media (max-width: {{ breakPointMedium }}px) and (min-width: 799px) {
+        #customBannerTitle {
+          color: #{{ page.metafields.custom_fields["custom_title_color_medium"] }};
+        }
+      }
+    </style>
+    {% else %} 
+    <style>
+      @media (min-width: 799px) {
+        #customBannerTitle {
+          color: #{{ page.metafields.custom_fields["custom_title_color"] }};
+        }
+      }
+    </style>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {%- if settings.favicon != nil -%}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ settings.favicon | img_url: '180x180' }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon | img_url: '180x180' }}"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ settings.favicon | img_url: '57x57' }}"/>
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ settings.favicon | img_url: '60x60' }}"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ settings.favicon | img_url: '72x72' }}"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ settings.favicon | img_url: '76x76' }}"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ settings.favicon | img_url: '114x114' }}"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | img_url: '180x180' }}"/>
+    <link rel="apple-touch-icon" sizes="228x228" href="{{ settings.favicon | img_url: '228x228' }}"/>
+    {%- else -%}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
+    {%- endif -%}
+    {%- if template.directory == 'customers' -%}
+    <script defer src="{{ 'shopify_common.js' | shopify_asset_url }}"></script>
+    <script defer src="{{ 'customer_area.js' | shopify_asset_url }}"></script>
+    {%- endif -%}
+    {% render 'treedify' %}
+    {% capture cfh %}{{ content_for_header }}{% endcapture %}
+    {% include 'var-theme' %}
+    {% include 'social-meta-info' %}
+    {% if collection.previous_product %}<link rel="prev" href="{{ collection.previous_product }}">{% endif %}
+    {% if collection.next_product %}<link rel="next" href="{{ collection.next_product }}">{% endif %}
+    <style>
+      {% if settings.main_background_image != blank %}
+      body {
+        background-image: url('{{ settings.main_background_image | img_url:"1200x"}}');
+          background-size: cover;
+          }
+      body.index {
+        background-image: none;
+      }
+      main.shopify-section.index-sections {
+        background-image: url('{{ settings.main_background_image | img_url:"1200x"}}');
+          background-size: cover;
+          background-attachment: fixed;
+          }
+      {% endif %}
+    </style>
+    <script async type="text/javascript" data-src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=W9ubMB"></script>
+    {% render 'treedify' %}
+    {{ 'bsub.js' | asset_url | script_tag | replace: 'src', 'data-src' }} 
+    {{ 'bsub.scss.css' | asset_url | stylesheet_tag | replace: 'href', 'data-href' }}
+    <title>Places Search Box</title>
+    <script data-src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script data-src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
+    <style type="text/css">
+      #map {
+        height: 100%;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+      #infowindow-content {
+        display: none;
+      }
+      #map #infowindow-content {
+        display: inline;
+      }
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
+    </style>
+    <script type="lazyloadscript">
+      function initAutocomplete() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: -33.8688, lng: 151.2195 },
+          zoom: 13,
+          mapTypeId: "roadmap",
+        });
+        const input = document.getElementById("pac-input");
+        const searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        map.addListener("bounds_changed", () => {
+                        searchBox.setBounds(map.getBounds());
+      });
+      let markers = [];
+      searchBox.addListener("places_changed", () => {
+                            const places = searchBox.getPlaces();
+      if (places.length == 0) {
+        return;
+      }
+      markers.forEach((marker) => {
+        marker.setMap(null);
+      });
+      markers = [];
+      const bounds = new google.maps.LatLngBounds();
+      places.forEach((place) => {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        const icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25),
+        };
+        markers.push(
+          new google.maps.Marker({
+            map,
+            icon,
+            title: place.name,
+            position: place.geometry.location,
+          })
+        );
+        if (place.geometry.viewport) {
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+      });
+      }
+    </script>
+    <meta name="google-site-verification" content="eAiWtbnWki4YgpBItEkLeB6oYdKwgTWCC7aI2M6cXho" />
+    <script async data-src="https://www.googletagmanager.com/gtag/js?id=AW-644039185"></script> 
+    <script type="lazyloadscript"> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-644039185'); </script>
+    <script type="lazyloadscript"> gtag('config', 'AW-644039185/TczUCLyupvUBEJGEjbMC', { 'phone_conversion_number': '(857) 991-1557' }); </script>
+    <meta name="google-site-verification" content="55g7ElSy9_mTmgvjlJuIozbMOVuEfrERU42qdoJosX0" />
+    <script type="lazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M6KWXLJ');</script>
+    
+    {% comment %}
+      google fonts
+    {% endcomment%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allison&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allison&display=swap" rel="stylesheet">
+
+  </head>
+  {% if template.name == 'index' %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ shop.url }}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "url": "{{ shop.url }}{{ page.url }}"
+    }
+  </script>
+  {% endif %}
+  <body class="{%- if template == '404' -%}
+               error-404
+               {% else -%}
+               {{ template | replace: '.', '-' | handle }}
+               {%- endif -%}
+               {%- if product.handle != blank -%} product-{{product.handle}}{%- endif -%} 
+               {% if settings.header_layout == 'vertical' -%}
+               has-vertical-header
+               {%- endif -%} 
+               {% if page.handle contains 'fresh'%} custom-header-top-page {% endif %} template-type-{{template.name}}"
+        data-money-format="{{ shop.money_format }}" data-shop-url="{{ shop.url }}">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6KWXLJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    {%- if settings.show_announcement_bar -%}
+    {% section 'announcement-bar' %}
+    {%- endif -%}
+    {%- if settings.header_layout == "classic" -%}
+    {% section 'header__top-bar' %}
+    {% if template.name == "index" %} 
+    {% comment %}{% section 'header-classic-backup' %}{% endcomment %}
+    {% section 'header-classic-original' %}
+    {% else %}
+    {% section 'header-classic-original' %}
+    {% endif %}
+    {%- elsif settings.header_layout == "centered" -%}
+    {% section 'header-centered__top-bar' %}
+    {% section 'header-centered' %}
+    {%- elsif settings.header_layout == "vertical" -%}
+    {% section 'header-vertical' %}
+    {%- elsif settings.header_layout == "search_focus" -%}
+    {% section 'header__top-bar' %}
+    {% section 'header-search-focus' %}
+    {%- endif -%}
+    {%- if settings.cart_action == 'drawer' -%}
+    {% include 'ajax-cart' %}
+    {%- endif -%}
+    {% if settings.mega_menu_1 == true %}
+    {% section 'mega-menu-1' %}
+    {% endif %}
+    {% if settings.mega_menu_2 == true %}
+    {% section 'mega-menu-2' %}
+    {% endif %}
+    {% if settings.mega_menu_3 == true %}
+    {% section 'mega-menu-3' %}
+    {% endif %}
+    {% if settings.mega_menu_4 == true %}
+    {% section 'mega-menu-4' %}
+    {% endif %}
+    {% if settings.mega_menu_5 == true %}
+    {% section 'mega-menu-5' %}
+    {% endif %}
+    {% if settings.mega_menu_6 == true %}
+    {% section 'mega-menu-6' %}
+    {% endif %}
+    {% if settings.mega_menu_7 == true %}
+    {% section 'mega-menu-7' %}
+    {% endif %}
+    {% if settings.mega_menu_8 == true %}
+    {% section 'mega-menu-8' %}
+    {% endif %}
+    {% if settings.mega_menu_9 == true %}
+    {% section 'mega-menu-9' %}
+    {% endif %}
+    {% if settings.mega_menu_10 == true %}
+    {% section 'mega-menu-10' %}
+    {% endif %}
+    {% if settings.header_layout == "vertical" %}
+    <div class="is-beside-vertical-header">
+      {% endif %}
+      {% if page.metafields.custom_fields["custom_hero_image"] != blank %}
+      {% include 'include-custom-hero-image' %}
+      {% endif %}
+      {{ content_for_layout }}
+      <noscript class="endOfLayoutContentX" type="text/mark"></noscript>{% render 'treedify_script' %}
+      {% unless page.title == "The Chef's Table" %}
+      {% section 'prefooter' %}
+      {% endunless %}
+      {% if settings.footer_layout == "centered" %}
+      {% section 'footer__icon-bar' %}
+      {% section 'footer-centered' %}
+      {% elsif settings.footer_layout == "classic" %}
+      {% section 'footer__icon-bar' %}
+      {% section 'footer-classic' %}
+      {% elsif settings.footer_layout == "promotional" %}
+      {% section 'footer__icon-bar' %}
+      {% section 'footer-promotional' %}
+      {% endif %}
+      {% if settings.header_layout == "vertical" %}
+    </div>
+    {% endif %}
+    {% if settings.show_fixed_message %}
+    {% section 'fixed-message' %}
+    {% endif %}
+    {% if settings.enable_quickshop %}
+    {% include 'quick-shop' %}
+    {% endif %}
+
+    {% if settings.search_display_style == 'popup' %}
+    {% include 'search-popup' %}
+    {% endif %}
+
+    {% if settings.enable_cart_popup %}
+      {% include 'cart-champion-popup' %}
+    {% endif %}
+
+    {% if settings.show_popup %}
+      {% if template == "product" or template == "collection" %}
+        {% section 'popup' %}
+      {% endif %}
+    {% endif %}
+
+    {% if settings.disqus_enabled %}
+    {% if template contains "blog" or template contains "article" or template contains "index" %}
+    <script id="dsq-count-scr" src="//{{ settings.disqus_shortname }}.disqus.com/count.js" async></script>
+    {% endif %}
+    {% endif %}
+    {% include 'custom-title-mover' %}
+    <div id="refcandy-poprocks" data-id="n9dcjg5o83zoqjp9ouwza89zs" data-location="left" data-minimized="no" data-version="2"></div>
+    {% render 'back-in-stock-helper' %}
+    {% include 'criteo-tracking' %}
+    <script type="lazyloadscript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//portal.referralcandy.com/assets/widgets/refcandy-poprocks.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","refcandy-poprocks-js");</script>
+    {% include 'smile-initializer' %}
+    {{ content_for_footer }}
+  <!--Gorgias Chat Widget Start--><script id="gorgias-chat-widget-install-v2" src="https://config.gorgias.chat/gorgias-chat-bundle-loader.js?applicationId=12607"></script>
+<script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});</script><!--Gorgias Chat Widget End-->
+</body>
+</html>
+{% endcapture %}
+{% assign content = content | replace_first: '<!doctype', '!doctype' | split: ' <' %}
+{%- for html in content -%}{%- assign htmlblock = html | strip | prepend: ' <' -%}{{htmlblock | replace: ' </', '</'}}{%- endfor -%}

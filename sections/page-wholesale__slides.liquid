@@ -1,0 +1,28 @@
+{% if page.metafields.custom_fields["slides_repeater"] != blank %}
+<div class="wholesale-slides">
+    {% for item in page.metafields.custom_fields["slides_repeater"] %}
+        <div class="wholesale-slide">
+            {% if item["slide_image"] != blank %}
+                {{ item["slide_image"] }}
+            {% endif %}
+            <div class="wholesale-slide-content">
+                {% if item["slide_title"] != blank %}
+                    <h2>{{ item["slide_title"] }}</h2>
+                {% endif %}
+
+                {% if item["slide_subtitle"] != blank %}
+                    <label>{{ item["slide_subtitle"] }}</label>
+                {% endif %}
+
+                {% if item["slide_text"] != blank %}
+                    <span>{{ item["slide_text"] }}</span>
+                {% endif %}
+
+                {% if item["slide_content"] != blank %}
+                    <p>{{ item["slide_content"] }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}

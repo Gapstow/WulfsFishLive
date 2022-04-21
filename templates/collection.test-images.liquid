@@ -1,0 +1,62 @@
+
+<ul id="product-list">
+{% paginate collection.products by 50 %}
+  {% for product in collection.products %}
+   {% assign hasSmallImage = false %}
+    {% for image in product.images %}
+
+      {% if image.height < 400 or image.width < 400 %}
+        {% assign hasSmallImage = true %}
+      {% endif %}
+    {% endfor %}
+    {% if hasSmallImage %}
+      <li class="image-test-li">
+      <div class="flex-images">
+    {% for image in product.images %}
+      {% if image.height < 400 or image.width < 400 %}
+      	<div class="image-wrapper-small-image">
+          <img class="small-image" src="{{ image | img_url:'75x75', crop:'center'}}"><br/>
+          <span>Only {{image.width}}x{{image.height}} pixels</span>
+        </div>
+      {% else %}
+        <img class="regular-image" src="{{ image | img_url:'75x75', crop:'center'}}">
+      {% endif %}
+    {% endfor %}
+    </div>
+            <div class="product-name"><a href="{{product.url}}">{{ product.title }}</a>&nbsp;&nbsp;-&nbsp;&nbsp;<a target="_blank" href="https://wulfs-fish-1.myshopify.com/admin/products/{{product.id}}">Link to ADMIN page</a></div>
+      </li>
+    {% endif %}
+  {% endfor %}
+  {{ paginate | default_pagination }}
+{% endpaginate %}
+</ul>
+
+{{ paginate | default_pagination }}
+
+<style>
+.image-wrapper-small-image {
+  text-align: center;
+}
+.flex-images {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.flex-images > * {
+  margin-right: 10px;
+}
+.image-test-li {
+  border-bottom: 1px solid lightgray;
+}
+li img {
+  display: inline-block;
+  width: 75px;
+  height: auto;
+}
+img.small-image {
+  border: 2px solid red;
+}
+.page, .next, .prev {
+  font-size: 28px;
+}
+</style>

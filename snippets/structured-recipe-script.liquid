@@ -1,0 +1,88 @@
+<!-- structured-recipe-script.liquid -->
+
+{% if article.excerpt != blank %}
+  {% assign description = article.excerpt | strip_html %}
+{% else %}
+  {% assign description = article.content | strip_html | truncatewords: 30 %}
+{% endif %}
+{% if article.metafields.custom_fields["prep_time"] != blank %}
+  {% assign prepTime = article.metafields.custom_fields["prep_time"] | split: '-' | first %}
+{% endif %}
+{% if article.metafields.custom_fields["cook_time"] != blank %}
+  {% assign cookTime = article.metafields.custom_fields["cook_time"] | split: '-' | first %}
+{% endif %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Recipe",
+  "name": "{{ article.title | split: ':' | last | lstrip }}",
+  "image": [
+    {% for item in article.metafields.custom_fields["banner_slide"] limit:9 %}
+      "{{ item['slide_image'] }}"{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "author": { 
+    "@type": "Person",
+    "name": "{{ article.metafields.custom_fields["recipe_author"] }}"
+  },
+  "datePublished": "{{ article.created_at | date: "%Y-%m-%d" }}",
+  "description": "{{ description }}.",
+  "prepTime": "PT{{prepTime}}M",
+  "cookTime": "PT{{cookTime}}M",
+  "totalTime": "PT{{prepTime | plus:cookTime}}M",
+  {% if article.metafields.custom_fields["structured_keywords"] != blank %}"keywords": "{{ article.metafields.custom_fields["structured_keywords"] }}",{% endif %}
+  "recipeYield": "{{ article.metafields.custom_fields["serves"] | split: '-' | first }}",
+  {% if article.metafields.custom_fields["recipe_category"] != blank %}"recipeCategory": "{{ article.metafields.custom_fields["recipe_category"] }}",{% endif %}
+  {% if article.metafields.custom_fields["recipe_cuisine"] != blank %}"recipeCuisine": "{{ article.metafields.custom_fields["recipe_cuisine"] }}",{% endif %}
+  {%- if article.metafields.custom_fields["recipe_nutrition"] != blank -%}"nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "{{ article.metafields.custom_fields["recipe_nutrition"] }} calories"
+  },{%- endif -%}
+  "recipeIngredient": [
+      {%- for item in article.metafields.custom_fields["recipe_section"] -%}
+      {%- for repeater_item in item["ingredients_list"] -%}
+      "{{ repeater_item["ingredients_list"] }}"{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+      {%- endfor -%}
+    ],
+  "recipeInstructions": [
+      {%- for item in article.metafields.custom_fields["recipe_section"] -%}
+      {%- for repeater_item in item["instructions_steps"] -%}
+      {
+        "@type": "HowToStep",
+        "text": "{{ repeater_item["instructions_steps"] }}",
+        "url": "{{ shop.url }}{{ article.url }}/#panel-1"
+      }{% unless forloop.last %},{% endunless %}
+      
+      {%- endfor -%}
+      {%- endfor -%}
+  ]{%- comment -%},
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "ratingCount": "18"
+  },
+  "video": {
+    "@type": "VideoObject",
+    "name": "How to make a Party Coffee Cake",
+    "description": "This is how you make a Party Coffee Cake.",
+    "thumbnailUrl": [
+      "https://example.com/photos/1x1/photo.jpg",
+      "https://example.com/photos/4x3/photo.jpg",
+      "https://example.com/photos/16x9/photo.jpg"
+     ],
+    "contentUrl": "http://www.example.com/video123.mp4",
+    "embedUrl": "http://www.example.com/videoplayer?video=123",
+    "uploadDate": "2018-02-05T08:00:00+08:00",
+    "duration": "PT1M33S",
+    "interactionStatistic": {
+      "@type": "InteractionCounter",
+      "interactionType": { "@type": "WatchAction" },
+      "userInteractionCount": 2347
+    },
+    "expires": "2019-02-05T08:00:00+08:00"
+  }{%- endcomment -%}
+}
+</script>
+ 
