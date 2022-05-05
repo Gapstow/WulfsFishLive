@@ -148,6 +148,7 @@
     "sections": {
       "1557099047693": {
         "type": "index__image-with-text-overlay",
+        "disabled": true,
         "settings": {
           "image": "shopify:\/\/shop_images\/Alt_bostonWarfTransparent_1800x_2000x_c8aaa5bf-33a9-4de5-bf45-67c4e68942b0.png",
           "altTag": "Workers waiting to unload haddock from the fishing schooners at a south Boston wharf, May 1923. The haddock are dumped into scale boxes then loaded into pushcarts to be taken for ice packing.",
@@ -3735,7 +3736,14 @@
             "type": "listing",
             "settings": {
               "title": "Customer and Sales Support Associate (Wholesale division)",
-              "richtext": "<p><strong>The Role<\/strong>  <\/p><p>Wulf’s Fish is seeking a Customer and Sales Support Associate to help manage customer relationships and expectations in our wholesale division. This role will act as a liaison with existing customers and vendors. The job will consist of multiple functions: communications between Wulf’s Fish and our current customer base, communications between the account manager and customers, as well as assisting with daily activities in the sales office such as invoicing, data entry, and managing some aspects of shipping. This is a great opportunity to be part of a small team with a strong growth plan. At Wulf’s Fish, we carefully select and butcher by hand the fish we sell, and we’re committed to offering the highest quality available. We’re a hands-on company doing much more than buying and selling products we never touch, and we’re very serious about food and cooking here!  <\/p><p>The ideal candidate will have a keen attention to detail and the ability to work in a fast-paced environment with multiple deadlines. They must also bring their culinary knowledge and be excited to talk about food and cooking.   <\/p><p>This role would be a great next step for someone looking to leave the restaurant kitchen who would like to build out their skill set for a different kind of job in food. It would also be a good fit for someone early in their career in sales or customer service who would like to expand their skill set and get a more complete picture of how a food business works.   <\/p><p>The Customer and Sales Support Associate will work in coordination with the existing Sales team to continue to grow our customer base and increase sales. The Customer and Sales Support Associate role is a critical part of the Wulf’s brand, and we pride ourselves on offering not only the best seafood, but the best relationships which come with attentive service and informed assistance to our customers. The Customer and Sales Support Associate will also bring insights from their customer interactions to help Sales Mangers grow their existing customers. <\/p><p><\/p><p><\/p><p><strong>Responsibilities<\/strong>  <\/p><p><strong>Customer Service (40%) <\/strong>  <\/p><p>Manage customer interactions through the shared ordering email and order confirmations.    <\/p><p>Respond to customer phone calls, questions, and provide thoughtful suggestions on potential replacement items when we face product outages.  <\/p><p>Implement order changes or adds with production team.  <\/p><p>Stay engaged with the customers to resolve any potential shortfalls with products to ensure every effort is made to fulfil an order in full.  <\/p><p> <\/p><p><strong>Support Sales Managers (40%)<\/strong>  <\/p><p>Liaise with the sales managers to learn details about each individual customer, ordering specs, delivery details, and proper flows of communications.  <\/p><p>Troubleshoot issues with orders, assist with clarifying specs, with the help of managers to ensure customer needs are being met.   <\/p><p>Work with the sales managers to highlight specific products, or suggest potential product upsells where appropriate.  <\/p><p>Assisting with price management. <\/p><p>  <\/p><p><strong>Sales Daily Operations<\/strong> <strong>(20%)<\/strong>  <\/p><p>Transcribing orders from email to paper. <\/p><p>Inputting orders from paper to QuickBooks. <\/p><p>Invoicing orders \/ creating BOL’s \/ Shipping documents etc.  <\/p><p>  <\/p><p><strong>Qualifications<\/strong>  <\/p><p>Experience working with the public in a customer service, hospitality, or retail role. Professional food experience desired.  A passion for seafood is a must.  <\/p><p>Exceptional organizational and communication skills, with thick skin and an enthusiastic sense of humor.  <\/p><p>Must be self-motivated with an entrepreneurial mindset.   <\/p><p>Must be willing to interrogate every process and product for continuous improvement and bring creativity and a hands-on approach to making change.  <\/p><p>Must be a detail-oriented and customer-focused multi-tasker. Time management and the ability to set and complete tasks is key to success in this role.  <\/p><p>Able to communicate clearly and concisely over the phone and in writing.  <\/p><p>Customer focused: proactively seek and find ways to provide the highest standards of service.  <\/p><p>Knowledge of seafood is required. Our culinary knowledge and engagement are part of what sets Wulf’s apart. We love to talk about fish and so do our customers.  <\/p><p>Previous knowledge of, or willingness to learn, QuickBooks, Seasoft, and Excel.  <\/p><p>  <\/p><p><strong>Commitment<\/strong>   <\/p><p>This is a full-time position (although part-time is possible for the right candidate)<\/p><p>Multiple shifts available - day and evening\/night   <\/p><p>Will work from our office in Boston’s Seaport District. This is not a remote position.  <\/p><p>Free Parking  <\/p><p>Paid time off, medical, dental, and vision benefits <\/p><p>Company Sponsored 401K with match  <\/p><p>Employee discount program  <\/p><p>Dining allowance <\/p><p>  <\/p><p><strong>To apply<\/strong>  <\/p><p>Please send a resume and cover letter to <a href=\"mailto:Dantczak@wulfsfish.com\" target=\"_blank\"><span style=\"text-decoration:underline\">Dantczak@wulfsfish.com<\/span><\/a>  <\/p><p>Please tell us about your experience in customer service, sales, or a role working in hospitality as well as your seafood knowledge. Experience cooking seafood would be a big plus!   <\/p>"
+              "richtext": "<p><strong>The Role<\/strong>  <\/p><p>Wulf’s Fish is seeking a Customer and Sales Support Associate to help manage customer relationships and expectations in our wholesale division. This role will act as a liaison with existing customers and vendors. The job will consist of multiple functions: communications between Wulf’s Fish and our current customer base, communications between the account manager and customers, as well as assisting with daily activities in the sales office such as invoicing, data entry, and managing some aspects of shipping. This is a great opportunity to be part of a small team with a strong growth plan. At Wulf’s Fish, we carefully select and butcher by hand the fish we sell, and we’re committed to offering the highest quality available. We’re a hands-on company doing much more than buying and selling products we never touch, and we’re very serious about food and cooking here!  <\/p><p>The ideal candidate will have a keen attention to detail and the ability to work in a fast-paced environment with multiple deadlines. They must also bring their culinary knowledge and be excited to talk about food and cooking.   <\/p><p>This role would be a great next step for someone looking to leave the restaurant kitchen who would like to build out their skill set for a different kind of job in food. It would also be a good fit for someone early in their career in sales or customer service who would like to expand their skill set and get a more complete picture of how a food business works.   <\/p><p>The Customer and Sales Support Associate will work in coordination with the existing Sales team to continue to grow our customer base and increase sales. The Customer and Sales Support Associate role is a critical part of the Wulf’s brand, and we pride ourselves on offering not only the best seafood, but the best relationships which come with attentive service and informed assistance to our customers. The Customer and Sales Support Associate will also bring insights from their customer interactions to help Sales Mangers grow their existing customers. <\/p><p>We will be hiring more than one person for this role, and we are looking for people to fill both  day and evening\/night shifts. Some weekend hours are required.<\/p><p><\/p><p><strong>Responsibilities<\/strong>  <\/p><p><strong>Customer Service (40%) <\/strong>  <\/p><p>Manage customer interactions through the shared ordering email and order confirmations.    <\/p><p>Respond to customer phone calls, questions, and provide thoughtful suggestions on potential replacement items when we face product outages.  <\/p><p>Implement order changes or adds with production team.  <\/p><p>Stay engaged with the customers to resolve any potential shortfalls with products to ensure every effort is made to fulfil an order in full.  <\/p><p> <\/p><p><strong>Support Sales Managers (40%)<\/strong>  <\/p><p>Liaise with the sales managers to learn details about each individual customer, ordering specs, delivery details, and proper flows of communications.  <\/p><p>Troubleshoot issues with orders, assist with clarifying specs, with the help of managers to ensure customer needs are being met.   <\/p><p>Work with the sales managers to highlight specific products, or suggest potential product upsells where appropriate.  <\/p><p>Assisting with price management. <\/p><p>  <\/p><p><strong>Sales Daily Operations<\/strong> <strong>(20%)<\/strong>  <\/p><p>Transcribing orders from email to paper. <\/p><p>Inputting orders from paper to QuickBooks. <\/p><p>Invoicing orders \/ creating BOL’s \/ Shipping documents etc.  <\/p><p>  <\/p><p><strong>Qualifications<\/strong>  <\/p><p>Experience working with the public in a customer service, hospitality, or retail role. Professional food experience desired.  A passion for seafood is a must.  <\/p><p>Exceptional organizational and communication skills, with thick skin and an enthusiastic sense of humor.  <\/p><p>Must be self-motivated with an entrepreneurial mindset.   <\/p><p>Must be willing to interrogate every process and product for continuous improvement and bring creativity and a hands-on approach to making change.  <\/p><p>Must be a detail-oriented and customer-focused multi-tasker. Time management and the ability to set and complete tasks is key to success in this role.  <\/p><p>Able to communicate clearly and concisely over the phone and in writing.  <\/p><p>Customer focused: proactively seek and find ways to provide the highest standards of service.  <\/p><p>Knowledge of seafood is required. Our culinary knowledge and engagement are part of what sets Wulf’s apart. We love to talk about fish and so do our customers.  <\/p><p>Previous knowledge of, or willingness to learn, QuickBooks, Seasoft, and Excel.  <\/p><p>  <\/p><p><strong>Commitment<\/strong>   <\/p><p>This is a full-time position (although part-time is possible for the right candidate)<\/p><p>Multiple shifts available - day and evening\/night. Some weekend hours are required.   <\/p><p>Will work from our office in Boston’s Seaport District. This is not a remote position.  <\/p><p>Free Parking  <\/p><p>Paid time off, medical, dental, and vision benefits <\/p><p>Company Sponsored 401K with match  <\/p><p>Employee discount program  <\/p><p>Dining allowance <\/p><p>  <\/p><p><strong>To apply<\/strong>  <\/p><p>Please send a resume and cover letter to <a href=\"mailto:Dantczak@wulfsfish.com\" target=\"_blank\"><span style=\"text-decoration:underline\">Dantczak@wulfsfish.com<\/span><\/a>  <\/p><p>Please tell us about your experience in customer service, sales, or a role working in hospitality as well as your seafood knowledge. Experience cooking seafood would be a big plus!   <\/p>"
+            }
+          },
+          "0f3d03f1-521c-415c-9097-340a8491eb26": {
+            "type": "listing",
+            "settings": {
+              "title": "Driver",
+              "richtext": "<p><strong>The Role<\/strong>  <\/p><p>Wulf’s Fish is looking for friendly and hardworking individuals to join our Seafood Delivery Team.  The daily routine typically includes but is not limited to: handling product, delivering to our restaurant customers throughout Massachusetts, and dropping ground and air freight.   <\/p><p><strong>Qualifications<\/strong>  <\/p><p>Valid driver’s license and insurable driving record (No CDL required) <\/p><p>Comfortable driving delivery vans, experience driving box trucks a plus <\/p><p>Accountable and able to communicate effectively with co-workers and customers <\/p><p>Strong attention to detail and an ability to retain new information <\/p><p>Must be able to work on your feet and lift 50 lbs <\/p><p>Experience with seafood and\/or kitchen work is valuable but not required; we will teach the right candidate   <\/p><p><strong>Commitment<\/strong>  <\/p><p>This is a full-time job.   <\/p><p>Must be willing to work when needed (6 days).  <\/p><p>Multiple shifts\/starting times available but 8 hrs per shift expected. <\/p><p><strong>Benefits<\/strong> <\/p><p>Generous Paid Time Off Policy <\/p><p>Matching 401K  <\/p><p>Medical, Vision and Dental coverage <\/p><p>Discounts on all in-house seafood for home use <\/p><p><strong>To Apply<\/strong> <\/p><p>Call or text Rich Maldonado at 617.708.2063 <\/p><p>Email a resume or summary of recent work experience and any relevant skills or abilities to jobs@wulfsfish.com  <\/p>"
             }
           },
           "ea1dde6c-3afa-4a52-9c49-56902715550f": {
@@ -3752,6 +3760,7 @@
           "4a187a32-623e-43ec-8a7a-2f05bc9abd07",
           "f894c763-593e-4606-be8d-51c1ec327799",
           "141ba692-107c-435e-9745-e54d44c4782f",
+          "0f3d03f1-521c-415c-9097-340a8491eb26",
           "ea1dde6c-3afa-4a52-9c49-56902715550f"
         ],
         "settings": {
@@ -5745,9 +5754,149 @@
       "page-wholesale__featured-caviar": {
         "type": "page-wholesale__featured-caviar",
         "settings": {}
+      },
+      "165167287493b2fdbb": {
+        "type": "index__slideshow-classic",
+        "blocks": {
+          "ebc01e74-6ee6-4a27-8a7a-de048297cb19": {
+            "type": "video",
+            "settings": {
+              "embed_code": "<iframe src=\"https:\/\/player.vimeo.com\/video\/700573037?h=0844f9f1b6\" width=\"640\" height=\"360\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen=\"\"><\/iframe>",
+              "aspect_ratio": "16:9",
+              "autoplay": false,
+              "autoloop": true,
+              "iframe_video": "https:\/\/www.youtube.com\/watch?v=8NxS0vrPcsA",
+              "html5_video": "",
+              "controls": true,
+              "pretext": "",
+              "title": "Featured video",
+              "subtitle": "Embed a Youtube or Vimeo video.",
+              "pretext_color": "#000000",
+              "heading_color": "#000000",
+              "subheading_color": "#000000",
+              "horizontal_text_position": "center",
+              "vertical_text_position": "center",
+              "text_align": "center",
+              "button_label": "Play video",
+              "button_style": "button--secondary",
+              "overlay_style": "text_only",
+              "video_overlay_color": "#ffffff",
+              "gradient": "rgba(0,0,0,0)",
+              "gradient_rotation": 180,
+              "background_opacity": 77,
+              "text_width": 70,
+              "width": "wide",
+              "padding_top": 20,
+              "padding_bottom": 0,
+              "padding_left": 0,
+              "padding_right": 0,
+              "animation": "none",
+              "css_class": "",
+              "custom_css": ""
+            }
+          },
+          "e3a1cb6c-ece5-4ff9-9b96-280bb1abfd79": {
+            "type": "video",
+            "settings": {
+              "embed_code": "<iframe src=\"https:\/\/player.vimeo.com\/video\/700572741?h=05ebb62da9\" width=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen=\"\"><\/iframe>",
+              "aspect_ratio": "16:9",
+              "autoplay": true,
+              "autoloop": true,
+              "iframe_video": "https:\/\/www.youtube.com\/watch?v=8NxS0vrPcsA",
+              "html5_video": "",
+              "controls": true,
+              "pretext": "",
+              "title": "Featured video",
+              "subtitle": "Embed a Youtube or Vimeo video.",
+              "pretext_color": "#000000",
+              "heading_color": "#000000",
+              "subheading_color": "#000000",
+              "horizontal_text_position": "center",
+              "vertical_text_position": "center",
+              "text_align": "center",
+              "button_label": "Play video",
+              "button_style": "button--secondary",
+              "overlay_style": "text_only",
+              "video_overlay_color": "#ffffff",
+              "gradient": "rgba(0,0,0,0)",
+              "gradient_rotation": 180,
+              "background_opacity": 77,
+              "text_width": 70,
+              "width": "wide",
+              "padding_top": 20,
+              "padding_bottom": 0,
+              "padding_left": 0,
+              "padding_right": 0,
+              "animation": "none",
+              "css_class": "",
+              "custom_css": ""
+            }
+          },
+          "df456bd7-c175-43a0-a40f-aee4a4e41a5f": {
+            "type": "video",
+            "settings": {
+              "embed_code": "<iframe src=\"https:\/\/player.vimeo.com\/video\/700571838?h=9f51def46a\" width=\"640\" height=\"360\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen=\"\"><\/iframe>",
+              "aspect_ratio": "16:9",
+              "autoplay": false,
+              "autoloop": true,
+              "iframe_video": "https:\/\/www.youtube.com\/watch?v=8NxS0vrPcsA",
+              "html5_video": "",
+              "controls": true,
+              "pretext": "",
+              "title": "Featured video",
+              "subtitle": "Embed a Youtube or Vimeo video.",
+              "pretext_color": "#000000",
+              "heading_color": "#000000",
+              "subheading_color": "#000000",
+              "horizontal_text_position": "center",
+              "vertical_text_position": "center",
+              "text_align": "center",
+              "button_label": "Play video",
+              "button_style": "button--secondary",
+              "overlay_style": "text_only",
+              "video_overlay_color": "#ffffff",
+              "gradient": "rgba(0,0,0,0)",
+              "gradient_rotation": 180,
+              "background_opacity": 77,
+              "text_width": 70,
+              "width": "wide",
+              "padding_top": 20,
+              "padding_bottom": 0,
+              "padding_left": 0,
+              "padding_right": 0,
+              "animation": "none",
+              "css_class": "",
+              "custom_css": ""
+            }
+          }
+        },
+        "block_order": [
+          "ebc01e74-6ee6-4a27-8a7a-de048297cb19",
+          "e3a1cb6c-ece5-4ff9-9b96-280bb1abfd79",
+          "df456bd7-c175-43a0-a40f-aee4a4e41a5f"
+        ],
+        "settings": {
+          "image_transition": "slide",
+          "image_slideshow_speed": 8,
+          "show_arrows": true,
+          "show_nav_buttons": true,
+          "click_to_unmute": true,
+          "unmute_text": "Click To Unmute Videos",
+          "unmute_button": "#ffffff",
+          "unmute_opacity": 92,
+          "unmute_text_color": "#ff7752",
+          "mobile_text_below_image": true,
+          "width": "wide",
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "animation": "none",
+          "css_class": "",
+          "custom_css": ""
+        }
       }
     },
     "content_for_index": [
+      "165167287493b2fdbb",
       "1557099047693",
       "16080496500a61a8c7",
       "1608049773cb139743",

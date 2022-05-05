@@ -1377,7 +1377,7 @@ img.cleanfish-icon {
   align-items: center;
   padding-left: 10px;
   padding-right: 10px;
-  background: white !important;
+  background: #EFEFEF !important;
   padding: 3px;
   a {
     color: white;
@@ -2610,4 +2610,48 @@ body.dialog-is-open #customDialogWrapper {
 
 .ajax-cart__note {
   font-size: 1rem;
+}
+
+
+/************ video slider *******/
+.video-slider-section {
+  padding-bottom: 30px;
+  .flickity-page-dots {
+    position: static;
+    margin-top: 20px;
+  }
+  .flickity-button {
+    //display: none;
+    bottom: 0;
+    transform: translatey(30%);
+  }
+  @media (max-width: 480px) {
+    padding-bottom: 0px;
+    .flickity-button {
+      transform: translatey(-20%);
+      display: block;
+    }
+  }
+}
+.video-slider-section.section-has-unmute-button {
+  position: relative;
+  #clickToUnMute {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    @media (max-width: 768px) {
+      display: none;
+    }
+    .btn {
+      padding: 12px 22px;
+      border-radius: 5px;
+    }
+  }
 }
