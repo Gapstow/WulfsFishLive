@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="{{ shop.locale }}">
   <head>
-  {% if template contains "recipe" %}
+  {% if template contains "recipe" and template contains "article"%}
   <!-- template is {{ template }} -->
     {% include 'structured-recipe-script' %}
   {% endif %}

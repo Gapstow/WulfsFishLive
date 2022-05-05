@@ -41,9 +41,13 @@
   },{%- endif -%}
   "recipeIngredient": [
       {%- for item in article.metafields.custom_fields["recipe_section"] -%}
-      {%- for repeater_item in item["ingredients_list"] -%}
-      "{{ repeater_item["ingredients_list"] }}"{% unless forloop.last %},{% endunless %}
-      {%- endfor -%}
+        {% if item["ingredients_list"] != blank %}
+          {%- for repeater_item in item["ingredients_list"] -%}
+            "{{ repeater_item["ingredients_list"] }}" {% unless forloop.last %},{% endunless %}
+          {%- endfor -%} {% unless forloop.last %},{% endunless %}
+        {% else %}
+          "Seasoning to taste"{% unless forloop.last %},{% endunless %}
+        {% endif %}
       {%- endfor -%}
     ],
   "recipeInstructions": [
@@ -55,7 +59,7 @@
         "url": "{{ shop.url }}{{ article.url }}/#panel-1"
       }{% unless forloop.last %},{% endunless %}
       
-      {%- endfor -%}
+      {%- endfor -%}{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
   ]{%- comment -%},
   "aggregateRating": {
